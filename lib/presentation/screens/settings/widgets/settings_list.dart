@@ -11,8 +11,7 @@ class SettingsList extends StatelessWidget {
   const SettingsList({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -32,5 +31,4 @@ class SettingsList extends StatelessWidget {
         )
       ],
     );
-  }
 }

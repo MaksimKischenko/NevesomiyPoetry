@@ -44,8 +44,7 @@ class _PoemsScreenState extends State<PoemsScreen> {
 
 
   @override
-  Widget build(BuildContext context) {
-    return BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
+  Widget build(BuildContext context) => BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
       listener: (context, state) {
         if(state is NetworkConnectionEnabled) {
           showErrorConnectionMessage(state);
@@ -99,7 +98,6 @@ class _PoemsScreenState extends State<PoemsScreen> {
         },
       ),
     );
-  }
 
   void showErrorConnectionMessage(NetworkConnectionEnabled state) {
     if (!state.isEnabled) {
@@ -108,7 +106,7 @@ class _PoemsScreenState extends State<PoemsScreen> {
         context: context,
       );
     } else {
-      context.canPop() ? context.pop() : null;
+      if(context.canPop()) context.pop();
     }
   }
 
@@ -116,7 +114,7 @@ class _PoemsScreenState extends State<PoemsScreen> {
     context.read<PoemsBloc>().add(PoemsLoad(syncWithFireStore: syncWithFireStore));
   }
 
-  void sortByType(Topics value) async {
+  Future<void> sortByType(Topics value) async {
     context.read<PoemsBloc>().add(PoemsSortByType(value: value));
   }
 }

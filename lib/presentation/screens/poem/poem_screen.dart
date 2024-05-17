@@ -15,8 +15,7 @@ class PoemScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
+  Widget build(BuildContext context) => BlocProvider(
       create: (context) => PoemBloc(
         poem: poem
       ),
@@ -24,7 +23,6 @@ class PoemScreen extends StatelessWidget {
         poem: poem,
       ),
     );
-  }
 }
 
 

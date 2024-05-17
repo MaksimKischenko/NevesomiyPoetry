@@ -37,7 +37,7 @@ class RemoteResourcesBloc extends Bloc<RemoteResourcesEvent, RemoteResourcesStat
     await cacheService.initialise();
     
     if(event.syncWithFireStore) {
-      var result = await fireStoreservice.getUrlLinks();
+      final result = await fireStoreservice.getUrlLinks();
       result?.fold(
         (falure) => emit(RemoteResourcesError(error: falure.message)), 
         (right) {

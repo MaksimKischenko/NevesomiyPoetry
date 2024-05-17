@@ -12,8 +12,7 @@ class SignOutTile extends StatelessWidget {
 
 
   @override
-  Widget build(BuildContext context) {
-    return Ink(
+  Widget build(BuildContext context) => Ink(
       child: InkWell(
         onTap: onTap,
         child: Row(
@@ -32,5 +31,4 @@ class SignOutTile extends StatelessWidget {
         )
       ),
     );
-  }
 }

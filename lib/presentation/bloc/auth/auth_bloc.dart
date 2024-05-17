@@ -49,7 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if(authData != null) {
           if(!authData.emailVerified) {
             timer ??= Timer.periodic(const Duration(seconds: 3), (timer) async{
-              var user = (await service.reloadUser()).currentUser;
+              final user = (await service.reloadUser()).currentUser;
               if(user!.emailVerified) {
                 DataManager.instance.userEmail = authData.email;
                 emit(AuthSignedIn(
@@ -75,18 +75,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
 
     emit(AuthLoading());
-    var result = await service.login(
+    final result = await service.login(
       event.email, event.password
     );
     result?.fold(
       (falure) => emit(AuthError(
         error: falure.message
       )), 
-      (right) {
-      return emit(AuthSignedIn(
+      (right) => emit(AuthSignedIn(
         user: right.user
-      ));
-      }
+      ))
     );
   }  
 
@@ -97,7 +95,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
 
     
-    var result = await service.signUp(
+    final result = await service.signUp(
       event.email, event.password
     );
     
@@ -117,7 +115,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoading());
     await cacheService.clearCache();
-    var result = await service.signOut();
+    final result = await service.signOut();
     result.fold(
       (falure) => emit(AuthError(
         error: falure.message
@@ -134,7 +132,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     emit(AuthLoading());
 
-    var result = await service.resetPassword(event.email);
+    final result = await service.resetPassword(event.email);
     
     result?.fold(
       (falure) => emit(AuthError(

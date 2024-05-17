@@ -28,15 +28,14 @@ class _PoemAppBarState extends State<PoemAppBar> {
   @override
   void initState() {
     super.initState();
-    isFavorite = widget.poem.isFavorite ?? false;
+    isFavorite = widget.poem.isFavorite;
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocListener<PoemBloc, PoemState>(
+  Widget build(BuildContext context) => BlocListener<PoemBloc, PoemState>(
       listener: (context, state) {
         setState(() {
-          isFavorite = state.poem.isFavorite ?? false;
+          isFavorite = state.poem.isFavorite;
         });
       },
       child: AppBar(
@@ -58,13 +57,12 @@ class _PoemAppBarState extends State<PoemAppBar> {
             ],
           ),
           actions: [
-           isFavorite? SvgPicture.asset(
+           if (isFavorite) SvgPicture.asset(
                 SvgRepo.medal.location,
                 width: 24,
                 height: 24,
-            ) :  const SizedBox.shrink()
+            ) else const SizedBox.shrink()
           ],
       ),
     );
-  }
 }

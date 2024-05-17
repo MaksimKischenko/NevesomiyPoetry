@@ -14,8 +14,7 @@ class PoemList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SliverList(
+  Widget build(BuildContext context) => SliverList(
       delegate: SliverChildBuilderDelegate(
         childCount: poems.length,
         (_, index) => Padding(
@@ -37,7 +36,7 @@ class PoemList extends StatelessWidget {
                   poems[index].previewContent,
                   style: Theme.of(context).textTheme.bodySmall
                 ),
-                trailing: (poems[index].isFavorite ?? false)? SvgPicture.asset(
+                trailing: (poems[index].isFavorite)? SvgPicture.asset(
                   SvgRepo.medal.location,
                   width: 18,
                   height: 18,
@@ -48,7 +47,6 @@ class PoemList extends StatelessWidget {
         ),
       ),
     );
-  }
 
   Future<void> navigateToPoem(BuildContext context, Poem poem) async {
      await context.pushNamed<Poem>('poem', 

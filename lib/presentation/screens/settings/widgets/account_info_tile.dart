@@ -7,8 +7,7 @@ class AccountInfoTile extends StatelessWidget {
   const AccountInfoTile({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ListTile(
+  Widget build(BuildContext context) => ListTile(
       leading: SvgPicture.asset(
         SvgRepo.man.location,
         width: 48,
@@ -19,5 +18,4 @@ class AccountInfoTile extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
-  }
 }

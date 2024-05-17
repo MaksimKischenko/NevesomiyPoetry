@@ -35,7 +35,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
   Future<void> _onLoad(PoemsLoad event, Emitter<PoemsState> emit) async {
     if (event.syncWithFireStore) {
       log('REMOTE');
-      var result = await poemsUseCase.doRemotePoems();
+      final result = await poemsUseCase.doRemotePoems();
       result.fold(
         (falure) => emit(PoemsError(error: falure.message)),
         (right) {

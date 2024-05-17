@@ -35,8 +35,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: const SimpleAppBar(),
       body: BlocListener<AuthBloc, AuthState>(
@@ -94,7 +93,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         ),
       ),
     );
-  }
 
   void resetPassword() {
     context.read<AuthBloc>().add(ResetPassword(email: _emailTextInputController.text.trim()));

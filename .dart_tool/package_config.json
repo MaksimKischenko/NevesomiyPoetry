@@ -321,7 +321,7 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/flutter_lints-3.0.2",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/flutter_lints-4.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
@@ -357,7 +357,7 @@
     },
     {
       "name": "go_router",
-      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/go_router-14.0.2",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/go_router-14.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -429,9 +429,9 @@
     },
     {
       "name": "lints",
-      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/lints-3.0.0",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/lints-4.0.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.1"
     },
     {
       "name": "liquid_pull_to_refresh",
@@ -771,7 +771,7 @@
     },
     {
       "name": "webview_flutter_wkwebview",
-      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.13.0",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.13.1",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -806,7 +806,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-05-17T12:14:43.443933Z",
+  "generated": "2024-05-17T13:04:48.315882Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

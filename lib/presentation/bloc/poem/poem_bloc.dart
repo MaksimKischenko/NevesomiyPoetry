@@ -20,14 +20,15 @@ class PoemBloc extends Bloc<PoemEvent, PoemState> {
       on<PoemEvent>(_onEvent); 
     }
 
-   void _onEvent(
+   Future<void>? _onEvent(
     PoemEvent event,
     Emitter<PoemState> emit,
   ) {
     if (event is PoemAction) return _onAction(event, emit);
+    return null;
   }
 
-  void _onAction(
+  Future<void> _onAction(
     PoemAction event,
     Emitter<PoemState> emit,
   ) async {

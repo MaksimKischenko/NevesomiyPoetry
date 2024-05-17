@@ -1,6 +1,6 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
 
 class SignUpBody extends StatelessWidget {
@@ -21,9 +21,7 @@ class SignUpBody extends StatelessWidget {
 
 
   @override
-  Widget build(BuildContext context) {
-
-    return Padding(
+  Widget build(BuildContext context) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Form(
         key: formKey,
@@ -88,5 +86,4 @@ class SignUpBody extends StatelessWidget {
           ],
         ))
     );
-  }
 }

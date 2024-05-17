@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,8 +16,7 @@ class ActionMaterialButton extends StatelessWidget {
   });
   
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
+  Widget build(BuildContext context) => BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if(state is AuthLoading) {
           return MaterialButton(
@@ -46,5 +44,4 @@ class ActionMaterialButton extends StatelessWidget {
         }
       },
     );
-  }
 }

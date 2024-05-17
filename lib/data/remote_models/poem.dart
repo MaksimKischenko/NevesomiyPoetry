@@ -45,14 +45,13 @@ class Poem extends Equatable {
     required this.content,
     required this.topicCategory,
     required this.isFavorite,
-    this.previewContent = "",
-    this.poemTopicAssetLocation = "",
+    this.previewContent = '',
+    this.poemTopicAssetLocation = '',
   });
 
   factory Poem.fromFirestore(
     Map<String, dynamic> data,
-  ) {
-    return Poem(
+  ) => Poem(
       title: data['title'],
       book: data['book'],
       isFavorite: data['isFavorite'],
@@ -61,13 +60,10 @@ class Poem extends Equatable {
       topicCategory: PoemParser.byTopicId(data['topicCategory']).$1,
       poemTopicAssetLocation: PoemParser.byTopicId(data['topicCategory']).$2
     );
-  }
 
-    Map<String, dynamic> toFirestore() {
-    return {
-      "isFavorite": isFavorite,
+    Map<String, dynamic> toFirestore() => {
+      'isFavorite': isFavorite,
     };
-  }
   static Poem fromJson(JsonMap json) => _$PoemFromJson(json);
 
   JsonMap toJson() => _$PoemToJson(this);
@@ -87,8 +83,7 @@ class Poem extends Equatable {
     String? topicCategory,
     String? previewContent,
     String? poemTopicAssetLocation,
-  }) {
-    return Poem(
+  }) => Poem(
       title: title ?? this.title,
       book: book ?? this.book,
       content: content ?? this.content,
@@ -97,7 +92,6 @@ class Poem extends Equatable {
       previewContent: previewContent ?? this.previewContent,
       poemTopicAssetLocation: poemTopicAssetLocation ?? this.poemTopicAssetLocation,
     );
-  }
 }
 
 typedef JsonMap = Map<String, dynamic>;

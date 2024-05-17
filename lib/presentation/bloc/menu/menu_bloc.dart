@@ -16,16 +16,17 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     on<MenuEvent>(_onEvent);
   }
 
-  void _onEvent(
+  Future<void>? _onEvent(
     MenuEvent event,
     Emitter<MenuState> emit,
   ) {
     if (event is MenuTabUpdate) return _onMenuTabUpdate(event, emit);
     if (event is MenuHide) return _onMenuHide(event, emit);
     if (event is MenuShow) return _onMenuShow(event, emit);
+    return null;
   }
 
-  void _onMenuTabUpdate(
+  Future<void> _onMenuTabUpdate(
     MenuTabUpdate event,
     Emitter<MenuState> emit,
   ) async {
@@ -34,7 +35,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     ));
   }
 
-  void _onMenuHide(
+  Future<void> _onMenuHide(
     MenuHide event,
     Emitter<MenuState> emit,
   ) async {
@@ -43,7 +44,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     ));
   }
 
-  void _onMenuShow(
+  Future<void> _onMenuShow(
     MenuShow event,
     Emitter<MenuState> emit,
   ) async {

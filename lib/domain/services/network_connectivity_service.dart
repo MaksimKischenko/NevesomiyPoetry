@@ -14,15 +14,15 @@ class NetworkConnectivityService {
 
 
   Future<void> initialise() async {
-     var result = await _networkConnectivity.checkConnectivity();
-    _checkStatus(result.single);
+     final result = await _networkConnectivity.checkConnectivity();
+     await _checkStatus(result.single);
     _networkConnectivity.onConnectivityChanged.listen((result) {
       _checkStatus(result.single);
     });
   }
 
-  void _checkStatus(ConnectivityResult result) async {
-    bool isOnline = false;
+  Future<void> _checkStatus(ConnectivityResult result) async {
+    var isOnline = false;
     try {
       if(result != ConnectivityResult.none) {
         isOnline = true;

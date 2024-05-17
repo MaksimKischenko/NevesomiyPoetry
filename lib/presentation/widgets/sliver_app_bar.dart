@@ -4,8 +4,7 @@ class SliverListAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-    BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Scaffold(
+    BuildContext context, double shrinkOffset, bool overlapsContent) => Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         centerTitle: true,
@@ -15,7 +14,6 @@ class SliverListAppBar extends SliverPersistentHeaderDelegate {
         ),   
       ),
     );
-  }
 
   @override
   double get maxExtent => 100;

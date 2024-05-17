@@ -19,9 +19,12 @@ class CacheService {
 
   Future<void> _setBoolValue(String key, bool value) async =>
       await _sharedPreferences!.setBool(key, value);
+
   Future<void> _setStringValue(String key, String value) =>
       _sharedPreferences!.setString(key, value);
+
   String? _getStringValue(String key) => _sharedPreferences?.getString(key);
+  
   bool? _getBoolValue(String key) => _sharedPreferences?.getBool(key);
 
 
@@ -29,26 +32,22 @@ class CacheService {
     await _setBoolValue('theme', isLight);
   }
 
-  bool? getTheme() {
-    return _getBoolValue('theme');
-  }
+  bool? getTheme() => _getBoolValue('theme');
 
   void savePoems(List<Poem> poems) {
     _setStringValue(CollectionData.poems.docId, json.encode(poems));
   }
 
-  List<Poem> getPoems() {
-    return List<dynamic>.from(json.decode(_getStringValue(CollectionData.poems.docId) ?? '') as List)
+  List<Poem> getPoems() => List<dynamic>.from(json.decode(_getStringValue(CollectionData.poems.docId) ?? '') as List)
         .map((jsonMap) => Poem.fromJson(Map<String, dynamic>.from(jsonMap)))
         .toList();
-  }
 
   void saveTopic(String name) {
     _setStringValue('topics', name);
   }
 
   Topics getTopic() {
-    var currentTopicName = _getStringValue('topics');
+    final currentTopicName = _getStringValue('topics');
     var currentTopic = Topics.all;
     if(currentTopicName != null) {
        currentTopic = Topics.values.firstWhere((topic) => topic.name == currentTopicName);
@@ -61,9 +60,9 @@ class CacheService {
     _setStringValue(CollectionData.urlLinks.docId, json.encode(links));
   }
 
-  Map<String, dynamic> getLinks() {
-    return json.decode(_getStringValue(CollectionData.urlLinks.docId) ?? '') as Map<String, dynamic>;
-  }
+  Map<String, dynamic> getLinks() => json.decode(
+    _getStringValue(CollectionData.urlLinks.docId) ?? ''
+  ) as Map<String, dynamic>;
 
   Future<void> clearCache() async{
     await _sharedPreferences?.clear();

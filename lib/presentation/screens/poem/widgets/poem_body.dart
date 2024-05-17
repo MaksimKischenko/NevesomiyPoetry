@@ -1,14 +1,13 @@
 import 'dart:math';
 
+import 'package:confetti/confetti.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/screens/poem/widgets/widgets.dart';
-import 'package:confetti/confetti.dart';
-
-import 'package:flutter/material.dart';
 
 class PoemBody extends StatefulWidget {
   final Poem poem;
@@ -49,9 +48,10 @@ class _PoemBodyState extends State<PoemBody> {
     final fullAngle = degToRad(360);
     path.moveTo(size.width, halfWidth);
 
-    for (double step = 0; step < fullAngle; step += degreesPerStep) {
-      path.lineTo(halfWidth + externalRadius * cos(step), halfWidth + externalRadius * sin(step));
-      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+    for (var step = 0; step < fullAngle; step += degreesPerStep as int) {
+      path
+      ..lineTo(halfWidth + externalRadius * cos(step), halfWidth + externalRadius * sin(step))
+      ..lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
           halfWidth + internalRadius * sin(step + halfDegreesPerStep));
     }
     path.close();
@@ -59,8 +59,7 @@ class _PoemBodyState extends State<PoemBody> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: PoemAppBar(
         poem: widget.poem,
       ),
@@ -128,7 +127,6 @@ class _PoemBodyState extends State<PoemBody> {
         )
       ],
     );
-  }
 
   // Future<void> makeFavorite() {
 

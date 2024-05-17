@@ -15,8 +15,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthStreamStates) {
@@ -42,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen> {
         //child: Container(),
       ),
     );
-  }
 
   Future<void> _loadPoems() async {
     context.read<PoemsBloc>().add(const PoemsLoad(syncWithFireStore: true));

@@ -20,7 +20,7 @@ class PoemsUseCase {
 
   Future<Either<Failure, List<Poem>>> doRemotePoems() async {
     try {
-        var poems = await fireStoreService.getPoems();
+        final poems = await fireStoreService.getPoems();
         poemsRepository.addAll(poems);
         return Right(poems);  
     } on FirebaseException catch (e) {

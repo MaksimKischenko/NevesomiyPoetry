@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -25,13 +24,11 @@ class SpaceMapAnimation extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
+  Widget build(BuildContext context) => Stack(
       children: [
         AnimatedBuilder(
           animation: scaleAnimation,
-          builder: (context, child) {
-            return Transform.scale(
+          builder: (context, child) => Transform.scale(
               scale: scaleAnimation.value,
               child: FadeTransition(
                 opacity: opacityAnimationSpaceMap,
@@ -41,8 +38,7 @@ class SpaceMapAnimation extends StatelessWidget {
                   height: 120,
                 ),
               ),
-            );
-          },
+            ),
         ),   
         Positioned(
           bottom: 10,
@@ -64,5 +60,4 @@ class SpaceMapAnimation extends StatelessWidget {
         ),
       ],
     );
-  }
 }

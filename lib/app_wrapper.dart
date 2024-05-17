@@ -32,8 +32,7 @@ class _AppWrapperState extends State<AppWrapper> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
+  Widget build(BuildContext context) => MultiBlocProvider(
       providers: [
         BlocProvider<NetworkConnectionBloc>(
           create: (context) => NetworkConnectionBloc(),
@@ -64,6 +63,5 @@ class _AppWrapperState extends State<AppWrapper> {
         child: widget.child,
       )
     );
-  }
 
 }

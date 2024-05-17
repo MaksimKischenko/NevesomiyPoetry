@@ -13,8 +13,7 @@ class SettingsScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: const SimpleAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(24),
@@ -24,15 +23,13 @@ class SettingsScreen extends StatelessWidget {
             const AccountInfoTile(),
             Expanded(
               child: BlocBuilder<ThemeBloc, ThemeState>(
-                builder: (context, state) {
-                  return SvgPicture.asset(
+                builder: (context, state) => SvgPicture.asset(
                     state.isLight? 
                     SvgRepo.photo.location: 
                     SvgRepo.map.location,
                     width: 300,
                     height: 300,
-                  );
-                },
+                  ),
               ),
             ),
             const SettingsList(),
@@ -40,5 +37,4 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
     );
-  }
 }

@@ -48,8 +48,7 @@ mixin ModalDialogs {
     return showDialog(
       context: context, 
       barrierDismissible: false,
-      builder: ((context) {
-        return Padding(
+      builder: (context) => Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 80, 
             vertical: MediaQuery.of(context).size.height / 3.5
@@ -86,8 +85,7 @@ mixin ModalDialogs {
               ],
             ),
           ),
-        );
-      })
+        )
     );   
   }
 

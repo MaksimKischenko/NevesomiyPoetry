@@ -47,8 +47,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: const SimpleAppBar(),
       body: MultiBlocListener(
@@ -98,7 +97,6 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
           ),
         )
     ));
-  }
 
   void showErrorConnectionMessage(NetworkConnectionEnabled state) {
     if(!state.isEnabled) {
@@ -107,7 +105,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
         context: context, 
       );              
     } else {
-      context.canPop() ? context.pop() : null;
+      if(context.canPop()) context.pop();
     }
   }
 
@@ -146,18 +144,18 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
     _scaleAnimation = Tween<double>(begin: 1, end: 1.5).animate(_controller);
 
     _positionAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 0.0), 
-      end: const Offset(-5.0, -5.0), 
+      begin: const Offset(0, 0), 
+      end: const Offset(-5, -5), 
     ).animate(_controller);
 
     _opacityAnimationRocket = Tween<double>(
-      begin: 1.0, 
-      end: 0.0, 
+      begin: 1, 
+      end: 0, 
     ).animate(_controller);
 
      _opacityAnimationSpaceMap = Tween<double>(
       begin: 0.5, 
-      end: 1.0, 
+      end: 1, 
     ).animate(_controller);
        
     _emailTextInputController.addListener(() {

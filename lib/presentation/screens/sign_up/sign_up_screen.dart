@@ -45,8 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: const SimpleAppBar(),
       body: MultiBlocListener(
@@ -97,7 +96,6 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
         )
       )
     );
-  }
 
   void showNetworkConnectionMessage(NetworkConnectionEnabled state) {
     if (!state.isEnabled) {
@@ -106,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
         type: DialogType.errorNetwork,
       );
     } else {
-      context.canPop() ? context.pop() : null;
+      if(context.canPop()) context.pop();
     }
   }
 
@@ -139,23 +137,23 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
     _scaleAnimation = Tween<double>(begin: 1, end: 1.5).animate(_controller);
 
     _positionAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 0.0), 
-      end: const Offset(-5.0, -5.0), 
+      begin: const Offset(0, 0), 
+      end: const Offset(-5, -5), 
     ).animate(_controller);
 
     _opacityAnimationEmail = Tween<double>(
-      begin: 1.0, 
-      end: 0.0, 
+      begin: 1, 
+      end: 0, 
     ).animate(_controller);
 
     _rotationAnimationEmail = Tween<double>(
-      begin: 0.0, 
+      begin: 0, 
       end: 0.5, 
     ).animate(_controller);
 
      _opacityAnimationIdCard = Tween<double>(
       begin: 0.5, 
-      end: 1.0, 
+      end: 1, 
     ).animate(_controller);
        
     _emailTextInputController.addListener(() {

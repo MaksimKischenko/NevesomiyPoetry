@@ -26,14 +26,13 @@ class NetworkConnectionBloc extends Bloc<NetworkConnectionEvent, NetworkConnecti
     NetworkConnectionRun event,
     Emitter<NetworkConnectionState> emit
   ) async {
-    service.initialise();
-    await emit.forEach<bool>(
+    await Future.wait([
+     service.initialise(),
+     emit.forEach<bool>(
       service.myStream, 
-      onData: (isConnected) {
-        return NetworkConnectionEnabled(
+      onData: (isConnected) => NetworkConnectionEnabled(
           isEnabled: isConnected
-        );
-      }
-    );
+        )
+    )]);
   }
 }

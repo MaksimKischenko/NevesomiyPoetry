@@ -21,7 +21,7 @@ class FireStoreService {
       .doc(CollectionData.poemsTest.docId)
       .withConverter(
         fromFirestore: PoemTracker.fromFirestore, 
-        toFirestore: (PoemTracker poem, _) { return {};},
+        toFirestore: (PoemTracker poem, _) => {},
       )
       .get();
       final poems = ref.data()?.poems;
@@ -31,12 +31,10 @@ class FireStoreService {
   
 
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getPoemsCollection() async {
-    return await _fireBase
+  Future<DocumentSnapshot<Map<String, dynamic>>> getPoemsCollection() async => await _fireBase
     .collection(CollectionData.poems.name)
     .doc(CollectionData.poems.docId)
     .get();
-  }
 
   
   
@@ -53,7 +51,5 @@ class FireStoreService {
     }
   }
 
-  Future<void> clearData() async {
-    return await _fireBase.clearPersistence();
-  } 
+  Future<void> clearData() async => await _fireBase.clearPersistence(); 
  } 

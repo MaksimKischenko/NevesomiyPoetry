@@ -3,7 +3,7 @@ import 'package:nevesomiy/presentation/styles/styles.dart';
 
 
 mixin AppThemes {
-  static get ligthTheme => ThemeData(
+  static ThemeData get ligthTheme => ThemeData(
       colorScheme: ColorScheme.fromSeed(
         seedColor: Colors.deepPurpleAccent,
         primary: ColorStyles.mainColor,
@@ -96,7 +96,7 @@ mixin AppThemes {
       ),
     );
 
-  static get darkTheme => ThemeData.dark().copyWith(
+  static ThemeData get darkTheme => ThemeData.dark().copyWith(
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.white70,
       primary: Colors.white70,

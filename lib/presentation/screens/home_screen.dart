@@ -46,8 +46,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<MenuBloc, MenuState>(
+  Widget build(BuildContext context) => BlocConsumer<MenuBloc, MenuState>(
       listener: (context, state) {
         _isVisible = state.isVisible;
         if (_isVisible) {
@@ -100,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ),        
       )
     );
-  }
+
+    
    void _onItemTapped(int index) {
     selectedBottomNavigationIndex = index;
     context.read<MenuBloc>().add(MenuTabUpdate(tab: screensTabs.keys.toList()[index]));

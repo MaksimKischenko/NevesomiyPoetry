@@ -9,16 +9,12 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
-        return MaterialApp.router(
+  Widget build(BuildContext context) => BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) => MaterialApp.router(
           routerConfig: router, 
           theme: state.isLight? 
             AppThemes.ligthTheme: 
             AppThemes.darkTheme
-        );
-      },
+        ),
     );
-  }
 }
