@@ -12,7 +12,26 @@ class FireStoreService {
   static FireStoreService get instance => _instance;
   
   final _fireBase = FirebaseFirestore.instance;
+  Stream<QuerySnapshot> get poemsStream =>
+      FirebaseFirestore.instance
+      .collection(CollectionData.poems.name)
+      .withConverter(
+        fromFirestore: PoemTracker.fromFirestore, 
+        toFirestore: (PoemTracker poem, _) => {}
+      )
+      .snapshots();
 
+
+  //TODO
+  Future<List<Poem>> listenPoems() async{
+    final completer = Completer<List<Poem>>();
+    poemsStream.listen((event) {
+      final poemTracker = event.docs.first.data() as PoemTracker;
+      final poems = poemTracker.poems;
+      completer.complete(poems);
+    });
+    return completer.future;
+  }
 
   Future<List<Poem>> getPoems() async {
       final ref = await _fireBase
@@ -27,14 +46,6 @@ class FireStoreService {
       return Future.value(poems);
   } 
   
-  
-
-
-  Future<DocumentSnapshot<Map<String, dynamic>>> getPoemsCollection() async => await _fireBase
-    .collection(CollectionData.poems.name)
-    .doc(CollectionData.poems.docId)
-    .get();
-
 
   Future<Either<Failure, DocumentSnapshot<Map<String, dynamic>>>?> getUrlLinks() async {
     try {
@@ -47,6 +58,5 @@ class FireStoreService {
        
     }
   }
-
   Future<void> clearData() async => await _fireBase.clearPersistence(); 
  } 

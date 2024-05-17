@@ -23,3 +23,4 @@ final class PoemsSortByType extends PoemsEvent {
   }); 
 }
 
+final class PoemsOnListen extends PoemsEvent {}

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/domain.dart';
@@ -29,6 +30,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
   ) {
     if (event is PoemsLoad) return _onLoad(event, emit);
     if (event is PoemsSortByType) return _onSort(event, emit);
+    if (event is PoemsOnListen) return _onListen(event, emit);
     return null;
   }
 
@@ -62,5 +64,17 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
       value: event.value, 
       isSortedState: true
     ));
+  }
+
+  Future<void> _onListen(PoemsOnListen event, Emitter<PoemsState> emit) async {
+    await emit.forEach<QuerySnapshot<Object?>>(
+      poemsUseCase.poemsStream,
+      onData: (data) {
+        final poemTracker =  data.docs.first.data() as PoemTracker;
+        final poems = poemTracker.poems;
+        log('Stream: ${poems}');
+        return PoemsLoading();
+      }
+    );
   }
 }

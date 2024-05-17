@@ -18,12 +18,29 @@ class PoemsUseCase {
   poemsRepository = PoemsRepository.instance,
   fireStoreService = FireStoreService.instance;
 
+  Stream<QuerySnapshot> get poemsStream => fireStoreService.poemsStream;
+
   Future<Either<Failure, List<Poem>>> doRemotePoems() async {
     try {
         final poems = await fireStoreService.getPoems();
         await cacheService.savePoems(poems);
         poemsRepository.addAll(poems);
         return Right(poems);  
+    } on FirebaseException catch (e) {
+        return Left(FireBaseFailure(error: e));
+    }
+  }
+
+
+  Future<Either<Failure, List<Poem>>> listenPoems() async{
+    try {
+      poemsStream.listen((event) async{
+        final poemTracker = event.docs.first.data() as PoemTracker;
+        final poems = poemTracker.poems;
+        await cacheService.savePoems(poems);
+        poemsRepository.addAll(poems);
+      });
+      return Right(poems);  
     } on FirebaseException catch (e) {
         return Left(FireBaseFailure(error: e));
     }
