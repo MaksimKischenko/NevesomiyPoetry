@@ -33,30 +33,28 @@ class RemoteResourcesBloc extends Bloc<RemoteResourcesEvent, RemoteResourcesStat
   ) async {
 
     emit(RemoteResourcesLoading());
-   
-    await cacheService.initialise();
     
-    if(event.syncWithFireStore) {
-      final result = await fireStoreservice.getUrlLinks();
-      result?.fold(
-        (falure) => emit(RemoteResourcesError(error: falure.message)), 
-        (right) {
-          mapLinks = right.data()?.map((key, value) {
-            value as DocumentReference<Map<String, dynamic>>;
-            return MapEntry(
-              key, 
-              value.path.replaceAll('https:/', 'https://'),
-            );
-          });
-          cacheService.saveLinks(mapLinks); 
-        }
-      );
-    } else {
-      mapLinks = cacheService.getLinks();
-    }
-    emit(RemoteResourcesLoaded(
-      mapResources: mapLinks,
-    ));
+    // if(event.syncWithFireStore) {
+    //   final result = await fireStoreservice.getUrlLinks();
+    //   result?.fold(
+    //     (falure) => emit(RemoteResourcesError(error: falure.message)), 
+    //     (right) {
+    //       mapLinks = right.data()?.map((key, value) {
+    //         value as DocumentReference<Map<String, dynamic>>;
+    //         return MapEntry(
+    //           key, 
+    //           value.path.replaceAll('https:/', 'https://'),
+    //         );
+    //       });
+    //       cacheService.saveLinks(mapLinks); 
+    //     }
+    //   );
+    // } else {
+    //   mapLinks = cacheService.getLinks();
+    // }
+    // emit(RemoteResourcesLoaded(
+    //   mapResources: mapLinks,
+    // ));
   }
 }
 

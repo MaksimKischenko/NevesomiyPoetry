@@ -17,7 +17,6 @@ class FireStoreService {
   Future<List<Poem>> getPoems() async {
       final ref = await _fireBase
       .collection(CollectionData.poems.name)
-      //where('age', isGreaterThan: 0)
       .doc(CollectionData.poemsTest.docId)
       .withConverter(
         fromFirestore: PoemTracker.fromFirestore, 
@@ -36,8 +35,6 @@ class FireStoreService {
     .doc(CollectionData.poems.docId)
     .get();
 
-  
-  
 
   Future<Either<Failure, DocumentSnapshot<Map<String, dynamic>>>?> getUrlLinks() async {
     try {

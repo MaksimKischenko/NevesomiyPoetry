@@ -42,13 +42,13 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
           poems = right;
         });
     } else {
-     log('LOCAL');
+      log('LOCAL');
       poems = await poemsUseCase.doLocalPoems();
     }
-    
+    final topic = await cacheService.getTopicName();
     emit(PoemsLoaded(
       poems: poems, 
-      value: cacheService.getTopic(), 
+      value: topic, 
       isSortedState: false
     ));
   }
@@ -56,7 +56,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
   Future<void> _onSort(PoemsSortByType event, Emitter<PoemsState> emit) async {
     emit(PoemsLoading());
     poems = poemsUseCase.sortPoemsByTopic(event.value);
-    cacheService.saveTopic(event.value.name);
+    await cacheService.saveTopicName(event.value.name);
     emit(PoemsLoaded(
       poems: poems, 
       value: event.value, 

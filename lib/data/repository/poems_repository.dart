@@ -6,10 +6,9 @@ class PoemsRepository {
   static PoemsRepository get instance => _instance;
   
   var _poems = <Poem>[];
+  List<Poem> get poems => _poems;
 
-
-  List<Poem> getAll() => _poems;
-
+  // ignore: use_setters_to_change_properties
   void addAll(List<Poem> poems) {
     _poems = poems;
   }
