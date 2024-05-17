@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
@@ -7,7 +6,6 @@ import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/data/failure.dart';
 import 'package:nevesomiy/domain/domain.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
-import 'package:nevesomiy/utils/utils.dart';
 
 class PoemsUseCase {
   final FireStoreService fireStoreService;
@@ -20,27 +18,13 @@ class PoemsUseCase {
 
   Stream<QuerySnapshot> get poemsStream => fireStoreService.poemsStream;
 
+
   Future<Either<Failure, List<Poem>>> doRemotePoems() async {
     try {
         final poems = await fireStoreService.getPoems();
         await cacheService.savePoems(poems);
         poemsRepository.addAll(poems);
         return Right(poems);  
-    } on FirebaseException catch (e) {
-        return Left(FireBaseFailure(error: e));
-    }
-  }
-
-
-  Future<Either<Failure, List<Poem>>> listenPoems() async{
-    try {
-      poemsStream.listen((event) async{
-        final poemTracker = event.docs.first.data() as PoemTracker;
-        final poems = poemTracker.poems;
-        await cacheService.savePoems(poems);
-        poemsRepository.addAll(poems);
-      });
-      return Right(poems);  
     } on FirebaseException catch (e) {
         return Left(FireBaseFailure(error: e));
     }
@@ -71,5 +55,11 @@ class PoemsUseCase {
     }).toList();
      await cacheService.savePoems(poems);
     return poems;
+  }
+
+  List<Poem> parseByTracker(QuerySnapshot<Object?> data) {
+    final poemTracker = data.docs.first.data() as PoemTracker;
+    final poems = poemTracker.poems;
+    return poems;  
   }
 }

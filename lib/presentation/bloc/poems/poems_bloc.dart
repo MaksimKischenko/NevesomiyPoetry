@@ -69,12 +69,16 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
   Future<void> _onListen(PoemsOnListen event, Emitter<PoemsState> emit) async {
     await emit.forEach<QuerySnapshot<Object?>>(
       poemsUseCase.poemsStream,
-      onData: (data) {
-        final poemTracker = data.docs.first.data() as PoemTracker;
-        final poems = poemTracker.poems;
+      onData: (data) { 
+        final poems = poemsUseCase.parseByTracker(data);
         log('Stream: ${poems}');
-        return PoemsLoading();
-      }
+        return PoemsLoaded(
+          poems: poems,
+          value: Topics.all,
+          isSortedState: true
+        );
+      },
+      onError: (error, stackTrace) => PoemsError(error: error),
     );
   }
 }

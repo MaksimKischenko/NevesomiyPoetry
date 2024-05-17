@@ -21,18 +21,6 @@ class FireStoreService {
       )
       .snapshots();
 
-
-  //TODO
-  Future<List<Poem>> listenPoems() async{
-    final completer = Completer<List<Poem>>();
-    poemsStream.listen((event) {
-      final poemTracker = event.docs.first.data() as PoemTracker;
-      final poems = poemTracker.poems;
-      completer.complete(poems);
-    });
-    return completer.future;
-  }
-
   Future<List<Poem>> getPoems() async {
       final ref = await _fireBase
       .collection(CollectionData.poems.name)
