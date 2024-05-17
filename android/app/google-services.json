@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "847524385890",
+    "project_id": "nevesomiy-b6c49",
+    "storage_bucket": "nevesomiy-b6c49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847524385890:android:a6e43f578a6a3af9eead3b",
+        "android_client_info": {
+          "package_name": "com.prdoduction.nevesomiy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHluYZBreuTgmX7q4RJQ_oZFemyKFw7w0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
