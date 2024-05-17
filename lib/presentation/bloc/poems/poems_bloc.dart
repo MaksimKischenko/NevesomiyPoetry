@@ -70,7 +70,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     await emit.forEach<QuerySnapshot<Object?>>(
       poemsUseCase.poemsStream,
       onData: (data) {
-        final poemTracker =  data.docs.first.data() as PoemTracker;
+        final poemTracker = data.docs.first.data() as PoemTracker;
         final poems = poemTracker.poems;
         log('Stream: ${poems}');
         return PoemsLoading();
