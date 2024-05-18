@@ -16,74 +16,56 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
 
   PoemsBloc():
       cacheService = CacheService.instance,
-      poemsUseCase = PoemsUseCase(),
+      poemsUseCase = PoemsUseCase.instance,
       super(PoemsLoading()) {
     on<PoemsEvent>(_onEvent);
   }
 
-  late List<Poem> tempPoems;
-  late PoemsState tempState;
 
   Future<void>? _onEvent(
     PoemsEvent event,
     Emitter<PoemsState> emit,
   ) {
-    if (event is PoemsLoad) return _onLoad(event, emit);
+    if (event is PoemsLoadAndListen) return _onLoadRemoteAndListen(event, emit);
+    if (event is PoemsLoadCache) return _onLoadCache(event, emit);
     if (event is PoemsSortByType) return _onSort(event, emit);
-    if (event is PoemsOnListen) return _onListen(event, emit);
     return null;
   }
 
-  Future<void> _onLoad(PoemsLoad event, Emitter<PoemsState> emit) async {
-    if (event.syncWithFireStore) {
-      log('REMOTE');
-      final result = await poemsUseCase.doRemotePoems();
-      result.fold(
-        (falure) => emit(PoemsError(error: falure.message)),
-        (right) {
-          tempPoems = right;
-        });
-    } else {
-      log('LOCAL');
-      tempPoems = await poemsUseCase.doLocalPoems();
-    }
+  Future<void> _onLoadRemoteAndListen(PoemsLoadAndListen event, Emitter<PoemsState> emit) async {
+    await emit.forEach<QuerySnapshot<Object?>>(
+      poemsUseCase.poemsStream,
+      onData: (data) { 
+        final poems = poemsUseCase.doRemotePoemsAndListen(data);
+        log('Remote');
+        return PoemsLoaded(
+          poems: poems,
+          value: Topics.all,
+          isSortedState: false
+        );
+      },
+      onError: (error, stackTrace) => PoemsError(error: error),
+    );
+  }
+
+  Future<void> _onLoadCache(PoemsLoadCache event, Emitter<PoemsState> emit) async {
     final topic = await cacheService.getTopicName();
-    tempState = PoemsLoaded(
-      poems: tempPoems, 
+    await poemsUseCase.doLocalPoems();
+    log('Local');
+    emit(PoemsLoaded(
+      poems: poemsUseCase.poemsRepository.poems, 
       value: topic, 
       isSortedState: false
-    );
-    emit(tempState);
+    ));
   }
 
   Future<void> _onSort(PoemsSortByType event, Emitter<PoemsState> emit) async {
     emit(PoemsLoading());
-    tempPoems = poemsUseCase.sortPoemsByTopic(event.value);
     await cacheService.saveTopicName(event.value.name);
     emit(PoemsLoaded(
-      poems: tempPoems, 
+      poems: poemsUseCase.sortPoemsByTopic(event.value), 
       value: event.value, 
       isSortedState: true
     ));
-  }
-
-  Future<void> _onListen(PoemsOnListen event, Emitter<PoemsState> emit) async {
-    await emit.forEach<QuerySnapshot<Object?>>(
-      poemsUseCase.poemsStream,
-      onData: (data) { 
-        final poems = poemsUseCase.parseByTracker(data);
-        log('Stream: ${poems}');
-        if(poems.length != tempPoems.length) {
-          return PoemsLoaded(
-            poems: poems,
-            value: Topics.all,
-            isSortedState: true
-          );
-        } else {
-          return tempState;
-        }
-      },
-      onError: (error, stackTrace) => PoemsError(error: error),
-    );
   }
 }

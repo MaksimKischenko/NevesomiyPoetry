@@ -70,9 +70,7 @@ class _PoemsScreenState extends State<PoemsScreen> {
           } else if (state is PoemsLoaded) {
             context.read<MenuBloc>().add(MenuShow());
             return LiquidPullToRefresh(
-              onRefresh: () async {
-                await _loadPoems(syncWithFireStore: true);
-              },
+              onRefresh: () async => _loadPoemsAndListen(),
               // showChildOpacityTransition: false,
               child: CustomScrollView(
                 controller: _hideBottomNavController,
@@ -110,8 +108,8 @@ class _PoemsScreenState extends State<PoemsScreen> {
     }
   }
 
-  Future<void> _loadPoems({required bool syncWithFireStore}) async {
-    context.read<PoemsBloc>().add(PoemsLoad(syncWithFireStore: syncWithFireStore));
+  Future<void> _loadPoemsAndListen() async {
+    context.read<PoemsBloc>().add(PoemsLoadAndListen());
   }
 
   Future<void> sortByType(Topics value) async {

@@ -16,10 +16,12 @@ class PoemTracker {
 
   factory PoemTracker.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
+    // ignore: avoid_unused_constructor_parameters
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
     final poemEntries = ((data?['all'] ?? []) as List<dynamic>)
+    // ignore: unnecessary_lambdas
     .map((entry) => Poem.fromFirestore(entry)).toList();
     return PoemTracker(
       poems: poemEntries,
@@ -54,7 +56,7 @@ class Poem extends Equatable {
   ) => Poem(
       title: data['title'],
       book: data['book'],
-      isFavorite: data['isFavorite'],
+      isFavorite: false,
       content: PoemParser.byBreakContent(data['content']),
       previewContent: PoemParser.byPreviewContent(data['content']),
       topicCategory: PoemParser.byTopicId(data['topicCategory']).$1,

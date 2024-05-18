@@ -12,7 +12,7 @@ class PoemBloc extends Bloc<PoemEvent, PoemState> {
   PoemBloc({
     required this.poem
   }) : 
-  poemsUseCase = PoemsUseCase(),
+  poemsUseCase = PoemsUseCase.instance,
     super(
       PoemState(
         poem: poem 

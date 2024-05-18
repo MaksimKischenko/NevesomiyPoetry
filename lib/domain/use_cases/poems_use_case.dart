@@ -11,10 +11,15 @@ class PoemsUseCase {
   final FireStoreService fireStoreService;
   final PoemsRepository poemsRepository;
   final CacheService cacheService;
-  PoemsUseCase(): 
+  
+  PoemsUseCase._(): 
   cacheService = CacheService.instance,
   poemsRepository = PoemsRepository.instance,
   fireStoreService = FireStoreService.instance;
+
+  static final _instance = PoemsUseCase._();
+  static PoemsUseCase get instance => _instance;
+
 
   Stream<QuerySnapshot> get poemsStream => fireStoreService.poemsStream;
 
@@ -30,7 +35,18 @@ class PoemsUseCase {
     }
   }
 
-  Future<List<Poem>> doLocalPoems() async => cacheService.getPoems();
+  List<Poem> doRemotePoemsAndListen(QuerySnapshot<Object?> data) {
+    final poemTracker = data.docs.first.data() as PoemTracker;
+    final poems = poemTracker.poems.reversed.toList();
+    unawaited(cacheService.savePoems(poems));
+    poemsRepository.addAll(poems);
+    return poems;  
+  }
+
+  Future<List<Poem>> doLocalPoems() async {
+    poemsRepository.addAll(await cacheService.getPoems());
+    return cacheService.getPoems();
+  }
 
   List<Poem> sortPoemsByTopic(Topics value) {
     final poems = poemsRepository.poems;
@@ -57,9 +73,5 @@ class PoemsUseCase {
     return poems;
   }
 
-  List<Poem> parseByTracker(QuerySnapshot<Object?> data) {
-    final poemTracker = data.docs.first.data() as PoemTracker;
-    final poems = poemTracker.poems.reversed.toList();
-    return poems;  
-  }
+
 }

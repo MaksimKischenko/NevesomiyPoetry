@@ -105,7 +105,7 @@ class _PoemBodyState extends State<PoemBody> {
           onPressed: () {
             _controllerCenter.play();
             context.read<PoemBloc>().add(const PoemAction(isFavorite: true));
-            context.read<PoemsBloc>().add(const PoemsLoad(syncWithFireStore: false));
+            context.read<PoemsBloc>().add(PoemsLoadCache());
           },
           icon: SvgPicture.asset(
             SvgRepo.like.location,
@@ -117,7 +117,7 @@ class _PoemBodyState extends State<PoemBody> {
           label: const Text('Не нравится'),
           onPressed: () {
             context.read<PoemBloc>().add(const PoemAction(isFavorite: false));
-            context.read<PoemsBloc>().add(const PoemsLoad(syncWithFireStore: false));
+            context.read<PoemsBloc>().add(PoemsLoadCache());
           },
           icon: SvgPicture.asset(
             SvgRepo.unLike.location,

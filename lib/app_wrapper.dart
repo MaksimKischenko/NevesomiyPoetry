@@ -56,12 +56,10 @@ class _AppWrapperState extends State<AppWrapper> {
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if(state is AuthSignedIn) {
-            context.read<PoemsBloc>().add(const PoemsLoad(syncWithFireStore: true));
-            context.read<RemoteResourcesBloc>().add(const RemoteResourcesLoad(syncWithFireStore: true));
+            context.read<PoemsBloc>().add(PoemsLoadAndListen());
           } 
         },
         child: widget.child,
       )
     );
-
 }

@@ -38,13 +38,10 @@ class _SplashScreenState extends State<SplashScreen> {
           }
           return const SizedBox.shrink();
         },
-        //child: Container(),
       ),
     );
 
   Future<void> _loadPoems() async {
-    context.read<PoemsBloc>().add(const PoemsLoad(syncWithFireStore: true));
-    context.read<PoemsBloc>().add(PoemsOnListen());
-    // context.read<RemoteResourcesBloc>().add(const RemoteResourcesLoad(syncWithFireStore: true));
+    context.read<PoemsBloc>().add(PoemsLoadCache());
   }
 }

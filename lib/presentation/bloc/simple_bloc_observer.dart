@@ -6,7 +6,7 @@ class SimpleBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    log(event.toString());
+    log('Event: ${event.toString()}');
   }
 
   @override
