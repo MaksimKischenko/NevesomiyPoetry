@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
+import 'package:nevesomiy/presentation/bloc/poems/poems_bloc.dart';
 
 import 'package:nevesomiy/presentation/styles/styles.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
@@ -42,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
   Future<void> _loadPoems() async {
-    context.read<PoemsBloc>().add(PoemsLoadCache());
+    context.read<PoemsBloc>().add(PoemsLoadAndListen());
+    // context.read<PoemsBloc>().add(PoemsLoadCache());
   }
 }

@@ -1,13 +1,14 @@
 import 'dart:convert';
-
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
 
 class CacheService {
+
   CacheService._();
   static final _instance = CacheService._();
   static CacheService get instance => _instance;
+  
 
   
   Future<void> saveTheme({required bool isLightTheme}) async{
@@ -16,12 +17,14 @@ class CacheService {
   Future<bool> getTheme() async =>  await PreferencesHelper.read(PrefsKeys.isLightTheme) ?? true;
 
 
-  Future<void> savePoems(List<Poem> poems) async {
-    await PreferencesHelper.write(PrefsKeys.poemsCache,json.encode(poems));
+  Future<bool> containsCachePoems() async => await PreferencesHelper.contains(PrefsKeys.poemsCache);
+
+  Future<void> savePoems(List<Poem> poems, TypeStoreKey<String> key) async {
+    await PreferencesHelper.write(key, json.encode(poems));
   }
 
-  Future<List<Poem>> getPoems() async=> List<dynamic>.from(json.decode(
-    await PreferencesHelper.read(PrefsKeys.poemsCache) ?? '') as List)
+  Future<List<Poem>> getPoems(TypeStoreKey<String> key) async=> List<dynamic>.from(json.decode(
+    await PreferencesHelper.read(key) ?? '') as List)
         .map((jsonMap) => Poem.fromJson(Map<String, dynamic>.from(jsonMap)))
         .toList();
 

@@ -1,9 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:either_dart/either.dart';
 import 'package:nevesomiy/data/data.dart';
-import 'package:nevesomiy/data/failure.dart';
 import 'package:nevesomiy/domain/domain.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
@@ -23,29 +22,17 @@ class PoemsUseCase {
 
   Stream<QuerySnapshot> get poemsStream => fireStoreService.poemsStream;
 
-
-  Future<Either<Failure, List<Poem>>> doRemotePoems() async {
-    try {
-        final poems = await fireStoreService.getPoems();
-        await cacheService.savePoems(poems);
-        poemsRepository.addAll(poems);
-        return Right(poems);  
-    } on FirebaseException catch (e) {
-        return Left(FireBaseFailure(error: e));
-    }
-  }
-
   List<Poem> doRemotePoemsAndListen(QuerySnapshot<Object?> data) {
     final poemTracker = data.docs.first.data() as PoemTracker;
     final poems = poemTracker.poems.reversed.toList();
-    unawaited(cacheService.savePoems(poems));
+    unawaited(cacheService.savePoems(poems, PrefsKeys.poemsCache));
     poemsRepository.addAll(poems);
     return poems;  
   }
 
   Future<List<Poem>> doLocalPoems() async {
-    poemsRepository.addAll(await cacheService.getPoems());
-    return cacheService.getPoems();
+    poemsRepository.addAll(await cacheService.getPoems(PrefsKeys.poemsCache));
+    return cacheService.getPoems(PrefsKeys.poemsCache);
   }
 
   List<Poem> sortPoemsByTopic(Topics value) {
@@ -60,8 +47,19 @@ class PoemsUseCase {
     return poems;   
   }
 
-  Future<List<Poem>> poemMakeFavorite(Poem poem,  {required bool? isFavorite}) async{
-    var poems =  await cacheService.getPoems();
+  Future<List<Poem>> poemMakeFavorite(Poem poem, {required bool? isFavorite}) async{
+
+      final contentFormatted = poem.content.trim();
+      log('FORMATTED: $contentFormatted');
+      final peopleLiked = poemsRepository.poems.map((e) => e.peopleLiked).toList().first;
+      if(!(peopleLiked?.contains(DataManager.instance.userEmail!) ?? false) ) {
+      peopleLiked?.insert(0, DataManager.instance.userEmail!);
+      final newPoem = poem.copyWith(peopleLiked: peopleLiked, content: contentFormatted);
+      await fireStoreService.setLikeToPoem(newPoem);
+    }
+
+    var poems = poemsRepository.poems;
+
     poems = poems.map<Poem>((e) {
       if(e.title == poem.title) {
        return e.copyWith(isFavorite: isFavorite);
@@ -69,9 +67,20 @@ class PoemsUseCase {
         return e;
       }
     }).toList();
-     await cacheService.savePoems(poems);
+    await cacheService.savePoems(poems, PrefsKeys.poemsCache);
     return poems;
   }
 
-
+  Future<void> saveFavoritePoems() async{
+    log("START");
+    final containsCache = await cacheService.containsCachePoems();
+    if(containsCache) {
+      final cachedPoems = await cacheService.getPoems(PrefsKeys.poemsCache);
+      final favoritePoems = cachedPoems.where((element) => element.isFavorite).toList();
+      if(favoritePoems.isNotEmpty) {
+        await cacheService.savePoems(favoritePoems, PrefsKeys.favoritePoemsCache);
+        log("SAVED");
+      }
+    }
+  }
 }

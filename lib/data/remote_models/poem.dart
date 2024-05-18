@@ -1,8 +1,10 @@
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:nevesomiy/utils/utils.dart';
 
 part 'poem.g.dart';
@@ -27,6 +29,10 @@ class PoemTracker {
       poems: poemEntries,
     );
   }
+
+  Map<String, dynamic> toFirestore() => {
+      'all': poems.map((poem) => poem.toFirestore()).toList(),
+    };
 }
 
 @immutable
@@ -39,6 +45,7 @@ class Poem extends Equatable {
   final String topicCategory;
   final String previewContent;
   final String poemTopicAssetLocation;
+  final List<String>? peopleLiked;
 
 
   const Poem({
@@ -47,6 +54,7 @@ class Poem extends Equatable {
     required this.content,
     required this.topicCategory,
     required this.isFavorite,
+    required this.peopleLiked,
     this.previewContent = '',
     this.poemTopicAssetLocation = '',
   });
@@ -59,13 +67,19 @@ class Poem extends Equatable {
       isFavorite: false,
       content: PoemParser.byBreakContent(data['content']),
       previewContent: PoemParser.byPreviewContent(data['content']),
-      topicCategory: PoemParser.byTopicId(data['topicCategory']).$1,
-      poemTopicAssetLocation: PoemParser.byTopicId(data['topicCategory']).$2
+      topicCategory: data['topicCategory'],
+      poemTopicAssetLocation: PoemParser.byTopicId(data['topicCategory']).$2,
+      peopleLiked: data['peopleLiked'] is Iterable ? List.from(data['peopleLiked']) : null,
     );
 
     Map<String, dynamic> toFirestore() => {
-      'isFavorite': isFavorite,
+      'book': book,
+      'content': content,
+      'title': title,
+      'topicCategory': topicCategory,
+      if (peopleLiked != null) 'peopleLiked': peopleLiked,
     };
+
   static Poem fromJson(JsonMap json) => _$PoemFromJson(json);
 
   JsonMap toJson() => _$PoemToJson(this);
@@ -85,6 +99,7 @@ class Poem extends Equatable {
     String? topicCategory,
     String? previewContent,
     String? poemTopicAssetLocation,
+    List<String>? peopleLiked,
   }) => Poem(
       title: title ?? this.title,
       book: book ?? this.book,
@@ -93,6 +108,7 @@ class Poem extends Equatable {
       topicCategory: topicCategory ?? this.topicCategory,
       previewContent: previewContent ?? this.previewContent,
       poemTopicAssetLocation: poemTopicAssetLocation ?? this.poemTopicAssetLocation,
+      peopleLiked: peopleLiked ?? this.peopleLiked,
     );
 }
 

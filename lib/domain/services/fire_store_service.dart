@@ -34,6 +34,17 @@ class FireStoreService {
     final poems = ref.data()?.poems.reversed.toList();
     return Future.value(poems);
   } 
+
+
+  Future<void> setLikeToPoem(Poem poem) async{
+    await _fireBase
+      .collection(CollectionData.poems.name)
+      .doc(CollectionData.poemsTest.docId)
+      .withConverter(
+        fromFirestore: PoemTracker.fromFirestore, 
+        toFirestore: (PoemTracker poemTracker, _) => poemTracker.toFirestore(),
+      ).update(PoemTracker(poems: [poem]));
+  }
   
   Future<void> clearData() async => await _fireBase.clearPersistence(); 
 

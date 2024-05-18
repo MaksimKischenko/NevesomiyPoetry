@@ -2,18 +2,19 @@
 
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
+
 mixin PoemParser {
-  static (String, String) byTopicId(int topicId) {
+  static (String, String) byTopicId(String topicId) {
     switch (topicId) {
-      case 0:
+      case 'О любви':
         return Topics.love.nameAndLocation;
-      case 1:
+      case 'О городах':
         return Topics.urban.nameAndLocation;
-      case 2:
+      case 'Философия':
         return Topics.philosophy.nameAndLocation;
-      case 3:
+      case 'Гражданская лирика':
         return Topics.civil.nameAndLocation;
-      case 4:
+      case 'О природе':
         return Topics.landscape.nameAndLocation;                     
      default:
         return ('', '');   

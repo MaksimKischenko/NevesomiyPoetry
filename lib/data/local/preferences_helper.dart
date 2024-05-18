@@ -41,6 +41,7 @@ mixin PreferencesHelper {
 mixin PrefsKeys {
   static final isLightTheme = TypeStoreKey<bool>('isLightTheme', defaultValue: true);
   static final poemsCache = TypeStoreKey<String>('poemsCache', defaultValue: null);
+  static final favoritePoemsCache = TypeStoreKey<String>('favoritePoemsCache', defaultValue: null);
   static final topicName = TypeStoreKey<String>('topicName', defaultValue: null);
 }
 

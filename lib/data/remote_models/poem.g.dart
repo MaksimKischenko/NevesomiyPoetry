@@ -12,8 +12,11 @@ Poem _$PoemFromJson(Map<String, dynamic> json) => Poem(
       content: json['content'] as String,
       topicCategory: json['topicCategory'] as String,
       isFavorite: json['isFavorite'] as bool,
-      previewContent: json['previewContent'] as String? ?? "",
-      poemTopicAssetLocation: json['poemTopicAssetLocation'] as String? ?? "",
+      peopleLiked: (json['peopleLiked'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      previewContent: json['previewContent'] as String? ?? '',
+      poemTopicAssetLocation: json['poemTopicAssetLocation'] as String? ?? '',
     );
 
 Map<String, dynamic> _$PoemToJson(Poem instance) => <String, dynamic>{
@@ -24,4 +27,5 @@ Map<String, dynamic> _$PoemToJson(Poem instance) => <String, dynamic>{
       'topicCategory': instance.topicCategory,
       'previewContent': instance.previewContent,
       'poemTopicAssetLocation': instance.poemTopicAssetLocation,
+      'peopleLiked': instance.peopleLiked,
     };

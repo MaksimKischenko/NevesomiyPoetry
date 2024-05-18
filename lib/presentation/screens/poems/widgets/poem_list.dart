@@ -22,25 +22,37 @@ class PoemList extends StatelessWidget {
           child: Ink(
             child: InkWell(
               onTap: () => navigateToPoem(context, poems[index]),
-              child: ListTile(
-                leading: SvgPicture.asset(
-                  poems[index].poemTopicAssetLocation,
-                  width: 120,
-                  height: 120,
-                ),  
-                title: Text(
-                  poems[index].title, 
-                  style: Theme.of(context).textTheme.titleMedium
-                ),
-                subtitle: Text(
-                  poems[index].previewContent,
-                  style: Theme.of(context).textTheme.bodySmall
-                ),
-                trailing: (poems[index].isFavorite)? SvgPicture.asset(
-                  SvgRepo.medal.location,
-                  width: 18,
-                  height: 18,
-                ) : null,                
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      poems[index].poemTopicAssetLocation,
+                      width: 120,
+                      height: 120,
+                    ),  
+                    title: Text(
+                      poems[index].title, 
+                      style: Theme.of(context).textTheme.titleMedium
+                    ),
+                    subtitle: Text(
+                      poems[index].previewContent,
+                      style: Theme.of(context).textTheme.bodyMedium
+                    ),
+                    trailing: (poems[index].isFavorite)? SvgPicture.asset(
+                      SvgRepo.medal.location,
+                      width: 18,
+                      height: 18,
+                    ) : null,                
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Text(
+                      'Нравится: ${poems[index].peopleLiked?.length?? 0}', 
+                      style: Theme.of(context).textTheme.bodySmall
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -49,9 +61,7 @@ class PoemList extends StatelessWidget {
     );
 
   Future<void> navigateToPoem(BuildContext context, Poem poem) async {
-     await context.pushNamed<Poem>('poem', 
-      extra: poem
-    );
+      await context.pushNamed<Poem>('poem', extra: poem);
   }
 }
 
