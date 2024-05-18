@@ -59,7 +59,7 @@ class PoemsUseCase {
 
   List<Poem> parseByTracker(QuerySnapshot<Object?> data) {
     final poemTracker = data.docs.first.data() as PoemTracker;
-    final poems = poemTracker.poems;
+    final poems = poemTracker.poems.reversed.toList();
     return poems;  
   }
 }

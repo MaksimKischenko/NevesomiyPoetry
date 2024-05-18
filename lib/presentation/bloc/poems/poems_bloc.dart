@@ -7,7 +7,6 @@ import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/domain.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
-
 part 'poems_event.dart';
 part 'poems_state.dart';
 
@@ -22,7 +21,8 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     on<PoemsEvent>(_onEvent);
   }
 
-  List<Poem> poems = [];
+  late List<Poem> tempPoems;
+  late PoemsState tempState;
 
   Future<void>? _onEvent(
     PoemsEvent event,
@@ -41,26 +41,27 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
       result.fold(
         (falure) => emit(PoemsError(error: falure.message)),
         (right) {
-          poems = right;
+          tempPoems = right;
         });
     } else {
       log('LOCAL');
-      poems = await poemsUseCase.doLocalPoems();
+      tempPoems = await poemsUseCase.doLocalPoems();
     }
     final topic = await cacheService.getTopicName();
-    emit(PoemsLoaded(
-      poems: poems, 
+    tempState = PoemsLoaded(
+      poems: tempPoems, 
       value: topic, 
       isSortedState: false
-    ));
+    );
+    emit(tempState);
   }
 
   Future<void> _onSort(PoemsSortByType event, Emitter<PoemsState> emit) async {
     emit(PoemsLoading());
-    poems = poemsUseCase.sortPoemsByTopic(event.value);
+    tempPoems = poemsUseCase.sortPoemsByTopic(event.value);
     await cacheService.saveTopicName(event.value.name);
     emit(PoemsLoaded(
-      poems: poems, 
+      poems: tempPoems, 
       value: event.value, 
       isSortedState: true
     ));
@@ -72,11 +73,15 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
       onData: (data) { 
         final poems = poemsUseCase.parseByTracker(data);
         log('Stream: ${poems}');
-        return PoemsLoaded(
-          poems: poems,
-          value: Topics.all,
-          isSortedState: true
-        );
+        if(poems.length != tempPoems.length) {
+          return PoemsLoaded(
+            poems: poems,
+            value: Topics.all,
+            isSortedState: true
+          );
+        } else {
+          return tempState;
+        }
       },
       onError: (error, stackTrace) => PoemsError(error: error),
     );
