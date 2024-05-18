@@ -36,14 +36,14 @@ class FireStoreService {
   } 
 
 
-  Future<void> setLikeToPoem(Poem poem) async{
+  Future<void> setLikeToPoem(List<Poem> poems) async{
     await _fireBase
       .collection(CollectionData.poems.name)
       .doc(CollectionData.poemsTest.docId)
       .withConverter(
         fromFirestore: PoemTracker.fromFirestore, 
         toFirestore: (PoemTracker poemTracker, _) => poemTracker.toFirestore(),
-      ).update(PoemTracker(poems: [poem]));
+      ).update(PoemTracker(poems: poems).toFirestore());
   }
   
   Future<void> clearData() async => await _fireBase.clearPersistence(); 

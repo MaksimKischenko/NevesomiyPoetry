@@ -1,7 +1,8 @@
 enum SvgRepo {
   bookClosed('assets/icons/book-closed.svg'), 
   bookOpen('assets/icons/book-open.svg'),  
-  email('assets/icons/envelope.svg'), 
+  email('assets/icons/envelope.svg'),
+  heart('assets/icons/heart.svg'),  
   map('assets/icons/map.svg'),
   globeMain('assets/icons/globe-main.svg'),
   man('assets/icons/man.svg'), 
@@ -10,7 +11,6 @@ enum SvgRepo {
   presentation('assets/icons/presentation.svg'),
   lock('assets/icons/lock.svg'),
   unLock('assets/icons/eye.svg'),      
-  look('assets/icons/look.svg'),
   key('assets/icons/key.svg'),
   settings('assets/icons/cog.svg'),     
   pen('assets/icons/pen.svg'),

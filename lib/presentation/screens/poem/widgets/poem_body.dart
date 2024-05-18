@@ -8,6 +8,7 @@ import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/screens/poem/widgets/widgets.dart';
+import 'package:nevesomiy/utils/utils.dart';
 
 class PoemBody extends StatefulWidget {
   final Poem poem;
@@ -89,7 +90,7 @@ class _PoemBodyState extends State<PoemBody> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    widget.poem.content, 
+                    PoemParser.byBreakContent(widget.poem.content), 
                     style: Theme.of(context).textTheme.bodyMedium
                   ),
                   const SizedBox(height: 12),
@@ -106,7 +107,7 @@ class _PoemBodyState extends State<PoemBody> {
           onPressed: () {
             _controllerCenter.play();
             context.read<PoemBloc>().add(const PoemAction(isFavorite: true));
-            context.read<PoemsBloc>().add(PoemsLoadCache());
+            // context.read<PoemsBloc>().add(PoemsLoadCache());
           },
           icon: SvgPicture.asset(
             SvgRepo.like.location,

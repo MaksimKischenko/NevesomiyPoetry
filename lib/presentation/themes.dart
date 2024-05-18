@@ -70,6 +70,13 @@ mixin AppThemes {
           color: Colors.black54,
           fontStyle: FontStyle.normal,
         ),
+        titleSmall: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 20,  
+          fontFamily: 'Roboto',  
+          color: Colors.black87,
+          fontStyle: FontStyle.normal,
+        ),
         bodySmall: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 14,    
@@ -79,9 +86,9 @@ mixin AppThemes {
         ),
         bodyMedium: TextStyle(
           fontWeight: FontWeight.w400,
-          fontSize: 18,    
-          fontFamily: 'Pacifico',  
-          color: Colors.deepPurpleAccent,
+          fontSize: 22,    
+          fontFamily: 'Roboto',   //Pacifico
+          color: Colors.black54,
           fontStyle: FontStyle.normal,
         ),            
       ),

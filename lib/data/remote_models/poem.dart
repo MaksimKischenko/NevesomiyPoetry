@@ -65,7 +65,7 @@ class Poem extends Equatable {
       title: data['title'],
       book: data['book'],
       isFavorite: false,
-      content: PoemParser.byBreakContent(data['content']),
+      content: data['content'], 
       previewContent: PoemParser.byPreviewContent(data['content']),
       topicCategory: data['topicCategory'],
       poemTopicAssetLocation: PoemParser.byTopicId(data['topicCategory']).$2,

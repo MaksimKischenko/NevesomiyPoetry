@@ -24,7 +24,7 @@ class PoemsUseCase {
 
   List<Poem> doRemotePoemsAndListen(QuerySnapshot<Object?> data) {
     final poemTracker = data.docs.first.data() as PoemTracker;
-    final poems = poemTracker.poems.reversed.toList();
+    final poems = poemTracker.poems;
     unawaited(cacheService.savePoems(poems, PrefsKeys.poemsCache));
     poemsRepository.addAll(poems);
     return poems;  
@@ -49,13 +49,16 @@ class PoemsUseCase {
 
   Future<List<Poem>> poemMakeFavorite(Poem poem, {required bool? isFavorite}) async{
 
-      final contentFormatted = poem.content.trim();
-      log('FORMATTED: $contentFormatted');
-      final peopleLiked = poemsRepository.poems.map((e) => e.peopleLiked).toList().first;
+      final peopleLiked = poem.peopleLiked;
       if(!(peopleLiked?.contains(DataManager.instance.userEmail!) ?? false) ) {
+
       peopleLiked?.insert(0, DataManager.instance.userEmail!);
-      final newPoem = poem.copyWith(peopleLiked: peopleLiked, content: contentFormatted);
-      await fireStoreService.setLikeToPoem(newPoem);
+      for (var e in poemsRepository.poems) {
+        if(e == poem) {
+          e = e.copyWith(peopleLiked: peopleLiked);
+        }
+      }
+      await fireStoreService.setLikeToPoem(poemsRepository.poems);
     }
 
     var poems = poemsRepository.poems;
