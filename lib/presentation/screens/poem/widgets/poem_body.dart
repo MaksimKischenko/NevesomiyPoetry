@@ -4,6 +4,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
@@ -24,11 +25,13 @@ class PoemBody extends StatefulWidget {
 
 class _PoemBodyState extends State<PoemBody> {
   late ConfettiController _controllerCenter;
+  late bool isActiveButton;
 
   @override
   void initState() {
     super.initState();
     _controllerCenter = ConfettiController(duration: const Duration(seconds: 5));
+    isActiveButton = !(widget.poem.peopleLiked?.contains(DataManager.instance.userEmail) ?? true);
   }
 
   @override
@@ -104,25 +107,24 @@ class _PoemBodyState extends State<PoemBody> {
       persistentFooterButtons: [
         ElevatedButton.icon(
           label: const Text('Нравится'),
-          onPressed: () {
+          onPressed: isActiveButton? () {
             _controllerCenter.play();
             context.read<PoemBloc>().add(const PoemAction(isFavorite: true));
             // context.read<PoemsBloc>().add(PoemsLoadCache());
-          },
+          } : null,
           icon: SvgPicture.asset(
-            SvgRepo.like.location,
+            SvgRepo.heart.location,
             width: 24,
             height: 24,
           ),
         ),
         ElevatedButton.icon(
-          label: const Text('Не нравится'),
+          label: const Text('Вернуться'),
           onPressed: () {
-            context.read<PoemBloc>().add(const PoemAction(isFavorite: false));
-            context.read<PoemsBloc>().add(PoemsLoadCache());
+            context.pop(widget.poem);
           },
           icon: SvgPicture.asset(
-            SvgRepo.unLike.location,
+            SvgRepo.back.location,
             width: 24,
             height: 24,
           ),

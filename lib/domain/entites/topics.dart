@@ -1,9 +1,9 @@
 enum Topics {
-  all(('Все', 'assets/icons/book-open.svg')),
+  all(('Все', 'assets/icons/bookshelf.svg')),
   love(('О любви', 'assets/icons/love_heart.svg')),
   urban(('О городах', 'assets/icons/architecture_building.svg')), 
-  philosophy(('Философия', 'assets/icons/globe.svg')), 
-  civil(('Гражданская лирика', 'assets/icons/glasses.svg')),
+  philosophy(('Философия', 'assets/icons/yin_yang.svg')), 
+  civil(('Гражданская лирика', 'assets/icons/megaphone.svg')),
   landscape(('О природе', 'assets/icons/mountain_nature.svg')),
   favorite(('Избранные', 'assets/icons/medal.svg'));
 

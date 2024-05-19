@@ -48,17 +48,15 @@ class PoemsUseCase {
   }
 
   Future<List<Poem>> poemMakeFavorite(Poem poem, {required bool? isFavorite}) async{
-
       final peopleLiked = poem.peopleLiked;
       if(!(peopleLiked?.contains(DataManager.instance.userEmail!) ?? false) ) {
-
-      peopleLiked?.insert(0, DataManager.instance.userEmail!);
-      for (var e in poemsRepository.poems) {
-        if(e == poem) {
-          e = e.copyWith(peopleLiked: peopleLiked);
+        peopleLiked?.insert(0, DataManager.instance.userEmail!);
+        final newPoemsList = List<Poem>.from(poemsRepository.poems);
+        final index = newPoemsList.indexWhere((element) => element == poem);
+        if (index != -1) {
+          newPoemsList[index] = poem.copyWith(peopleLiked: peopleLiked);
         }
-      }
-      await fireStoreService.setLikeToPoem(poemsRepository.poems);
+        await fireStoreService.setLikeToPoem(newPoemsList);
     }
 
     var poems = poemsRepository.poems;

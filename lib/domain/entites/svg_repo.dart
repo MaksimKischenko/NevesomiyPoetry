@@ -2,6 +2,7 @@ enum SvgRepo {
   bookClosed('assets/icons/book-closed.svg'), 
   bookOpen('assets/icons/book-open.svg'),  
   email('assets/icons/envelope.svg'),
+  back('assets/icons/back.svg'),
   heart('assets/icons/heart.svg'),  
   map('assets/icons/map.svg'),
   globeMain('assets/icons/globe-main.svg'),

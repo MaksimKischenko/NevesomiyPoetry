@@ -74,14 +74,14 @@ mixin AppThemes {
           fontWeight: FontWeight.w400,
           fontSize: 20,  
           fontFamily: 'Roboto',  
-          color: Colors.black87,
+          color: Colors.black54,
           fontStyle: FontStyle.normal,
         ),
         bodySmall: TextStyle(
           fontWeight: FontWeight.w400,
-          fontSize: 14,    
-          fontFamily: 'Pacifico',  
-          color: Colors.deepPurpleAccent,
+          fontSize: 16,    
+          fontFamily: 'Roboto',  
+          color: Color(0xff004976),
           fontStyle: FontStyle.normal,
         ),
         bodyMedium: TextStyle(

@@ -29,7 +29,8 @@ class TopicsBar extends StatelessWidget {
                       style: TextStyle(
                           color: currentTopic == Topics.values[index]
                               ? null
-                              : ColorStyles.assetDissableColor)),
+                              : ColorStyles.assetDissableColor)
+                  ),
                   onPressed: () => sortByType(Topics.values[index]),
                   icon: SvgPicture.asset(
                     Topics.values[index].nameAndLocation.$2,

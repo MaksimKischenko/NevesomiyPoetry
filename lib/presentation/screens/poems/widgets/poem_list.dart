@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -75,7 +77,8 @@ class PoemList extends StatelessWidget {
   ) : const SizedBox.shrink();
 
   Future<void> navigateToPoem(BuildContext context, Poem poem) async {
-      await context.pushNamed<Poem>('poem', extra: poem);
+    final updatedPoem = await context.pushNamed<Poem>('poem', extra: poem);
+    log('UPDATED POEM $updatedPoem');
   }
 }
 
