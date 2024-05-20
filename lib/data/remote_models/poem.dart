@@ -85,7 +85,7 @@ class Poem extends Equatable {
   JsonMap toJson() => _$PoemToJson(this);
 
   @override
-  List<Object?> get props => [title, content, topicCategory, poemTopicAssetLocation, previewContent, isFavorite];
+  List<Object?> get props => [title, content, topicCategory, poemTopicAssetLocation, previewContent, isFavorite, peopleLiked];
 
 
   @override

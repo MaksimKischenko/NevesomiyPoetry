@@ -6,7 +6,7 @@ mixin ColorStyles {
   static Color get mainColor => const Color(0xff004976).withOpacity(0.8);
   static Color get mainColorSplash => const Color(0xff004976).withOpacity(0.3);           
   static MaterialAccentColor get errorColor => Colors.redAccent;
-  static Color get okColor =>  Colors.greenAccent.shade200; 
+  static Color get okColor =>  Colors.green.withOpacity(0.5); 
   static Color get mainTextColor => Colors.black87.withOpacity(0.7);
   static Color get hintTextFieldColor => Colors.grey.shade600.withOpacity(0.8);
   static Color get iconTextFieldColor => Colors.grey.shade600.withOpacity(0.7); 

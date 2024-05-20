@@ -101,7 +101,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   void showErrorSignInMessage(
     String title,
   ) {
-    SnackBarDialog.showSnackBar(context, title, false);
+    SnackBarDialog.showSnackBar(context, title, isError: false);
     Future.delayed(const Duration(seconds: 2), () => context.pop());
   }
 }

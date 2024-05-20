@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/styles/color_styles.dart';
 
 
@@ -37,16 +35,8 @@ class EmailField extends StatelessWidget {
     focusNode: focusNode,
     initialValue: initialValue,
     textInputAction: TextInputAction.done,
-    decoration: InputDecoration(
-      suffixIcon: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: SvgPicture.asset(
-          SvgRepo.email.location,
-          width: 16,
-          height: 16,
-        ),   
-      ),        
-      suffixIconConstraints: const BoxConstraints(maxHeight: 16),     
+    decoration: const InputDecoration(      
+      suffixIconConstraints: BoxConstraints(maxHeight: 16),     
       labelText: 'E-mail',
       hintText:  'E-mail', 
     ),

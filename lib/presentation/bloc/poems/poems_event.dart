@@ -7,7 +7,6 @@ sealed class PoemsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class PoemsLoadCache extends PoemsEvent {}
 
 final class PoemsSortByType extends PoemsEvent {
   final Topics value;
@@ -15,6 +14,15 @@ final class PoemsSortByType extends PoemsEvent {
    const PoemsSortByType({
     required this.value,
   }); 
+}
+
+final class PoemsLoad extends PoemsEvent {
+    final bool syncWithFireStore;
+
+   const PoemsLoad({
+    required this.syncWithFireStore,
+  }); 
+
 }
 
 final class PoemsLoadAndListen extends PoemsEvent {}

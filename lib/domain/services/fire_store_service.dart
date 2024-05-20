@@ -31,7 +31,7 @@ class FireStoreService {
       toFirestore: (PoemTracker poem, _) => {},
     )
     .get();
-    final poems = ref.data()?.poems.reversed.toList();
+    final poems = ref.data()?.poems; //.reversed.toList();
     return Future.value(poems);
   } 
 

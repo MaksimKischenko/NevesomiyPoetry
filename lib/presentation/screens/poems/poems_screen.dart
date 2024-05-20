@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
@@ -21,6 +20,7 @@ class PoemsScreen extends StatefulWidget {
 
 class _PoemsScreenState extends State<PoemsScreen> {
   late ScrollController _hideBottomNavController;
+  bool networkConnectionEnabled = true;
   var _isVisible = true;
 
   @override
@@ -47,15 +47,23 @@ class _PoemsScreenState extends State<PoemsScreen> {
   Widget build(BuildContext context) => BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
       listener: (context, state) {
         if(state is NetworkConnectionEnabled) {
-          showErrorConnectionMessage(state);
+          networkConnectionEnabled = state.isEnabled;
         }
       },  
       child: BlocConsumer<PoemsBloc, PoemsState>(
         listener: (context, state) async {
           if (state is PoemsLoaded) {
-            if (!state.isSortedState) {
-              // sortByType(state.value);
-            }
+            // await SnackBarDialog.showSnackBar(
+            //   context, 
+            //   'Загружено: ${state.poems.length}',
+            //   isError:  false
+            // );    
+          } else if (state is PoemsError) {
+            await SnackBarDialog.showSnackBar(
+              context, 
+              state.error.toString(), 
+              isError:  true
+            );    
           }
         },
         builder: (context, state) {
@@ -70,7 +78,7 @@ class _PoemsScreenState extends State<PoemsScreen> {
           } else if (state is PoemsLoaded) {
             context.read<MenuBloc>().add(MenuShow());
             return LiquidPullToRefresh(
-              onRefresh: () async => _loadPoemsAndListen(),
+              onRefresh: () async => _loadPoems(),
               // showChildOpacityTransition: false,
               child: CustomScrollView(
                 controller: _hideBottomNavController,
@@ -97,19 +105,8 @@ class _PoemsScreenState extends State<PoemsScreen> {
       ),
     );
 
-  void showErrorConnectionMessage(NetworkConnectionEnabled state) {
-    if (!state.isEnabled) {
-      ModalDialogs.showMessage(
-        type: DialogType.errorNetwork,
-        context: context,
-      );
-    } else {
-      if(context.canPop()) context.pop();
-    }
-  }
-
-  Future<void> _loadPoemsAndListen() async {
-    context.read<PoemsBloc>().add(PoemsLoadAndListen());
+  Future<void> _loadPoems() async {
+     context.read<PoemsBloc>().add(PoemsLoad(syncWithFireStore: networkConnectionEnabled));
   }
 
   Future<void> sortByType(Topics value) async {

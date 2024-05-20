@@ -12,16 +12,16 @@ final class PoemsLoading extends PoemsState {}
 final class PoemsLoaded extends PoemsState {
   final List<Poem> poems;
   final Topics value;
-  final bool isSortedState;
+  // final bool isSortedState;
 
   const PoemsLoaded({
     required this.poems,
     required this.value, 
-    required this.isSortedState   
+    // required this.isSortedState   
   });
 
   @override
-  List<Object> get props => [poems, value, isSortedState];
+  List<Object> get props => [poems, value];
 }
 
 final class PoemsError extends PoemsState {

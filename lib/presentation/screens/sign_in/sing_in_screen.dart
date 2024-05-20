@@ -31,11 +31,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
   @override
   void initState() {
     super.initState();
-     _onInitControllersAndKeys();
-     WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        _onListenNetworkConnection();
-      });   
+     _onInitControllersAndKeys(); 
   }
 
   @override
@@ -113,7 +109,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
     SnackBarDialog.showSnackBar(
       context, 
       title, 
-      true
+      isError: true
     );             
   }
 
@@ -128,9 +124,6 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
     }
   }  
 
-  void _onListenNetworkConnection() {
-    context.read<NetworkConnectionBloc>().add(NetworkConnectionRun());
-  }
 
   void _onInitControllersAndKeys() {
     _formKey = GlobalKey<FormState>(); 

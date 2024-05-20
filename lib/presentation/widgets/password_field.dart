@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/styles/color_styles.dart';
 
 class PasswordTextField extends StatefulWidget {
@@ -32,7 +30,7 @@ class PasswordTextField extends StatefulWidget {
 
 class PasswordTextFieldState extends State<PasswordTextField> {
 
-  bool _passwordHidden = true;
+  final bool _passwordHidden = false;
 
   @override
   Widget build(BuildContext context) => TextFormField(
@@ -47,21 +45,21 @@ class PasswordTextFieldState extends State<PasswordTextField> {
     initialValue: widget.initialValue,
     textInputAction: TextInputAction.done,
     decoration: InputDecoration(
-      suffixIcon: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: GestureDetector(
-          onTap: () => setState(() => _passwordHidden = !_passwordHidden),
-          child: _passwordHidden ? SvgPicture.asset(
-              SvgRepo.lock.location,
-              width: 16,
-              height: 16,
-            ) :  SvgPicture.asset(
-              SvgRepo.unLock.location,
-              width: 16,
-              height: 16,
-            ),
-        ),
-      ),   
+      // suffixIcon: Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 8),
+      //   child: GestureDetector(
+      //     onTap: () => setState(() => _passwordHidden = !_passwordHidden),
+      //     child: _passwordHidden ? SvgPicture.asset(
+      //         SvgRepo.lock.location,
+      //         width: 16,
+      //         height: 16,
+      //       ) :  SvgPicture.asset(
+      //         SvgRepo.unLock.location,
+      //         width: 16,
+      //         height: 16,
+      //       ),
+      //   ),
+      // ),   
       suffixIconConstraints: const BoxConstraints(maxHeight: 16),     
       labelText: !widget.repeatPassword? 'Пароль' : 'Повторите пароль',
       hintText:  !widget.repeatPassword? 'Пароль' : 'Повторите пароль',
