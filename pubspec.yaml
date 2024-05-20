@@ -16,7 +16,6 @@ dependencies:
   go_router: ^14.0.2
 
   # ui
-  animated_flip_counter: ^0.3.4
   animated_text_kit: ^4.2.2
   confetti: ^0.7.0
   loading_animation_widget: ^1.2.0+4

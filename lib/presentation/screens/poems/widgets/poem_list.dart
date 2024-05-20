@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
+import 'package:nevesomiy/presentation/widgets/widget.dart';
 
 
 class PoemList extends StatelessWidget {
@@ -52,12 +54,18 @@ class PoemList extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                   children: [
                     Text(
-                      'Нравится: ${poems[index].peopleLiked?.length?? 0}', 
+                      'Нравится: ', 
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15)
                     ),
+                    AnimatedFlipCounter(
+                      duration: const Duration(milliseconds: 1000),
+                      textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15),
+                      value: poems[index].peopleLiked?.length?? 0, // pass in a value like 2014
+                    ),
+                    const Spacer(),
                     favoriteWidget(poems[index])  
                   ],
               ),
