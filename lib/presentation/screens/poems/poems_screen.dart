@@ -52,13 +52,8 @@ class _PoemsScreenState extends State<PoemsScreen> {
       },  
       child: BlocConsumer<PoemsBloc, PoemsState>(
         listener: (context, state) async {
-          if (state is PoemsLoaded) {
-            // await SnackBarDialog.showSnackBar(
-            //   context, 
-            //   'Загружено: ${state.poems.length}',
-            //   isError:  false
-            // );    
-          } else if (state is PoemsError) {
+          if (state is PoemsLoaded) { } 
+          else if (state is PoemsError) {
             await SnackBarDialog.showSnackBar(
               context, 
               state.error.toString(), 

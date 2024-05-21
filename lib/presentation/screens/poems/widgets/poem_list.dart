@@ -1,11 +1,11 @@
-import 'dart:developer';
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
+import 'package:nevesomiy/presentation/bloc/bloc.dart';
+import 'package:nevesomiy/presentation/styles/styles.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
 
 
@@ -29,7 +29,9 @@ class PoemList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
-                elevation: 4,
+                shadowColor: ColorStyles.mainColor,
+                surfaceTintColor: ColorStyles.mainColor,
+                elevation: 2,
                 child: Ink(
                   child: InkWell(
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -54,7 +56,6 @@ class PoemList extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Row(
-
                   children: [
                     Text(
                       'Нравится: ', 
@@ -79,14 +80,15 @@ class PoemList extends StatelessWidget {
   Widget favoriteWidget(Poem poem) => poem.peopleLiked?.contains(DataManager.instance.userEmail) ?? false ? 
     SvgPicture.asset(
       SvgRepo.heart.location,
-      // colorFilter: ColorFilter.mode(Colors.black54, BlendMode.overlay),
       width: 18,
       height: 18,
   ) : const SizedBox.shrink();
 
   Future<void> navigateToPoem(BuildContext context, Poem poem) async {
     final updatedPoem = await context.pushNamed<Poem>('poem', extra: poem);
-    log('UPDATED POEM $updatedPoem');
+    if(updatedPoem != null) {
+      context.read<PoemsBloc>().add(PoemsUpdateByPoem(poem: updatedPoem));
+    }
   }
 }
 

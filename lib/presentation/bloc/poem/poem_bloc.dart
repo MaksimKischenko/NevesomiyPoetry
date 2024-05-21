@@ -32,12 +32,7 @@ class PoemBloc extends Bloc<PoemEvent, PoemState> {
     PoemAction event,
     Emitter<PoemState> emit,
   ) async {
-  
-    await poemsUseCase.poemMakeFavorite(poem, isFavorite: event.isFavorite);
-    emit(state.copyWith(
-      poem: poem.copyWith(
-        isFavorite: event.isFavorite
-      )
-    ));
+    await poemsUseCase.poemMakeFavorite(poem);
+    emit(state);
   }
 }

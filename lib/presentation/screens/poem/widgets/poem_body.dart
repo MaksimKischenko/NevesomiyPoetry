@@ -24,19 +24,21 @@ class PoemBody extends StatefulWidget {
 }
 
 class _PoemBodyState extends State<PoemBody> {
+  final ValueNotifier<bool> _isFavorite = ValueNotifier(false);
   late ConfettiController _controllerCenter;
-  late bool isActiveButton;
+ 
 
   @override
   void initState() {
     super.initState();
     _controllerCenter = ConfettiController(duration: const Duration(seconds: 5));
-    isActiveButton = !(widget.poem.peopleLiked?.contains(DataManager.instance.userEmail) ?? true);
+    _isFavorite.value = widget.poem.peopleLiked?.contains(DataManager.instance.userEmail) ?? true;
   }
 
   @override
   void dispose() {
     _controllerCenter.dispose();
+    _isFavorite.dispose();
     super.dispose();
   }
 
@@ -67,6 +69,7 @@ class _PoemBodyState extends State<PoemBody> {
   Widget build(BuildContext context) => Scaffold(
       appBar: PoemAppBar(
         poem: widget.poem,
+        isFavorite: _isFavorite.value,
       ),
       body: Stack(
         children: [
@@ -88,11 +91,11 @@ class _PoemBodyState extends State<PoemBody> {
           ),
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
+                  SelectableText(
                     PoemParser.byBreakContent(widget.poem.content), 
                     style: Theme.of(context).textTheme.bodyMedium
                   ),
@@ -105,17 +108,16 @@ class _PoemBodyState extends State<PoemBody> {
       ),
       persistentFooterAlignment: AlignmentDirectional.center,
       persistentFooterButtons: [
-        ElevatedButton.icon(
-          label: const Text('Нравится'),
-          onPressed: isActiveButton? () {
-            _controllerCenter.play();
-            context.read<PoemBloc>().add(const PoemAction(isFavorite: true));
-            // context.read<PoemsBloc>().add(PoemsLoadCache());
-          } : null,
-          icon: SvgPicture.asset(
-            SvgRepo.heart.location,
-            width: 24,
-            height: 24,
+        ValueListenableBuilder<bool>(
+          valueListenable: _isFavorite,
+          builder: (context, value, child) => ElevatedButton.icon(
+            label: const Text('Нравится'),
+            onPressed: _isFavorite.value? null : _makeFavorite,
+            icon: SvgPicture.asset(
+              SvgRepo.heart.location,
+              width: 24,
+              height: 24,
+            ),
           ),
         ),
         ElevatedButton.icon(
@@ -132,7 +134,9 @@ class _PoemBodyState extends State<PoemBody> {
       ],
     );
 
-  // Future<void> makeFavorite() {
-
-  // }
+  void _makeFavorite() {
+    _controllerCenter.play();
+    context.read<PoemBloc>().add(PoemAction());
+    _isFavorite.value = true;
+  }
 }

@@ -5,7 +5,7 @@ enum Topics {
   philosophy(('Философия', 'assets/icons/yin_yang.svg')), 
   civil(('Гражданская лирика', 'assets/icons/megaphone.svg')),
   landscape(('О природе', 'assets/icons/mountain_nature.svg')),
-  favorite(('Избранные', 'assets/icons/medal.svg'));
+  favorite(('Избранные', 'assets/icons/heart.svg'));
 
   const Topics(this.nameAndLocation);
   final (String, String) nameAndLocation;

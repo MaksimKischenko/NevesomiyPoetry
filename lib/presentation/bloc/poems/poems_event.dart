@@ -22,7 +22,14 @@ final class PoemsLoad extends PoemsEvent {
    const PoemsLoad({
     required this.syncWithFireStore,
   }); 
+}
 
+final class PoemsUpdateByPoem extends PoemsEvent {
+    final Poem poem;
+
+   const PoemsUpdateByPoem({
+    required this.poem,
+  }); 
 }
 
 final class PoemsLoadAndListen extends PoemsEvent {}

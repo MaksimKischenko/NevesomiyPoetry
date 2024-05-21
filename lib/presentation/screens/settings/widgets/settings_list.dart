@@ -17,8 +17,8 @@ class SettingsList extends StatelessWidget {
       children: [
         ThemeSwitcher(
           text: 'Светлая тема',
-          onChanged: (value) {
-            context.read<ThemeBloc>().add(ThemeChange(isLight: value));
+          onChanged: ({required onChanged}) {
+            context.read<ThemeBloc>().add(ThemeChange(isLight: onChanged));
           },
         ),  
         const SizedBox(height: 16),    

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
@@ -53,7 +53,7 @@ class PoemsUseCase {
     final poems = poemsRepository.poems;
     if (value != Topics.all) {
       if (value == Topics.favorite) {
-        return poems.where((element) => element.isFavorite).toList();
+        return poems.where((element) => element.peopleLiked?.contains(DataManager.instance.userEmail) ?? false).toList();
       } else {
         return poems.where((element) => element.topicCategory == value.nameAndLocation.$1).toList();
       }
@@ -61,7 +61,7 @@ class PoemsUseCase {
     return poems;   
   }
 
-  Future<List<Poem>> poemMakeFavorite(Poem poem, {required bool? isFavorite}) async{
+  Future<void> poemMakeFavorite(Poem poem) async{
       final peopleLiked = poem.peopleLiked;
       if(!(peopleLiked?.contains(DataManager.instance.userEmail!) ?? false) ) {
         peopleLiked?.insert(0, DataManager.instance.userEmail!);
@@ -72,30 +72,7 @@ class PoemsUseCase {
         }
         await fireStoreService.setLikeToPoem(newPoemsList);
     }
-
-    var poems = poemsRepository.poems;
-
-    poems = poems.map<Poem>((e) {
-      if(e.title == poem.title) {
-       return e.copyWith(isFavorite: isFavorite);
-      } else {
-        return e;
-      }
-    }).toList();
+    final poems = poemsRepository.poems;
     await cacheService.savePoems(poems, PrefsKeys.poemsCache);
-    return poems;
-  }
-
-  Future<void> saveFavoritePoems() async{
-    log("START");
-    final containsCache = await cacheService.containsCachePoems();
-    if(containsCache) {
-      final cachedPoems = await cacheService.getPoems(PrefsKeys.poemsCache);
-      final favoritePoems = cachedPoems.where((element) => element.isFavorite).toList();
-      if(favoritePoems.isNotEmpty) {
-        await cacheService.savePoems(favoritePoems, PrefsKeys.favoritePoemsCache);
-        log("SAVED");
-      }
-    }
   }
 }

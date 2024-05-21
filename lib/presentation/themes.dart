@@ -86,7 +86,7 @@ mixin AppThemes {
         ),
         bodyMedium: TextStyle(
           fontWeight: FontWeight.w400,
-          fontSize: 22,    
+          fontSize: 20,    
           fontFamily: 'Roboto',   //Pacifico
           color: Colors.black54,
           fontStyle: FontStyle.normal,

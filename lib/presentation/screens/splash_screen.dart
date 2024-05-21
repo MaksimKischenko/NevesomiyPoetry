@@ -52,7 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _loadPoems() async {
     context.read<PoemsBloc>().add(PoemsLoadAndListen());
-    // context.read<PoemsBloc>().add(const PoemsLoad(syncWithFireStore: false));
   }
 
   void _onListenNetworkConnection() {

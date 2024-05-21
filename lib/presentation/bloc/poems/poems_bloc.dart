@@ -29,13 +29,13 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     if (event is PoemsLoad) return _onLoad(event, emit);
     if (event is PoemsLoadAndListen) return _onLoadRemoteAndListen(event, emit);
     if (event is PoemsSortByType) return _onSort(event, emit);
+    if (event is PoemsUpdateByPoem) return _onUpdateByPoem(event, emit);
     return null;
   }
 
 
   Future<void> _onLoad(PoemsLoad event, Emitter<PoemsState> emit) async {
     final topic = await cacheService.getTopicName();
-
     if (event.syncWithFireStore) {
       final result = await poemsUseCase.doRemotePoems();
       result.fold(
@@ -46,7 +46,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
       await poemsUseCase.doLocalPoems();
     }
     emit(PoemsLoaded(
-      poems: poemsUseCase.poemsSortedBy(topic),   //poemsUseCase.poemsRepository.poems, 
+      poems: poemsUseCase.poemsSortedBy(topic),   
       value: topic, 
     ));
   }
@@ -56,8 +56,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     await emit.forEach<QuerySnapshot<Object?>>(
       poemsUseCase.poemsStream,
       onData: (data) { 
-        final poems = poemsUseCase.doRemotePoemsAndListen(data);
-        log('REMOTE ONLISTEN ${poems.length}');
+        poemsUseCase.doRemotePoemsAndListen(data);
         return PoemsLoaded(
           poems: poemsUseCase.poemsSortedBy(topic),
           value: topic,
@@ -67,13 +66,22 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     );
   }
 
-
   Future<void> _onSort(PoemsSortByType event, Emitter<PoemsState> emit) async {
     emit(PoemsLoading());
     await cacheService.saveTopicName(event.value.name);
     emit(PoemsLoaded(
       poems: poemsUseCase.poemsSortedBy(event.value), 
       value: event.value, 
+    ));
+  }
+
+  Future<void> _onUpdateByPoem(PoemsUpdateByPoem event, Emitter<PoemsState> emit) async {
+    emit(PoemsLoading());
+    final topic = await cacheService.getTopicName();
+    poemsUseCase.poemsRepository.poems.where((element) => element.content == event.poem.content).first.copyWith(peopleLiked: event.poem.peopleLiked);
+    emit(PoemsLoaded(
+      poems: poemsUseCase.poemsSortedBy(topic), 
+      value: topic, 
     ));
   }
 }

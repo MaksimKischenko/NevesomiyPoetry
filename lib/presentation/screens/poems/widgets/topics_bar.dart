@@ -23,22 +23,35 @@ class TopicsBar extends StatelessWidget {
           child: Wrap(
             children: Topics.values
               .mapIndexed((e, index) => Padding(
-                padding: const EdgeInsets.all(2),
+                padding: const EdgeInsets.all(3),
                 child: ElevatedButton.icon(
                   label: Text(Topics.values[index].nameAndLocation.$1,
                       style: TextStyle(
-                          color: currentTopic == Topics.values[index]
+                          color: selected(index)
                               ? null
                               : ColorStyles.assetDissableColor)
                   ),
                   onPressed: () => sortByType(Topics.values[index]),
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(ColorStyles.mainColorSplash),
+                    shadowColor:  MaterialStateProperty.all(ColorStyles.mainColor),
+                    surfaceTintColor: MaterialStateProperty.all(ColorStyles.mainColor),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    side: selected(index)? MaterialStateProperty.all(
+                      BorderSide(
+                      color: ColorStyles.mainColor, // Цвет границы
+                      width: 1, // Ширина границы
+                      ),
+                    ): null,
+                    elevation: MaterialStateProperty.all(2)
+                  ),
                   icon: SvgPicture.asset(
                     Topics.values[index].nameAndLocation.$2,
-                    colorFilter: currentTopic == Topics.values[index]
+                    colorFilter: selected(index)
                         ? null
                         : ColorFilter.mode(ColorStyles.assetDissableColor, BlendMode.srcIn),
-                    width: 24,
-                    height: 24,
+                    width: 16,
+                    height: 16,
                   ),
                 ),
             )).toList(),
@@ -46,4 +59,6 @@ class TopicsBar extends StatelessWidget {
         )
     )
   );
+
+  bool selected(int index) => currentTopic == Topics.values[index];
 }

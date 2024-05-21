@@ -8,12 +8,5 @@ sealed class PoemEvent extends Equatable {
 }
 
 
-class PoemAction extends PoemEvent {
-  final bool? isFavorite;
-
-  const PoemAction({this.isFavorite});
-
-  @override
-  List<Object?> get props => [isFavorite]; 
-}
+class PoemAction extends PoemEvent {}
 

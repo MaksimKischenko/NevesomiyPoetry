@@ -45,21 +45,6 @@ class PasswordTextFieldState extends State<PasswordTextField> {
     initialValue: widget.initialValue,
     textInputAction: TextInputAction.done,
     decoration: InputDecoration(
-      // suffixIcon: Padding(
-      //   padding: const EdgeInsets.symmetric(horizontal: 8),
-      //   child: GestureDetector(
-      //     onTap: () => setState(() => _passwordHidden = !_passwordHidden),
-      //     child: _passwordHidden ? SvgPicture.asset(
-      //         SvgRepo.lock.location,
-      //         width: 16,
-      //         height: 16,
-      //       ) :  SvgPicture.asset(
-      //         SvgRepo.unLock.location,
-      //         width: 16,
-      //         height: 16,
-      //       ),
-      //   ),
-      // ),   
       suffixIconConstraints: const BoxConstraints(maxHeight: 16),     
       labelText: !widget.repeatPassword? 'Пароль' : 'Повторите пароль',
       hintText:  !widget.repeatPassword? 'Пароль' : 'Повторите пароль',

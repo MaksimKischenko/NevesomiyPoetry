@@ -16,15 +16,11 @@ enum SvgRepo {
   pencil('assets/icons/pencil.svg'),   
   star('assets/icons/star.svg'),     
   like('assets/icons/thumb-up.svg'),
-  medal('assets/icons/medal.svg'),
   plain('assets/icons/plane.svg'),
   photo('assets/icons/photo.svg'),    
   modem('assets/icons/modem.svg'),  
   rocket('assets/icons/rocket.svg'),
-  wrench('assets/icons/wrench.svg'),            
-  unLike('assets/icons/thumb-down.svg');    
-
-
+  wrench('assets/icons/wrench.svg');  
 
   const SvgRepo(this.location);
   final String location;
