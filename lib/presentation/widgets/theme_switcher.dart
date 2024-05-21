@@ -1,34 +1,38 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 
-class ThemeSwitcher extends StatelessWidget {
+class ThemeSwitcher extends StatefulWidget {
   final String text;
   final Function({required bool onChanged})? onChanged;
 
-  ThemeSwitcher({
+  const ThemeSwitcher({
     Key? key,
     required this.text,
     required this.onChanged,
   }) : super(key: key);
 
+  @override
+  State<ThemeSwitcher> createState() => _ThemeSwitcherState();
+}
 
-  final ValueNotifier<bool> isLightTheme = ValueNotifier(false);
+class _ThemeSwitcherState extends State<ThemeSwitcher> {
+
+  final ValueNotifier<bool> isDarkTheme = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) => BlocListener<ThemeBloc, ThemeState>(
         listener: (context, state) {
-          isLightTheme.value = state.isLight;
+          isDarkTheme.value = state.isDarkTheme;
         },
         child: Row(
           children: [
             ValueListenableBuilder<bool>(
-              valueListenable: isLightTheme,
+              valueListenable: isDarkTheme,
               builder: (context, value, child) => CupertinoSwitch(
-                value: isLightTheme.value,
+                value: isDarkTheme.value,
                 activeColor: Theme.of(context).colorScheme.secondary,
                 onChanged: _onTap,
               ),
@@ -36,8 +40,8 @@ class ThemeSwitcher extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                text,
-                //style: AppStyles.checkBoxTextStyle
+                widget.text,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
           ],
@@ -45,7 +49,7 @@ class ThemeSwitcher extends StatelessWidget {
       );
 
   void _onTap(bool value) {
-    isLightTheme.value = value;
-    onChanged?.call(onChanged: value);
+    isDarkTheme.value = value;
+    widget.onChanged?.call(onChanged: value);
   }
 }

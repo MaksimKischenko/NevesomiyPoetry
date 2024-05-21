@@ -25,7 +25,7 @@ class SignOutTile extends StatelessWidget {
             const SizedBox(width: 16),
             Text(
               'Выйти', 
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         )

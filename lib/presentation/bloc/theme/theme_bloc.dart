@@ -12,7 +12,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   cacheService = CacheService.instance,
   super(
     const ThemeState(
-      isLight: true
+      isDarkTheme: true
     )) {
     on<ThemeEvent>(_onEvent);
   }
@@ -28,15 +28,15 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     ThemeChange event,
     Emitter<ThemeState> emit,
   ) async {
-    if(event.isLight == null) {
-      event.isLight = await cacheService.getTheme();
+    if(event.isDark == null) {
+      event.isDark = await cacheService.getTheme();
       emit(state.copyWith(
-        isLight: event.isLight 
+        isDarkTheme: event.isDark 
       ));
     } else {
-      await cacheService.saveTheme(isLightTheme: event.isLight ?? true);
+      await cacheService.saveTheme(isLightTheme: event.isDark ?? true);
       emit(state.copyWith(
-        isLight: event.isLight,
+        isDarkTheme: event.isDark,
       ));
     }
   }

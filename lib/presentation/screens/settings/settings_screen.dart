@@ -24,7 +24,7 @@ class SettingsScreen extends StatelessWidget {
             Expanded(
               child: BlocBuilder<ThemeBloc, ThemeState>(
                 builder: (context, state) => SvgPicture.asset(
-                    state.isLight? 
+                    state.isDarkTheme? 
                     SvgRepo.photo.location: 
                     SvgRepo.map.location,
                     width: 300,

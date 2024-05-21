@@ -12,9 +12,9 @@ class CacheService {
 
   
   Future<void> saveTheme({required bool isLightTheme}) async{
-    await PreferencesHelper.write(PrefsKeys.isLightTheme, isLightTheme);
+    await PreferencesHelper.write(PrefsKeys.isDarkTheme, isLightTheme);
   }
-  Future<bool> getTheme() async =>  await PreferencesHelper.read(PrefsKeys.isLightTheme) ?? true;
+  Future<bool> getTheme() async =>  await PreferencesHelper.read(PrefsKeys.isDarkTheme) ?? true;
 
 
   Future<bool> containsCachePoems() async => await PreferencesHelper.contains(PrefsKeys.poemsCache);

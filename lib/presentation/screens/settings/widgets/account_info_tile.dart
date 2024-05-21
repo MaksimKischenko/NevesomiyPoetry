@@ -15,7 +15,7 @@ class AccountInfoTile extends StatelessWidget {
       ),
       title: Text(
         '${DataManager.instance.userEmail}',
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
 }

@@ -12,9 +12,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) => BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) => MaterialApp.router(
           routerConfig: router, 
-          theme: state.isLight? 
-            AppThemes.ligthTheme: 
-            AppThemes.darkTheme
+          theme: state.isDarkTheme? 
+            AppThemes.darkTheme: 
+            AppThemes.ligthTheme
         ),
     );
 }

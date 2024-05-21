@@ -84,6 +84,13 @@ mixin AppThemes {
           color: Color(0xff004976),
           fontStyle: FontStyle.normal,
         ),
+        bodyLarge: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 20,    
+          fontFamily: 'Pacifico',   //Pacifico
+          color: Colors.black54,
+          fontStyle: FontStyle.normal,
+        ), 
         bodyMedium: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 20,    

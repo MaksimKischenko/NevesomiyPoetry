@@ -1,19 +1,19 @@
 part of 'theme_bloc.dart';
 
 class ThemeState extends Equatable {
-  final bool isLight;
+  final bool isDarkTheme;
   
   const ThemeState({
-    required this.isLight
+    required this.isDarkTheme
   });
   
   @override
-  List<Object> get props => [isLight];
+  List<Object> get props => [isDarkTheme];
 
   ThemeState copyWith({
-    bool? isLight,
+    bool? isDarkTheme,
   }) => ThemeState(
-    isLight: isLight ?? this.isLight,
+    isDarkTheme: isDarkTheme ?? this.isDarkTheme,
   );
 }
 

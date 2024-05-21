@@ -10,9 +10,9 @@ sealed class ThemeEvent extends Equatable {
 
 // ignore: must_be_immutable
 final class ThemeChange extends ThemeEvent {
-  bool? isLight;
+  bool? isDark;
 
   ThemeChange({
-    this.isLight
+    this.isDark
   });
 }

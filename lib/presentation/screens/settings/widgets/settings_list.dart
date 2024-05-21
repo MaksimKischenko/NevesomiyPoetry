@@ -16,19 +16,21 @@ class SettingsList extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ThemeSwitcher(
-          text: 'Светлая тема',
+          text: 'Темная тема',
           onChanged: ({required onChanged}) {
-            context.read<ThemeBloc>().add(ThemeChange(isLight: onChanged));
+            context.read<ThemeBloc>().add(ThemeChange(isDark: onChanged));
           },
         ),  
         const SizedBox(height: 16),    
         SignOutTile(
-          onTap: () {
-            context.read<AuthBloc>().add(AuthSignOut());
-            context.go('/auth');
-            context.read<MenuBloc>().add(const MenuTabUpdate(tab: MenuTab.poems));
-          },
+          onTap: () => logOut(context)
         )
       ],
     );
+
+    void logOut(BuildContext context) {
+      context.read<AuthBloc>().add(AuthSignOut());
+      context.go('/auth');
+      context.read<MenuBloc>().add(const MenuTabUpdate(tab: MenuTab.poems));
+    }
 }
