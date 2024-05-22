@@ -173,14 +173,14 @@ mixin AppThemes {
         fontWeight: FontWeight.w600,
         fontSize: 22,  
         fontFamily: 'Pacifico',  
-        color: Colors.white70,
+        color: Colors.blueGrey,
         fontStyle: FontStyle.normal,
       ),
       bodySmall: TextStyle(
         fontWeight: FontWeight.w400,
-        fontSize: 14,    
-        fontFamily: 'Pacifico',  
-        color: Colors.white54,
+        fontSize: 16,    
+        fontFamily: 'Roboto',  
+        color: Color(0xff004976),
         fontStyle: FontStyle.normal,
       ),
       bodyMedium: TextStyle(
@@ -189,7 +189,14 @@ mixin AppThemes {
         fontFamily: 'Pacifico',  
         color: Colors.white70,
         fontStyle: FontStyle.normal,
-      ),            
+      ),   
+      bodyLarge: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 20,    
+        fontFamily: 'Pacifico',   //Pacifico
+        color: Colors.white70,
+        fontStyle: FontStyle.normal,
+      ),          
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
@@ -203,6 +210,12 @@ mixin AppThemes {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
          backgroundColor: MaterialStateProperty.all(Colors.white70),
+        //  side: MaterialStateProperty.all(
+        //   const BorderSide(
+        //   color: Colors.blueGrey, // Цвет границы
+        //   width: 4, // Ширина границы
+        //   ),
+        // )
       )
     ),
   );

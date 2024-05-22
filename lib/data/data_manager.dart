@@ -4,5 +4,7 @@ class DataManager {
   static DataManager get instance => _instance;
 
   String? userEmail;
+  DateTime? creationDate;
+  DateTime? lastSignTime;
   
 }

@@ -1,14 +1,14 @@
 # This is a generated file; do not edit or check into version control.
-cloud_firestore=/Users/kishchanka/.pub-cache/hosted/pub.dev/cloud_firestore-4.17.3/
-cloud_firestore_web=/Users/kishchanka/.pub-cache/hosted/pub.dev/cloud_firestore_web-3.12.3/
+cloud_firestore=/Users/kishchanka/.pub-cache/hosted/pub.dev/cloud_firestore-4.17.4/
+cloud_firestore_web=/Users/kishchanka/.pub-cache/hosted/pub.dev/cloud_firestore_web-3.12.4/
 connectivity_plus=/Users/kishchanka/.pub-cache/hosted/pub.dev/connectivity_plus-6.0.3/
-firebase_auth=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_auth-4.19.5/
-firebase_auth_web=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_auth_web-5.11.5/
-firebase_core=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_core-2.31.0/
+firebase_auth=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_auth-4.19.6/
+firebase_auth_web=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_auth_web-5.11.6/
+firebase_core=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_core-2.31.1/
 firebase_core_web=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_core_web-2.17.0/
-firebase_in_app_messaging=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_in_app_messaging-0.7.5+5/
-firebase_messaging=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_messaging-14.9.2/
-firebase_messaging_web=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.8.5/
+firebase_in_app_messaging=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_in_app_messaging-0.7.5+6/
+firebase_messaging=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_messaging-14.9.3/
+firebase_messaging_web=/Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.8.6/
 path_provider_linux=/Users/kishchanka/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
 path_provider_windows=/Users/kishchanka/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.1/
 shared_preferences=/Users/kishchanka/.pub-cache/hosted/pub.dev/shared_preferences-2.2.3/

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,7 +52,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             timer ??= Timer.periodic(const Duration(seconds: 3), (timer) async{
               final user = (await service.reloadUser()).currentUser;
               if(user!.emailVerified) {
+
                 DataManager.instance.userEmail = authData.email;
+                DataManager.instance.creationDate = user.metadata.creationTime;
+                DataManager.instance.lastSignTime = user.metadata.lastSignInTime;
                 emit(AuthSignedIn(
                   user: user
                 ));
@@ -60,6 +64,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             });            
           } else {
             DataManager.instance.userEmail = authData.email;
+            DataManager.instance.creationDate = authData.metadata.creationTime;
+            DataManager.instance.lastSignTime = authData.metadata.lastSignInTime;
           }
         } 
         return AuthStreamStates(
