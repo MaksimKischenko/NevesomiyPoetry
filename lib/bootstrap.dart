@@ -15,8 +15,8 @@ Future<void> bootstrap() async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
-    Bloc.transformer = concurrent<dynamic>();    
-    Bloc.observer = SimpleBlocObserver();
-    runApp(const AppWrapper(child: App()));   
+  Bloc.transformer = concurrent<dynamic>();    
+  Bloc.observer = SimpleBlocObserver();
+  runApp(const AppWrapper(child: App()));   
 }
 

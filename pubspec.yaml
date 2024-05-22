@@ -19,11 +19,11 @@ dependencies:
   flutter_svg: ^2.0.7
   liquid_pull_to_refresh: ^3.0.1
   
-  # fireBase
+  # fireBase and notifier
   firebase_core: ^2.31.0
   firebase_auth: ^4.19.6
   firebase_messaging: ^14.9.3 
-  firebase_in_app_messaging: ^0.7.5+6
+  # firebase_in_app_messaging: ^0.7.5+6
   cloud_firestore: ^4.17.4 
 
   # bl

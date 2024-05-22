@@ -18,7 +18,6 @@ class FireBaseNotificationService {
   }
 
   Future<void> editMessagePermissions() async {
-    
     await _firebaseMessaging.requestPermission(
       alert: true,
       announcement: false,
@@ -29,8 +28,17 @@ class FireBaseNotificationService {
       sound: true,
     );     
   }
+
+  Future<void> setupFirebaseMessaging() async {
+    await _firebaseMessaging.getToken().then((token) {
+      log('Firebase Token: $token');
+      // Здесь вы можете отправить токен на ваш сервер, если это необходимо.
+    });
+    await _firebaseMessaging
+        .subscribeToTopic('t3')
+        .then((value) => log('topic subscrition finished'));
+  }
 }
 
-    // _firebaseMessaging
-    //     .subscribeToTopic('t3')
-    //     .then((value) => log('topic subscrition finished'));
+
+

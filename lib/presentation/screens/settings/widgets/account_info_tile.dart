@@ -24,9 +24,11 @@ class AccountInfoTile extends StatelessWidget {
           height: 48
         ),
         const SizedBox(width: 8),
-        Text(
-          info,
-          style: Theme.of(context).textTheme.bodyLarge,
+        Expanded(
+          child: Text(
+            info,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         ),
       ],
     ),

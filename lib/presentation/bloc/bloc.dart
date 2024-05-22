@@ -1,4 +1,5 @@
 export 'auth/auth_bloc.dart';
+export 'cloud_messaging/cloud_messaging_bloc.dart';
 export 'menu/menu_bloc.dart';
 export 'network_connection/network_connection_bloc.dart';
 export 'poem/poem_bloc.dart';

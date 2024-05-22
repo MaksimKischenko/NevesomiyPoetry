@@ -34,6 +34,9 @@ class _AppWrapperState extends State<AppWrapper> {
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
       providers: [
+        BlocProvider<CloudMessagingBloc>(
+          create: (context) => CloudMessagingBloc(),
+        ),
         BlocProvider<NetworkConnectionBloc>(
           create: (context) => NetworkConnectionBloc(),
         ),
