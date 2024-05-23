@@ -36,8 +36,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      // resizeToAvoidBottomInset: false,
-      appBar: const SimpleAppBar(),
+      appBar: const SimpleAppBar(title: 'Сброс пароля'),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is PasswordReseted) {

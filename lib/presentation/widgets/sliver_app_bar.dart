@@ -9,7 +9,7 @@ class SliverListAppBar extends SliverPersistentHeaderDelegate {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Поэзия Максима Невесомого', 
+          'Стихи', 
           style: Theme.of(context).appBarTheme.titleTextStyle
         ),   
       ),

@@ -7,7 +7,6 @@ import 'package:nevesomiy/domain/entites/ettities.dart';
 
 
 class SpaceMapAnimation extends StatelessWidget {
-
   final AnimationController controller;
   final Animation<double> scaleAnimation;
   final Animation<Offset> positionAnimation;
@@ -25,39 +24,40 @@ class SpaceMapAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Stack(
-      children: [
-        AnimatedBuilder(
-          animation: scaleAnimation,
-          builder: (context, child) => Transform.scale(
-              scale: scaleAnimation.value,
-              child: FadeTransition(
-                opacity: opacityAnimationSpaceMap,
-                child: SvgPicture.asset(
-                  SvgRepo.globeMain.location,
-                  width: 120,
-                  height: 120,
-                ),
+    children: [
+      AnimatedBuilder(
+        animation: scaleAnimation,
+        builder: (context, child) => Transform.scale(
+            scale: scaleAnimation.value,
+            child: FadeTransition(
+              opacity: opacityAnimationSpaceMap,
+              child: SvgPicture.asset(
+                SvgRepo.globeMain.location,
+                fit: BoxFit.scaleDown,
+                width: 140,
+                height: 140,
               ),
             ),
-        ),   
-        Positioned(
-          bottom: 10,
-          right: 25,
-          child: SlideTransition(
-            position: positionAnimation,
-            child: Transform.rotate(
-              angle: 305 * (pi/180),   
-              child: FadeTransition(
-                opacity: opacityAnimationRocket,
-                child: SvgPicture.asset(
-                  SvgRepo.rocket.location,
-                  width: 40,
-                  height: 40,
-                ),
+          ),
+      ),   
+      Positioned(
+        bottom: 10,
+        right: 25,
+        child: SlideTransition(
+          position: positionAnimation,
+          child: Transform.rotate(
+            angle: 305 * (pi/180),   
+            child: FadeTransition(
+              opacity: opacityAnimationRocket,
+              child: SvgPicture.asset(
+                SvgRepo.rocket.location,
+                width: 40,
+                height: 40,
               ),
             ),
           ),
         ),
-      ],
-    );
+      ),
+    ],
+  );
 }

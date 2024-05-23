@@ -25,7 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<Offset> _positionAnimation;
-  late Animation<double> _opacityAnimationEmail;
+  late Animation<double> _opacityAnimationPlain;
   late Animation<double> _opacityAnimationIdCard;
   late Animation<double> _rotationAnimationEmail;   
 
@@ -46,8 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      // resizeToAvoidBottomInset: false,
-      appBar: const SimpleAppBar(),
+      appBar: const SimpleAppBar(title: 'Регистрация'),
       body: MultiBlocListener(
         listeners: [
           BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
@@ -78,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
                   controller: _controller,
                   scaleAnimation: _scaleAnimation,
                   positionAnimation: _positionAnimation,
-                  opacityAnimationEmail: _opacityAnimationEmail,
+                  opacityAnimationEmail: _opacityAnimationPlain,
                   opacityAnimationIdCard: _opacityAnimationIdCard,
                   rotationAnimationEmail: _rotationAnimationEmail,                    
                 ),
@@ -141,7 +140,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
       end: const Offset(-5, -5), 
     ).animate(_controller);
 
-    _opacityAnimationEmail = Tween<double>(
+    _opacityAnimationPlain = Tween<double>(
       begin: 1, 
       end: 0, 
     ).animate(_controller);

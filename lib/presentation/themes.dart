@@ -87,7 +87,7 @@ mixin AppThemes {
         bodyLarge: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 20,    
-          fontFamily: 'Pacifico',   //Pacifico
+          fontFamily: 'Roboto',   //Pacifico
           color: Colors.black54,
           fontStyle: FontStyle.normal,
         ), 
@@ -193,7 +193,7 @@ mixin AppThemes {
       bodyLarge: TextStyle(
         fontWeight: FontWeight.w400,
         fontSize: 20,    
-        fontFamily: 'Pacifico',   //Pacifico
+        fontFamily: 'Roboto',   //Pacifico
         color: Colors.white70,
         fontStyle: FontStyle.normal,
       ),          

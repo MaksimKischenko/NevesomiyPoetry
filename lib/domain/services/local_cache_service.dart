@@ -10,14 +10,19 @@ class CacheService {
   static CacheService get instance => _instance;
   
 
-  
   Future<void> saveTheme({required bool isLightTheme}) async{
     await PreferencesHelper.write(PrefsKeys.isDarkTheme, isLightTheme);
   }
   Future<bool> getTheme() async =>  await PreferencesHelper.read(PrefsKeys.isDarkTheme) ?? true;
 
 
-  Future<bool> containsCachePoems() async => await PreferencesHelper.contains(PrefsKeys.poemsCache);
+  Future<void> saveMessagesFlag({required bool sendsMessages}) async{
+    await PreferencesHelper.write(PrefsKeys.sendsMessages, sendsMessages);
+  }
+
+  Future<bool> getMessagesFlag() async =>  await PreferencesHelper.read(PrefsKeys.sendsMessages) ?? true;
+
+
 
   Future<void> savePoems(List<Poem> poems, TypeStoreKey<String> key) async {
     await PreferencesHelper.write(key, json.encode(poems));

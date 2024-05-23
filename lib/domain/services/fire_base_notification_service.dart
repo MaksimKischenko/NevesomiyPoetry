@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:nevesomiy/domain/services/local_cache_service.dart';
 
 class FireBaseNotificationService {
   FireBaseNotificationService._();
@@ -8,6 +9,8 @@ class FireBaseNotificationService {
   static FireBaseNotificationService get instance => _instance;
   
   final _firebaseMessaging = FirebaseMessaging.instance;
+  final _cacheService = CacheService.instance;
+
   Stream<RemoteMessage> get myInAppStream => FirebaseMessaging.onMessage;
   Stream<RemoteMessage> get myOutAppStream => FirebaseMessaging.onMessageOpenedApp;
 
@@ -29,14 +32,24 @@ class FireBaseNotificationService {
     );     
   }
 
-  Future<void> setupFirebaseMessaging() async {
-    await _firebaseMessaging.getToken().then((token) {
-      log('Firebase Token: $token');
+  Future<void> enableFirebaseMessaging() async {
+    await Future.wait([
+     _firebaseMessaging.getToken().then((token) {
       // Здесь вы можете отправить токен на ваш сервер, если это необходимо.
-    });
-    await _firebaseMessaging
-        .subscribeToTopic('t3')
-        .then((value) => log('topic subscrition finished'));
+    }),
+      _firebaseMessaging
+          .subscribeToTopic('t3')
+          .then((value) => log('topic subscrition enable')),
+      _cacheService.saveMessagesFlag(sendsMessages: true)
+    ]);
+  }
+
+  Future<void> disableFirebaseMessaging() async {
+    await Future.wait([
+     _firebaseMessaging.unsubscribeFromTopic('t3')
+     .then((value) => log('topic subscrition disable')),
+     _cacheService.saveMessagesFlag(sendsMessages: false)
+    ]);
   }
 }
 

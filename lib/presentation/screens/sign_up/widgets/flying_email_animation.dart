@@ -35,8 +35,9 @@ class FlyingEmailAnimation extends StatelessWidget {
                 opacity: opacityAnimationIdCard,
                 child: SvgPicture.asset(
                   SvgRepo.sun.location,
-                  width: 120,
-                  height: 120,
+                  fit: BoxFit.scaleDown,
+                  width: 140,
+                  height: 140,
                 ),
               ),
             ),

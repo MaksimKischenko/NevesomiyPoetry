@@ -8,4 +8,11 @@ sealed class CloudMessagingEvent extends Equatable {
 }
 
 
-final class CloudMessagingRun extends CloudMessagingEvent {}
+final class CloudMessagingFlag extends CloudMessagingEvent {
+  final bool isEnabled;
+
+  const CloudMessagingFlag({
+    required this.isEnabled,
+  });
+
+}

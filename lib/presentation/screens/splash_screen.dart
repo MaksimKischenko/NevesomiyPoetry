@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nevesomiy/domain/services/local_cache_service.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/styles/styles.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
@@ -18,16 +19,16 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
      WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
+      (_) async{
         _onListenNetworkConnection();
-        _onListenCloudMessages();
+        await _onListenCloudMessages();
       });   
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async{
           if (state is AuthStreamStates) {
             if (state.user == null) {
               context.go('/auth');
@@ -51,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
 
-  Future<void> _loadPoems() async {
+  void _loadPoems() {
     context.read<PoemsBloc>().add(PoemsLoadAndListen());
   }
 
@@ -59,7 +60,9 @@ class _SplashScreenState extends State<SplashScreen> {
     context.read<NetworkConnectionBloc>().add(NetworkConnectionRun());
   }
 
-  void _onListenCloudMessages() {
-    context.read<CloudMessagingBloc>().add(CloudMessagingRun());
+  Future<void> _onListenCloudMessages() async{
+    final cacheService = CacheService.instance;
+    final isEnabled = await cacheService.getMessagesFlag();
+    context.read<CloudMessagingBloc>().add(CloudMessagingFlag(isEnabled: isEnabled));
   }
 }

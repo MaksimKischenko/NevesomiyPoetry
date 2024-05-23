@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
-import 'package:nevesomiy/presentation/bloc/auth/auth_bloc.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
 import 'package:nevesomiy/utils/modal_dialogs.dart';
@@ -45,8 +44,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      // resizeToAvoidBottomInset: false,
-      appBar: const SimpleAppBar(),
+      appBar: const SimpleAppBar(title: 'Авторизация'),
       body: MultiBlocListener(
         listeners: [
           BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
@@ -94,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
             ),
           ),
         )
-    ));
+          ));
 
   void showErrorConnectionMessage(NetworkConnectionEnabled state) {
     if(!state.isEnabled) {
