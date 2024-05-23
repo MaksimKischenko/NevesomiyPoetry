@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
+import 'package:nevesomiy/presentation/bloc/auth/auth_bloc.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
 import 'package:nevesomiy/utils/modal_dialogs.dart';
@@ -79,12 +80,13 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
                   opacityAnimationRocket: _opacityAnimationRocket,
                   opacityAnimationSpaceMap: _opacityAnimationSpaceMap,
                 ),                
-                const SizedBox(height: 60),                      
+                const SizedBox(height: 10),                      
                 SignInBody(
                   formKey: _formKey,
                   emailTextInputController: _emailTextInputController,
                   passwordTextInputController: _passwordTextInputController,
-                  onSignInTap: _onLogin,
+                  onSignInTap: _onSignIn,
+                  onSignInGoogleTap: _onSignInWithGoole,
                   onSignOutTap: () => context.push('/signUp'),
                   onForgetPasswordTap: () => context.push('/reset'),
                 ),
@@ -113,17 +115,20 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
     );             
   }
 
-  void _onLogin() {
+  void _onSignIn() {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
       context.read<AuthBloc>().add(
-        AuthLogin(
+        AuthSignIn(
           email: _emailTextInputController.text.trim(), 
           password: _passwordTextInputController.text.trim()
       ));
     }
   }  
 
+  void _onSignInWithGoole() {
+    context.read<AuthBloc>().add(AuthSignInWithGoogle());
+  }  
 
   void _onInitControllersAndKeys() {
     _formKey = GlobalKey<FormState>(); 

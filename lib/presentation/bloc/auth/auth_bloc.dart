@@ -32,7 +32,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     if (event is AuthCheckState) return await _onCheckState(event, emit);
-    if (event is AuthLogin) return await _onSignIn(event, emit);
+    if (event is AuthSignIn) return await _onSignIn(event, emit);
+    if (event is AuthSignInWithGoogle) return await _onSignInWithGoogle(event, emit);
     if (event is AuthSignUp) return await _onSignUp(event, emit);
     if (event is AuthSignOut) return await _onSignOut(event, emit);
     if (event is ResetPassword) return await _onResetPassword(event, emit); 
@@ -52,7 +53,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             timer ??= Timer.periodic(const Duration(seconds: 3), (timer) async{
               final user = (await service.reloadUser()).currentUser;
               if(user!.emailVerified) {
-
                 DataManager.instance.userEmail = authData.email;
                 DataManager.instance.creationDate = user.metadata.creationTime;
                 DataManager.instance.lastSignTime = user.metadata.lastSignInTime;
@@ -76,12 +76,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignIn(
-    AuthLogin event,
+    AuthSignIn event,
     Emitter<AuthState> emit
   ) async {
 
     emit(AuthLoading());
-    final result = await service.login(
+    final result = await service.signIn(
       event.email, event.password
     );
     result?.fold(
@@ -90,6 +90,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       )), 
       (right) => emit(AuthSignedIn(
         user: right.user
+      ))
+    );
+  }  
+
+  Future<void> _onSignInWithGoogle(
+    AuthSignInWithGoogle event,
+    Emitter<AuthState> emit
+  ) async {
+
+    emit(AuthLoading());
+    final result = await service.signInWithGoogle();
+    result.fold(
+      (falure) => emit(AuthError(
+        error: falure.message
+      )), 
+      (right) => emit(AuthSignedIn(
+        user: right
       ))
     );
   }  

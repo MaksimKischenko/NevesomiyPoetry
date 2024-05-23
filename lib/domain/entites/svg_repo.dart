@@ -18,6 +18,7 @@ enum SvgRepo {
   star('assets/icons/star.svg'),     
   like('assets/icons/thumb-up.svg'),
   plain('assets/icons/plane.svg'),   
+  google('assets/icons/google.svg'),
   modem('assets/icons/modem.svg'),  
   rocket('assets/icons/rocket.svg'),
   wrench('assets/icons/wrench.svg');  

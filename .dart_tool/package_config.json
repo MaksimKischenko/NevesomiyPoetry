@@ -344,6 +344,42 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "google_identity_services_web",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/google_identity_services_web-0.3.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "google_sign_in",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/google_sign_in-6.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "google_sign_in_android",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/google_sign_in_android-6.1.23",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "google_sign_in_ios",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/google_sign_in_ios-5.7.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "google_sign_in_platform_interface",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/google_sign_in_platform_interface-2.4.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "google_sign_in_web",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/google_sign_in_web-0.12.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "graphs",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/graphs-2.3.1",
       "packageUri": "lib/",
@@ -770,7 +806,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-05-22T12:54:35.256036Z",
+  "generated": "2024-05-23T08:22:57.296405Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

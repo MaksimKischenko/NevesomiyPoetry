@@ -9,11 +9,11 @@ sealed class AuthEvent extends Equatable {
 
 final class AuthCheckState extends AuthEvent {}
 
-final class AuthLogin extends AuthEvent {
+final class AuthSignIn extends AuthEvent {
   final String email;
   final String password;
 
-  const AuthLogin({
+  const AuthSignIn({
     required this.email,
     required this.password
   });
@@ -21,6 +21,8 @@ final class AuthLogin extends AuthEvent {
   @override
   List<Object?> get props => [email, password];  
 }
+
+final class AuthSignInWithGoogle extends AuthEvent {}
 
 final class AuthSignUp extends AuthEvent {
   final String email;
