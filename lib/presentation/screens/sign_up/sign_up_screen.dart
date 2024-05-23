@@ -6,6 +6,7 @@ import 'package:nevesomiy/domain/entites/dialog_type.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
 import 'package:nevesomiy/utils/modal_dialogs.dart';
+import 'package:nevesomiy/utils/utils.dart';
 
 import 'widgets/widgets.dart';
 
@@ -64,7 +65,9 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
                 } else if(state is AuthSignedIn) {
                   context.go('/home');         
                 }
-              } 
+              } else if(state is AuthError) {
+                showErrorSignUpMessage(state.error.toString());
+              }
             },
           ),
         ],
@@ -96,6 +99,15 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
       )
     );
 
+  void showErrorSignUpMessage(String title) {
+    SnackBarDialog.showSnackBar(
+      context, 
+      title, 
+      isError: true
+    );             
+  }
+
+  
   void showNetworkConnectionMessage(NetworkConnectionEnabled state) {
     if (!state.isEnabled) {
       ModalDialogs.showMessage(

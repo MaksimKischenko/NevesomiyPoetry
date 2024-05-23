@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nevesomiy/data/data.dart';
+import 'package:nevesomiy/data/failure.dart';
 import 'package:nevesomiy/domain/services/fire_base_auth_service.dart';
 import 'package:nevesomiy/domain/services/local_cache_service.dart';
 
@@ -79,36 +80,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthSignIn event,
     Emitter<AuthState> emit
   ) async {
-
     emit(AuthLoading());
-    final result = await service.signIn(
-      event.email, event.password
-    );
-    result?.fold(
-      (falure) => emit(AuthError(
-        error: falure.message
-      )), 
-      (right) => emit(AuthSignedIn(
-        user: right.user
-      ))
-    );
+    try {
+      final userCredential = await service.signIn(event.email, event.password);
+      emit(AuthSignedIn(user: userCredential?.user));
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(error: FireBaseAuthFailure(error: e).message));
+    }   
   }  
 
   Future<void> _onSignInWithGoogle(
     AuthSignInWithGoogle event,
     Emitter<AuthState> emit
   ) async {
-
     emit(AuthLoading());
-    final result = await service.signInWithGoogle();
-    result.fold(
-      (falure) => emit(AuthError(
-        error: falure.message
-      )), 
-      (right) => emit(AuthSignedIn(
-        user: right
-      ))
-    );
+    try {
+      final user = await service.signInWithGoogle();
+      emit(AuthSignedIn(user: user));
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(error: FireBaseAuthFailure(error: e).message));
+    }    
   }  
 
   Future<void> _onSignUp(
@@ -116,20 +107,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit
   ) async {
     emit(AuthLoading());
-
-    
-    final result = await service.signUp(
-      event.email, event.password
-    );
-    
-    result?.fold(
-      (falure) => emit(AuthError(
-        error: falure.message
-      )), 
-      (right) => emit(AuthUnVerifiedEmail(
-        user: right.user
-      ))
-    );
+    try {
+      final userCredential = await service.signUp(
+        event.email, event.password
+      );
+      emit(AuthUnVerifiedEmail(user: userCredential.user));
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(error: FireBaseAuthFailure(error: e).message));
+    }
   }
 
   Future<void> _onSignOut(
@@ -138,30 +123,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoading());
     await cacheService.clearCache();
-    final result = await service.signOut();
-    result.fold(
-      (falure) => emit(AuthError(
-        error: falure.message
-      )), 
-      (right) => {}
-    );
+    try {
+      await service.signOut();
+      emit(PasswordReseted());
+    } on FirebaseAuthException catch (e) {
+      emit(AuthError(error: FireBaseAuthFailure(error: e).message));
+    }
   }
-
 
   Future<void> _onResetPassword(
     ResetPassword event,
     Emitter<AuthState> emit
   ) async {
-
     emit(AuthLoading());
-
-    final result = await service.resetPassword(event.email);
-    
-    result?.fold(
-      (falure) => emit(AuthError(
-        error: falure.message
-      )), 
-      (right) => emit(PasswordReseted())
-    );
+    try {
+       await service.resetPassword(event.email);
+       emit(PasswordReseted());
+    } on FirebaseAuthException catch (e) {
+       emit(AuthError(error: FireBaseAuthFailure(error: e).message));
+    }
   }     
 }

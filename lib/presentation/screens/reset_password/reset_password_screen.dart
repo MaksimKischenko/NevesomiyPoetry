@@ -40,7 +40,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is PasswordReseted) {
-            showErrorSignInMessage('Пароль успешно сброшен');
+            passwordReseted('Пароль успешно сброшен');
+          } else if(state is AuthError) {
+            showErrorResetPassword(state.error.toString());
           }
         },
         child: Padding(
@@ -93,11 +95,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       ),
     );
 
+  void showErrorResetPassword(String title) {
+    SnackBarDialog.showSnackBar(
+      context, 
+      title, 
+      isError: true
+    );             
+  }
+
   void resetPassword() {
     context.read<AuthBloc>().add(ResetPassword(email: _emailTextInputController.text.trim()));
   }
 
-  void showErrorSignInMessage(
+  void passwordReseted(
     String title,
   ) {
     SnackBarDialog.showSnackBar(context, title, isError: false);

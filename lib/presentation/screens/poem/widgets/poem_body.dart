@@ -26,7 +26,6 @@ class PoemBody extends StatefulWidget {
 class _PoemBodyState extends State<PoemBody> {
   final ValueNotifier<bool> _isFavorite = ValueNotifier(false);
   late ConfettiController _controllerCenter;
- 
 
   @override
   void initState() {
@@ -57,82 +56,85 @@ class _PoemBodyState extends State<PoemBody> {
     // ignore: omit_local_variable_types
     for (double step = 0; step < fullAngle; step += degreesPerStep) {
       path
-      ..lineTo(halfWidth + externalRadius * cos(step), halfWidth + externalRadius * sin(step))
-      ..lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
-          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+        ..lineTo(halfWidth + externalRadius * cos(step), halfWidth + externalRadius * sin(step))
+        ..lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+            halfWidth + internalRadius * sin(step + halfDegreesPerStep));
     }
     path.close();
     return path;
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-      appBar: PoemAppBar(
-        poem: widget.poem,
-        isFavorite: _isFavorite.value,
-      ),
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: ConfettiWidget(
-              confettiController: _controllerCenter,
-              blastDirectionality: BlastDirectionality.explosive, // don't specify a direction, blast randomly
-              shouldLoop: true, // start again as soon as the animation is finished
-              colors: const [
-                Colors.green,
-                Colors.blue,
-                Colors.pink,
-                Colors.orange,
-                Colors.purple
-              ], // manually specify the colors to be used
-              createParticlePath: drawStar, // define a custom shape/path.
-            ),
+  Widget build(BuildContext context) => BlocListener<PoemBloc, PoemState>(
+        listener: (context, state) {
+          
+        },
+        child: Scaffold(
+          appBar: PoemAppBar(
+            poem: widget.poem,
+            isFavorite: _isFavorite.value,
           ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SelectableText(
-                    PoemParser.byBreakContent(widget.poem.content), 
-                    style: Theme.of(context).textTheme.bodyMedium
+          body: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: ConfettiWidget(
+                  confettiController: _controllerCenter,
+                  blastDirectionality: BlastDirectionality.explosive, // don't specify a direction, blast randomly
+                  shouldLoop: true, // start again as soon as the animation is finished
+                  colors: const [
+                    Colors.green,
+                    Colors.blue,
+                    Colors.pink,
+                    Colors.orange,
+                    Colors.purple
+                  ], // manually specify the colors to be used
+                  createParticlePath: drawStar, // define a custom shape/path.
+                ),
+              ),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SelectableText(PoemParser.byBreakContent(widget.poem.content),
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(height: 12),
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                ],
+                ),
+              ),
+            ],
+          ),
+          persistentFooterAlignment: AlignmentDirectional.center,
+          persistentFooterButtons: [
+            ValueListenableBuilder<bool>(
+              valueListenable: _isFavorite,
+              builder: (context, value, child) => ElevatedButton.icon(
+                label: const Text('Нравится'),
+                onPressed: _isFavorite.value ? null : _makeFavorite,
+                icon: SvgPicture.asset(
+                  SvgRepo.heart.location,
+                  width: 24,
+                  height: 24,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      persistentFooterAlignment: AlignmentDirectional.center,
-      persistentFooterButtons: [
-        ValueListenableBuilder<bool>(
-          valueListenable: _isFavorite,
-          builder: (context, value, child) => ElevatedButton.icon(
-            label: const Text('Нравится'),
-            onPressed: _isFavorite.value? null : _makeFavorite,
-            icon: SvgPicture.asset(
-              SvgRepo.heart.location,
-              width: 24,
-              height: 24,
-            ),
-          ),
+            ElevatedButton.icon(
+              label: const Text('Вернуться'),
+              onPressed: () {
+                context.pop(widget.poem);
+              },
+              icon: SvgPicture.asset(
+                SvgRepo.back.location,
+                width: 24,
+                height: 24,
+              ),
+            )
+          ],
         ),
-        ElevatedButton.icon(
-          label: const Text('Вернуться'),
-          onPressed: () {
-            context.pop(widget.poem);
-          },
-          icon: SvgPicture.asset(
-            SvgRepo.back.location,
-            width: 24,
-            height: 24,
-          ),
-        )
-      ],
-    );
+      );
 
   void _makeFavorite() {
     _controllerCenter.play();

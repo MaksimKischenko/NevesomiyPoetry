@@ -42,7 +42,7 @@ mixin PrefsKeys {
   static final isDarkTheme = TypeStoreKey<bool>('isDarkTheme', defaultValue: false);
   static final poemsCache = TypeStoreKey<String>('poemsCache', defaultValue: null);
   static final topicName = TypeStoreKey<String>('topicName', defaultValue: null);
-  static final sendsMessages = TypeStoreKey<bool>('sendsMessages', defaultValue: false);
+  static final sendsMessages = TypeStoreKey<bool>('sendsMessages', defaultValue: true);
 }
 
 /// Обьект типизированный ключ используемый в key-value хранилищах для более удобной работы с ними

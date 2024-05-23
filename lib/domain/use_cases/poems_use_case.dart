@@ -1,10 +1,6 @@
 import 'dart:async';
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:either_dart/either.dart';
 import 'package:nevesomiy/data/data.dart';
-import 'package:nevesomiy/data/failure.dart';
 import 'package:nevesomiy/domain/domain.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
@@ -25,15 +21,11 @@ class PoemsUseCase {
   Stream<QuerySnapshot> get poemsStream => fireStoreService.poemsStream;
 
 
-  Future<Either<Failure, List<Poem>>> doRemotePoems() async {
-    try {
-        final poems = await fireStoreService.getPoems();
-        await cacheService.savePoems(poems, PrefsKeys.poemsCache);
-        poemsRepository.addAll(poems);
-        return Right(poems);  
-    } on FirebaseException catch (e) {
-        return Left(FireBaseFailure(error: e));
-    }
+  Future<List<Poem>> doRemotePoems() async {
+    final poems = await fireStoreService.getPoems();
+    await cacheService.savePoems(poems, PrefsKeys.poemsCache);
+    poemsRepository.addAll(poems);
+    return poems;  
   }
   
   List<Poem> doRemotePoemsAndListen(QuerySnapshot<Object?> data) {

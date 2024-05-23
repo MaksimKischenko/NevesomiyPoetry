@@ -32,3 +32,13 @@ final class CloudMessagingReceive extends CloudMessagingState {
   List<Object?> get props => [data];
 }
 
+final class CloudMessagingError extends CloudMessagingState {
+  final Object? error;
+
+  const CloudMessagingError({
+    required this.error
+  });
+
+  @override
+  List<Object?> get props => [error];  
+}

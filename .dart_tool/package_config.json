@@ -194,12 +194,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "either_dart",
-      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/either_dart-1.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.0"
-    },
-    {
       "name": "email_validator",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/email_validator-2.1.17",
       "packageUri": "lib/",
@@ -806,7 +800,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-05-23T08:22:57.296405Z",
+  "generated": "2024-05-23T14:07:11.930381Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:either_dart/either.dart';
 import 'package:nevesomiy/data/data.dart';
-import 'package:nevesomiy/data/failure.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
 
@@ -48,14 +46,14 @@ class FireStoreService {
   
   Future<void> clearData() async => await _fireBase.clearPersistence(); 
 
-  Future<Either<Failure, DocumentSnapshot<Map<String, dynamic>>>?> getUrlLinks() async {
-    try {
-      final collection = await _fireBase.collection(CollectionData.urlLinks.name).doc(CollectionData.urlLinks.docId).get();
+  // Future<Either<Failure, DocumentSnapshot<Map<String, dynamic>>>?> getUrlLinks() async {
+  //   try {
+  //     final collection = await _fireBase.collection(CollectionData.urlLinks.name).doc(CollectionData.urlLinks.docId).get();
 
-      return Right(collection);  
-    } on FirebaseException catch (e) {
+  //     return Right(collection);  
+  //   } on FirebaseException catch (e) {
   
-      return Left(FireBaseFailure(error: e)); 
-    }
-  }
+  //     return Left(FireBaseFailure(error: e)); 
+  //   }
+  // }
 } 

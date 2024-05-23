@@ -29,7 +29,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     if (event is PoemsLoad) return _onLoad(event, emit);
     if (event is PoemsLoadAndListen) return _onLoadRemoteAndListen(event, emit);
     if (event is PoemsSortByType) return _onSort(event, emit);
-    if (event is PoemsUpdateByPoem) return _onUpdateByPoem(event, emit);
+    if (event is PoemsUpdateByPoem) return _onUpdatePoemsByPoem(event, emit);
     return null;
   }
 
@@ -37,12 +37,14 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
   Future<void> _onLoad(PoemsLoad event, Emitter<PoemsState> emit) async {
     final topic = await cacheService.getTopicName();
     if (event.syncWithFireStore) {
-      final result = await poemsUseCase.doRemotePoems();
-      result.fold(
-        (falure) => emit(PoemsError(error: falure.message)),
-        (right) {log('REMOTE SIMPLE');});
+      try {
+        await poemsUseCase.doRemotePoems();
+        log('REMOTE');
+      } on FirebaseException catch (e) {
+        emit(PoemsError(error: e));
+      }
     } else {
-      log('LOCAL SIMPLE');
+      log('LOCAL');
       await poemsUseCase.doLocalPoems();
     }
     emit(PoemsLoaded(
@@ -53,17 +55,20 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
 
   Future<void> _onLoadRemoteAndListen(PoemsLoadAndListen event, Emitter<PoemsState> emit) async {
     final topic = await cacheService.getTopicName();
-    await emit.forEach<QuerySnapshot<Object?>>(
-      poemsUseCase.poemsStream,
-      onData: (data) { 
-        poemsUseCase.doRemotePoemsAndListen(data);
-        return PoemsLoaded(
-          poems: poemsUseCase.poemsSortedBy(topic),
-          value: topic,
-        );
-      },
-      onError: (error, stackTrace) => PoemsError(error: error),
-    );
+    try {
+      await emit.forEach<QuerySnapshot<Object?>>(
+        poemsUseCase.poemsStream,
+        onData: (data) { 
+          poemsUseCase.doRemotePoemsAndListen(data);
+          return PoemsLoaded(
+            poems: poemsUseCase.poemsSortedBy(topic),
+            value: topic,
+          );
+        },
+      );
+    } on FirebaseException catch (e) {
+      emit(PoemsError(error: e));
+    }    
   }
 
   Future<void> _onSort(PoemsSortByType event, Emitter<PoemsState> emit) async {
@@ -75,7 +80,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     ));
   }
 
-  Future<void> _onUpdateByPoem(PoemsUpdateByPoem event, Emitter<PoemsState> emit) async {
+  Future<void> _onUpdatePoemsByPoem(PoemsUpdateByPoem event, Emitter<PoemsState> emit) async {
     emit(PoemsLoading());
     final topic = await cacheService.getTopicName();
     poemsUseCase.poemsRepository.poems.where((element) => element.content == event.poem.content).first.copyWith(peopleLiked: event.poem.peopleLiked);

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:nevesomiy/domain/domain.dart';
 
@@ -27,19 +28,23 @@ class CloudMessagingBloc extends Bloc<CloudMessagingEvent, CloudMessagingState> 
     CloudMessagingFlag event,
     Emitter<CloudMessagingState> emit
   ) async {
-    if(event.isEnabled) {
-      await Future.wait([
-      service.enableFirebaseMessaging(),
-      service.editMessagePermissions(),
-      emit.forEach<RemoteMessage>(
-        service.myOutAppStream, 
-        onData: (data) =>  CloudMessagingReceive(
-          data: data
-        ) 
-      )]);
-    } else {
-      await service.disableFirebaseMessaging();
+    try {
+      if(event.isEnabled) {
+        await Future.wait([
+        service.enableFirebaseMessaging(),
+        service.editMessagePermissions(),
+        emit.forEach<RemoteMessage>(
+          service.myOutAppStream, 
+          onData: (data) =>  CloudMessagingReceive(
+            data: data
+          ) 
+        )]);
+      } else {
+        await service.disableFirebaseMessaging();
+      }
+      emit(CloudMessagingActivation(isEnabled: event.isEnabled));
+    } on FirebaseException catch (e) {
+      emit(CloudMessagingError(error: e));
     }
-    emit(CloudMessagingActivation(isEnabled: event.isEnabled));
   }
 }

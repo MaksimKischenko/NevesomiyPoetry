@@ -31,6 +31,8 @@ class _MessagesSwitcherState extends State<MessagesSwitcher> {
         listener: (context, state) {
           if(state is CloudMessagingActivation) {
             isEnabled.value = state.isEnabled;
+          } else if(state is CloudMessagingError) {
+            
           }
         },
         child: Row(
