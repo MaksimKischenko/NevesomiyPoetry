@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
             return Center(
               child: LoadingIndicator(
                 indicatorsSize: 48,
-                color: ColorStyles.mainColor,
+                color: ColorStyles.pallete1,
               ),
             );
           }

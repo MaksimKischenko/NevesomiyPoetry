@@ -36,7 +36,7 @@ class PasswordTextFieldState extends State<PasswordTextField> {
   Widget build(BuildContext context) => TextFormField(
     autocorrect: false,  
     minLines: 1, 
-    cursorColor: ColorStyles.mainColor,
+    cursorColor: ColorStyles.pallete1,
     cursorWidth: 1, 
     style: Theme.of(context).textTheme.bodySmall,
     controller: widget.controller,

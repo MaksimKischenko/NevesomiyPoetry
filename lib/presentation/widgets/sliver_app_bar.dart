@@ -1,6 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'package:nevesomiy/domain/entites/svg_repo.dart';
 
 class SliverListAppBar extends SliverPersistentHeaderDelegate {
+  final Function() onTap;
+  
+  const SliverListAppBar({
+    required this.onTap,
+  });
 
   @override
   Widget build(
@@ -8,6 +17,18 @@ class SliverListAppBar extends SliverPersistentHeaderDelegate {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         centerTitle: true,
+        actions: [
+          Ink(
+            child: InkWell(
+              onTap: onTap.call,
+              child: SvgPicture.asset(
+                SvgRepo.search.location,
+                width: 34,
+                height: 34,
+              ),
+            ),
+          ),            
+        ],
         title: Text(
           'Стихи', 
           style: Theme.of(context).appBarTheme.titleTextStyle

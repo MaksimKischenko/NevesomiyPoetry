@@ -112,7 +112,7 @@ class _PoemBodyState extends State<PoemBody> {
             ValueListenableBuilder<bool>(
               valueListenable: _isFavorite,
               builder: (context, value, child) => ElevatedButton.icon(
-                label: const Text('Нравится'),
+                label: Text('Нравится',  style: Theme.of(context).textTheme.bodySmall),
                 onPressed: _isFavorite.value ? null : _makeFavorite,
                 icon: SvgPicture.asset(
                   SvgRepo.heart.location,
@@ -122,7 +122,7 @@ class _PoemBodyState extends State<PoemBody> {
               ),
             ),
             ElevatedButton.icon(
-              label: const Text('Вернуться'),
+              label: Text('Вернуться', style: Theme.of(context).textTheme.bodySmall),
               onPressed: () {
                 context.pop(widget.poem);
               },

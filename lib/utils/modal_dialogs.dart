@@ -30,10 +30,9 @@ mixin ModalDialogs {
         );
         break;
       case DialogType.success:
-
         break;
       case DialogType.emailVerify:
-        indicatorColor = ColorStyles.mainColor;
+        indicatorColor = ColorStyles.pallete1;
         animateIndicatorsType = AnimateIndicatorsType.info;
         child = VerificationEmailBody(
           email: email ?? '',
@@ -91,24 +90,27 @@ mixin ModalDialogs {
 
   static Future<T?> showScrollableDialog<T>({
     required BuildContext context,
-    required Widget Function(
-    BuildContext context)
+    required Widget Function(BuildContext context)
     builder,
+    double sizePart = 0.5,
     double topCornerRadius = 12.0
   }) {{
       final topOffset = MediaQuery.of(context).padding.top +
-          MediaQuery.of(context).copyWith().size.height * 0.2;
+          MediaQuery.of(context).copyWith().size.height * sizePart;
       return showModalBottomSheet<T>(
         context: context,
         builder: (context) => BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), 
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2), 
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            // padding: MediaQuery.of(context).viewInsets,
             height: MediaQuery.of(context).copyWith().size.height - topOffset,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(topCornerRadius),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(topCornerRadius),
+                topRight: Radius.circular(topCornerRadius)  
+              ),
               child: Material(
+                color: ColorStyles.pallete3,
                 // child: builder(context, null),
                 child: builder(context),
               ),
@@ -116,10 +118,10 @@ mixin ModalDialogs {
           ),
         ),
         isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.vertical(top: Radius.circular(topCornerRadius))),
-        backgroundColor: const Color(0xffFCFCFC),
+        // shape: RoundedRectangleBorder(
+        //     borderRadius:
+        //         BorderRadius.vertical(top: Radius.circular(topCornerRadius))),
+        // backgroundColor: const Color(0xffFCFCFC),
       );
     }
   }

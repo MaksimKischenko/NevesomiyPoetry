@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/domain/entites/dialog_type.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
-import 'package:nevesomiy/utils/modal_dialogs.dart';
 import 'package:nevesomiy/utils/utils.dart';
 
 import 'widgets/widgets.dart';

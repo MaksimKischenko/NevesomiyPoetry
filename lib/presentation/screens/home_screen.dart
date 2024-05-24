@@ -56,10 +56,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         }
       },      
       builder: (context, state) => Scaffold(
+
         body: IndexedStack(
           index: screensTabs.keys.toList().indexWhere((e) => e == state.tab),
           children: screensTabs.values.toList(),
-        ),    //screensTabs[state.tab],
+        ), 
         bottomNavigationBar: SlideTransition(
           position: _offsetAnimation,
             child: BottomNavigationBar(
@@ -93,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ],
             currentIndex: screensTabs.keys.toList().indexOf(state.tab),
-            selectedItemColor: ColorStyles.mainColor,
+            selectedItemColor: ColorStyles.pallete1,
             onTap: _onItemTapped,
           ),         
         ),        

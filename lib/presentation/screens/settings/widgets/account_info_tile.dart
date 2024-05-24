@@ -21,7 +21,7 @@ class AccountInfoTile extends StatelessWidget {
       children: [
         SvgPicture.asset(
           svgLocation,
-          colorFilter: ColorFilter.mode(ColorStyles.mainColor.withOpacity(0.5), BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(ColorStyles.pallete1.withOpacity(0.5), BlendMode.srcIn),
           width: 24,
           height: 24
         ),

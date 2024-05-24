@@ -35,7 +35,7 @@ class _ThemeSwitcherState extends State<ThemeSwitcher> {
           children: [
             SvgPicture.asset(
               SvgRepo.theme.location,
-              colorFilter: ColorFilter.mode(ColorStyles.mainColor.withOpacity(0.5), BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(ColorStyles.pallete1.withOpacity(0.5), BlendMode.srcIn),
               width: 24,
               height: 24
             ),    

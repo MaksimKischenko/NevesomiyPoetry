@@ -25,11 +25,20 @@ final class PoemsLoad extends PoemsEvent {
 }
 
 final class PoemsUpdateByPoem extends PoemsEvent {
-    final Poem poem;
+  final Poem poem;
 
    const PoemsUpdateByPoem({
     required this.poem,
   }); 
 }
+
+final class PoemsSearch extends PoemsEvent {
+  final String name;
+
+   const PoemsSearch({
+    required this.name,
+  }); 
+}
+
 
 final class PoemsLoadAndListen extends PoemsEvent {}

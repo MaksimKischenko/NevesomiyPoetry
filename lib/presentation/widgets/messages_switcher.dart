@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
-
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/styles/styles.dart';
 
@@ -39,7 +38,7 @@ class _MessagesSwitcherState extends State<MessagesSwitcher> {
           children: [
             SvgPicture.asset(
               SvgRepo.notification.location,
-              colorFilter: ColorFilter.mode(ColorStyles.mainColor.withOpacity(0.5), BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(ColorStyles.pallete1.withOpacity(0.5), BlendMode.srcIn),
               width: 24,
               height: 24
             ),  

@@ -27,7 +27,7 @@ class ActionMaterialButton extends StatelessWidget {
             child: Center(
               child: LoadingIndicator(
                 indicatorsSize: 22,
-                color: ColorStyles.mainColor,
+                color: ColorStyles.pallete1,
               ),
             )
           );                          

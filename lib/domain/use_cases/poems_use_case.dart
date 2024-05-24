@@ -41,6 +41,7 @@ class PoemsUseCase {
     return cacheService.getPoems(PrefsKeys.poemsCache);
   }
 
+
   List<Poem> poemsSortedBy(Topics value) {
     final poems = poemsRepository.poems;
     if (value != Topics.all) {

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
-import 'package:nevesomiy/presentation/styles/styles.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
 
 
@@ -29,9 +28,6 @@ class PoemList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
-                shadowColor: ColorStyles.mainColor,
-                surfaceTintColor: ColorStyles.mainColor,
-                elevation: 2,
                 child: Ink(
                   child: InkWell(
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -62,7 +58,7 @@ class PoemList extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15)
                     ),
                     AnimatedFlipCounter(
-                      duration: const Duration(milliseconds: 1000),
+                      duration: const Duration(milliseconds: 500),
                       textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15),
                       value: poems[index].peopleLiked?.length?? 0, // pass in a value like 2014
                     ),

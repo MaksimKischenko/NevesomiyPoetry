@@ -28,22 +28,19 @@ class TopicsBar extends StatelessWidget {
                   label: Text(Topics.values[index].nameAndLocation.$1,
                       style: TextStyle(
                           color: selected(index)
-                              ? null
-                              : ColorStyles.assetDissableColor)
+                              ? ColorStyles.pallete1
+                              : ColorStyles.assetDissableColor
+                    )
                   ),
                   onPressed: () => sortByType(Topics.values[index]),
                   style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(ColorStyles.mainColorSplash),
-                    shadowColor:  MaterialStateProperty.all(ColorStyles.mainColor),
-                    surfaceTintColor: MaterialStateProperty.all(ColorStyles.mainColor),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     side: selected(index)? MaterialStateProperty.all(
                       BorderSide(
-                      color: ColorStyles.mainColor, // Цвет границы
-                      width: 1, // Ширина границы
+                        color: ColorStyles.pallete1, 
+                        width: 1,
                       ),
                     ): null,
-                    elevation: MaterialStateProperty.all(2)
+                    elevation: selected(index)? MaterialStateProperty.all(16) : MaterialStateProperty.all(2)
                   ),
                   icon: SvgPicture.asset(
                     Topics.values[index].nameAndLocation.$2,

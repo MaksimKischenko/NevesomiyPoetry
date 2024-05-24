@@ -4,6 +4,7 @@ enum SvgRepo {
   email('assets/icons/envelope.svg'),
   back('assets/icons/back.svg'),
   signOut('assets/icons/sign-out.svg'),
+  search('assets/icons/search.svg'),
   heart('assets/icons/heart.svg'),
   theme('assets/icons/theme.svg'),  
   notification('assets/icons/notification.svg'),      

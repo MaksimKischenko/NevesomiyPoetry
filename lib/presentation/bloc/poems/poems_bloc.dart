@@ -7,6 +7,7 @@ import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/domain.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
+
 part 'poems_event.dart';
 part 'poems_state.dart';
 
@@ -29,6 +30,7 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     if (event is PoemsLoad) return _onLoad(event, emit);
     if (event is PoemsLoadAndListen) return _onLoadRemoteAndListen(event, emit);
     if (event is PoemsSortByType) return _onSort(event, emit);
+    if (event is PoemsSearch) return _onSearch(event, emit);
     if (event is PoemsUpdateByPoem) return _onUpdatePoemsByPoem(event, emit);
     return null;
   }
@@ -77,6 +79,20 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
     emit(PoemsLoaded(
       poems: poemsUseCase.poemsSortedBy(event.value), 
       value: event.value, 
+    ));
+  }
+
+  Future<void> _onSearch(PoemsSearch event, Emitter<PoemsState> emit) async {
+    emit(PoemsLoading());
+    final poems = poemsUseCase.poemsRepository.poems.where((element) => 
+      element.title.toLowerCase().contains(event.name.toLowerCase()
+    ));
+    final topic = Topics.values.firstWhere((element) => 
+     element.nameAndLocation.$1 == poems.first.topicCategory
+    );
+    emit(PoemsLoaded(
+      poems: poems.toList(),
+      value: topic
     ));
   }
 
