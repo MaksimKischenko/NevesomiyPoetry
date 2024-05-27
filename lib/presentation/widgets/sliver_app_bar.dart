@@ -1,8 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:nevesomiy/domain/entites/svg_repo.dart';
+import 'package:nevesomiy/presentation/styles/styles.dart';
+import 'package:nevesomiy/presentation/widgets/widget.dart';
 
 class SliverListAppBar extends SliverPersistentHeaderDelegate {
   final Function() onTap;
@@ -18,14 +19,13 @@ class SliverListAppBar extends SliverPersistentHeaderDelegate {
       appBar: AppBar(
         centerTitle: true,
         actions: [
-          Ink(
-            child: InkWell(
-              onTap: onTap.call,
-              child: SvgPicture.asset(
-                SvgRepo.search.location,
-                width: 34,
-                height: 34,
-              ),
+          IconWrapper(
+            color: ColorStyles.pallete3,
+            onTap: onTap,
+            child: SvgPicture.asset(
+              SvgRepo.search.location,
+              width: 24,
+              height: 24,
             ),
           ),            
         ],

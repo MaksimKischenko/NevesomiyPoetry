@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
@@ -16,10 +15,10 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) { 
-
-    final textCommonStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
+    final textStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
       fontSize: 16
     );
+    final iconWrapperColor = Theme.of(context).colorScheme.primary;
 
     return Scaffold(
       appBar: const SimpleAppBar(title: 'Настройки'),
@@ -29,26 +28,31 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AccountInfoTile(
-              textStyle: textCommonStyle,
+              iconWrapperColor: iconWrapperColor,
+              textStyle: textStyle,
               svgLocation: SvgRepo.account.location,
-              info: DataManager.instance.userEmail ?? 'Неизвестно',
+              info: 'Профиль: ${DataManager.instance.userEmail ?? 'Неизвестно'}' ,
             ),
             const SizedBox(height: 8),
             AccountInfoTile(
-              textStyle: textCommonStyle,
+              iconWrapperColor: iconWrapperColor,
+              textStyle: textStyle,
               svgLocation: SvgRepo.dateAdd.location,
               info: 'Профиль создан: ${DataManager.instance.creationDate?.toStringFormatted() ?? ''}',
             ),
-            // const Spacer(),
+            const SizedBox(height: 8),
             ThemeSwitcher(
-              textStyle: textCommonStyle,
+              iconWrapperColor: iconWrapperColor,
+              textStyle: textStyle,
               text: 'Темная тема',
               onChanged: ({required onChanged}) {
                 context.read<ThemeBloc>().add(ThemeChange(isDark: onChanged));
               },
             ),  
+            const SizedBox(height: 8),
             MessagesSwitcher(
-              textStyle: textCommonStyle,
+              iconWrapperColor: iconWrapperColor,
+              textStyle: textStyle,
               text: 'Включить уведомления',
               onChanged: ({required onChanged}) {
                 context.read<CloudMessagingBloc>().add(CloudMessagingFlag(isEnabled: onChanged));
@@ -56,7 +60,8 @@ class SettingsScreen extends StatelessWidget {
             ),    
             const Spacer(),         
             SignOutTile(
-              textStyle: textCommonStyle,
+              iconWrapperColor: iconWrapperColor,
+              textStyle: textStyle,
               onTap: () => logOut(context)
             )
           ],
@@ -67,7 +72,7 @@ class SettingsScreen extends StatelessWidget {
 
   void logOut(BuildContext context) {
     context.read<AuthBloc>().add(AuthSignOut());
-    context.go('/auth');
+    context.read<ThemeBloc>().add(ThemeChange(isDark: false));
     context.read<MenuBloc>().add(const MenuTabUpdate(tab: MenuTab.poems));
   }
 }

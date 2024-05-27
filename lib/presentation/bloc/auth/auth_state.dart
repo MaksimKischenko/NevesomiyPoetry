@@ -6,7 +6,7 @@ sealed class AuthState extends Equatable {
   @override
   List<Object?> get props => [];
 }
-
+final class AuthInitial extends AuthState {}
 final class AuthStreamStates extends AuthState {
   final User? user;
 

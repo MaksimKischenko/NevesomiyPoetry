@@ -10,8 +10,10 @@ part 'cloud_messaging_state.dart';
 
 class CloudMessagingBloc extends Bloc<CloudMessagingEvent, CloudMessagingState> {
   final FireBaseNotificationService service; 
+  final CacheService cacheService;
   CloudMessagingBloc() 
      :service = FireBaseNotificationService.instance,
+     cacheService = CacheService.instance,
      super(CloudMessagingLoading()) {
       on<CloudMessagingEvent>(_onEvent);
      } 
@@ -28,8 +30,10 @@ class CloudMessagingBloc extends Bloc<CloudMessagingEvent, CloudMessagingState> 
     CloudMessagingFlag event,
     Emitter<CloudMessagingState> emit
   ) async {
+    
+    final isEnabled = event.isEnabled ?? await cacheService.getMessagesFlag();
     try {
-      if(event.isEnabled) {
+      if(isEnabled) {
         await Future.wait([
         service.enableFirebaseMessaging(),
         service.editMessagePermissions(),
@@ -42,7 +46,7 @@ class CloudMessagingBloc extends Bloc<CloudMessagingEvent, CloudMessagingState> 
       } else {
         await service.disableFirebaseMessaging();
       }
-      emit(CloudMessagingActivation(isEnabled: event.isEnabled));
+      emit(CloudMessagingActivation(isEnabled: isEnabled));
     } on FirebaseException catch (e) {
       emit(CloudMessagingError(error: e));
     }

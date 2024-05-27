@@ -23,7 +23,7 @@ class ActionMaterialButton extends StatelessWidget {
             disabledColor: ColorStyles.assetDissableColor,
             minWidth: double.maxFinite,
             onPressed: null,
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
             child: Center(
               child: LoadingIndicator(
                 indicatorsSize: 22,
@@ -35,7 +35,7 @@ class ActionMaterialButton extends StatelessWidget {
           return MaterialButton(
             minWidth: double.maxFinite,
             onPressed: onTap,
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
             child: Text(
               name, 
               style: ButtonTextStyles.authButtontextStyle

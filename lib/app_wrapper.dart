@@ -33,36 +33,36 @@ class _AppWrapperState extends State<AppWrapper> {
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
-      providers: [
-        BlocProvider<CloudMessagingBloc>(
-          create: (context) => CloudMessagingBloc(),
-        ),
-        BlocProvider<NetworkConnectionBloc>(
-          create: (context) => NetworkConnectionBloc(),
-        ),
-        BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc()..add(AuthCheckState()),
-        ),
-        BlocProvider<PoemsBloc>(
-          create: (context) => PoemsBloc(),
-        ),
-        BlocProvider<RemoteResourcesBloc>(
-          create: (context) => RemoteResourcesBloc(),
-        ),        
-        BlocProvider<MenuBloc>(
-          create: (context) => MenuBloc(),
-        ), 
-        BlocProvider<ThemeBloc>(
-          create: (context) => ThemeBloc()..add(ThemeChange())
-        ),          
-      ],
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if(state is AuthSignedIn) {
-            context.read<PoemsBloc>().add(PoemsLoadAndListen());
-          } 
-        },
-        child: widget.child,
-      )
-    );
+    providers: [
+      BlocProvider<CloudMessagingBloc>(
+        create: (context) => CloudMessagingBloc(),
+      ),
+      BlocProvider<NetworkConnectionBloc>(
+        create: (context) => NetworkConnectionBloc(),
+      ),
+      BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc()..add(AuthCheckState()),
+      ),
+      BlocProvider<PoemsBloc>(
+        create: (context) => PoemsBloc(),
+      ),
+      BlocProvider<RemoteResourcesBloc>(
+        create: (context) => RemoteResourcesBloc(),
+      ),        
+      BlocProvider<MenuBloc>(
+        create: (context) => MenuBloc(),
+      ), 
+      BlocProvider<ThemeBloc>(
+        create: (context) => ThemeBloc()..add(ThemeChange())
+      ),          
+    ],
+    child: BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if(state is AuthSignedIn) {
+          context.read<PoemsBloc>().add(PoemsLoadAndListen());
+        }
+      },
+      child: widget.child,
+    )
+  );
 }

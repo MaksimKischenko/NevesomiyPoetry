@@ -78,7 +78,7 @@ class PoemList extends StatelessWidget {
       SvgRepo.heart.location,
       width: 18,
       height: 18,
-  ) : const SizedBox.shrink();
+    ) : const SizedBox.shrink();
 
   Future<void> navigateToPoem(BuildContext context, Poem poem) async {
     final updatedPoem = await context.pushNamed<Poem>('poem', extra: poem);

@@ -23,6 +23,7 @@ class PoemsUseCase {
 
   Future<List<Poem>> doRemotePoems() async {
     final poems = await fireStoreService.getPoems();
+    poems.sort((a, b)=> (b.peopleLiked?.length ?? 0 ).compareTo(a.peopleLiked?.length ?? 0));
     await cacheService.savePoems(poems, PrefsKeys.poemsCache);
     poemsRepository.addAll(poems);
     return poems;  
@@ -30,7 +31,9 @@ class PoemsUseCase {
   
   List<Poem> doRemotePoemsAndListen(QuerySnapshot<Object?> data) {
     final poemTracker = data.docs.first.data() as PoemTracker;
-    final poems = poemTracker.poems;
+    final poems = 
+    poemTracker.poems
+     ..sort((a, b)=> (b.peopleLiked?.length ?? 0 ).compareTo(a.peopleLiked?.length ?? 0));
     unawaited(cacheService.savePoems(poems, PrefsKeys.poemsCache));
     poemsRepository.addAll(poems);
     return poems;  

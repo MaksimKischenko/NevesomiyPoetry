@@ -3,6 +3,7 @@ export 'animate_indicator.dart';
 export 'animated_flip_counter.dart';
 export 'connection_error_body.dart';
 export 'email_field.dart';
+export 'icon_wrapper.dart';
 export 'loading_indicator.dart';
 export 'messages_switcher.dart';
 export 'password_field.dart';

@@ -143,13 +143,14 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
     );
 
   Future<void> _loadPoems() async {
-     context.read<PoemsBloc>().add(PoemsLoad(syncWithFireStore: networkConnectionEnabled));
+    context.read<PoemsBloc>().add(PoemsLoad(syncWithFireStore: networkConnectionEnabled));
   }
 
   Future<void> _searchPoem(String name) async {
-     context.read<PoemsBloc>().add(PoemsSearch(name: name));
-     await _animationController.reverse();
-     _poetryNameController.clear();
+    context.read<PoemsBloc>().add(PoemsSearch(name: name));
+    await _animationController.reverse();
+    _isVisibleSearchField.value = false;
+    _poetryNameController.clear();
   }
 
   Future<void> sortByType(Topics value) async {

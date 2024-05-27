@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() 
     : service = FireBaseAuthService.instance,
     cacheService = CacheService.instance,
-    super(AuthLoading()){
+    super(AuthInitial()){
       on<AuthEvent>(_onEvent);
      } 
 
@@ -122,10 +122,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit
   ) async {
     emit(AuthLoading());
-    await cacheService.clearCache();
     try {
-      await service.signOut();
-      emit(PasswordReseted());
+      await Future.wait([
+       cacheService.clearCache(),
+       service.signOut()
+      ]);
     } on FirebaseAuthException catch (e) {
       emit(AuthError(error: FireBaseAuthFailure(error: e).message));
     }

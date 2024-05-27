@@ -5,6 +5,7 @@ import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/screens/screens.dart';
 import 'package:nevesomiy/presentation/styles/styles.dart';
+import 'package:nevesomiy/presentation/widgets/icon_wrapper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   int selectedBottomNavigationIndex = 0;
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;  
+
   static const Map<MenuTab, Widget> screensTabs = {
     MenuTab.poems:  PoemsScreen(),    
     MenuTab.settings:  SettingsScreen(),
@@ -26,6 +28,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+    (_) async{
+      await _onListenCloudMessages();
+    });   
     _controller = AnimationController(
       duration: const Duration(milliseconds: 400),
       vsync: this,
@@ -47,63 +53,81 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) => BlocConsumer<MenuBloc, MenuState>(
-      listener: (context, state) {
-        _isVisible = state.isVisible;
-        if (_isVisible) {
-          _controller.reverse();
-        } else {
-          _controller.forward();
-        }
-      },      
-      builder: (context, state) => Scaffold(
-
-        body: IndexedStack(
-          index: screensTabs.keys.toList().indexWhere((e) => e == state.tab),
-          children: screensTabs.values.toList(),
-        ), 
-        bottomNavigationBar: SlideTransition(
-          position: _offsetAnimation,
-            child: BottomNavigationBar(
-            enableFeedback: true,
-            items:  [          
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
+    listener: (context, state) {
+      _isVisible = state.isVisible;
+      if (_isVisible) {
+        _controller.reverse();
+      } else {
+        _controller.forward();
+      }
+    },      
+    builder: (context, state) => Scaffold(
+      body: IndexedStack(
+        index: screensTabs.keys.toList().indexWhere((e) => e == state.tab),
+        children: screensTabs.values.toList(),
+      ), 
+      bottomNavigationBar: SlideTransition(
+        position: _offsetAnimation,
+          child: BottomNavigationBar(
+          enableFeedback: true,
+          items:  [          
+            BottomNavigationBarItem(
+              icon: IconWrapper(
+                onTap: null,
+                color: ColorStyles.pallete1,                 
+                child: SvgPicture.asset(
                   SvgRepo.bookClosed.location,
                   width: 24,
                   height: 24,
-                ),  
-                activeIcon: SvgPicture.asset(
+                ),
+              ),  
+              activeIcon: IconWrapper(
+                onTap: null,
+                color: ColorStyles.pallete1,                  
+                child: SvgPicture.asset(
                   SvgRepo.bookOpen.location,
                   width: 24,
                   height: 24,
-                ),    
-                label: 'Стихи',
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
+                ),
+              ),    
+              label: 'Стихи',
+            ),
+            BottomNavigationBarItem(
+              icon: IconWrapper(
+                onTap: null,
+                color: ColorStyles.pallete1,
+                child: SvgPicture.asset(
                   SvgRepo.settings.location,
                   width: 24,
                   height: 24,
-                ),  
-                activeIcon: SvgPicture.asset(
+                ),
+              ),  
+              activeIcon: IconWrapper(
+                onTap: null,
+                color: ColorStyles.pallete1,                  
+                child: SvgPicture.asset(
                   SvgRepo.wrench.location,
                   width: 24,
                   height: 24,
-                ),    
-                label: 'Настройки',
-              ),
-            ],
-            currentIndex: screensTabs.keys.toList().indexOf(state.tab),
-            selectedItemColor: ColorStyles.pallete1,
-            onTap: _onItemTapped,
-          ),         
-        ),        
-      )
-    );
+                ),
+              ),    
+              label: 'Настройки',
+            ),
+          ],
+          currentIndex: screensTabs.keys.toList().indexOf(state.tab),
+          selectedItemColor: ColorStyles.pallete1,
+          onTap: _onItemTapped,
+        ),         
+      ),        
+    )
+  );
 
-    
-   void _onItemTapped(int index) {
+  void _onItemTapped(int index) {
     selectedBottomNavigationIndex = index;
     context.read<MenuBloc>().add(MenuTabUpdate(tab: screensTabs.keys.toList()[index]));
   } 
+
+  Future<void> _onListenCloudMessages() async{
+    context.read<CloudMessagingBloc>().add(const CloudMessagingFlag());
+  }
 }

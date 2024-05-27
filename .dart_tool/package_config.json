@@ -20,6 +20,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "ansicolor",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/ansicolor-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "archive",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/archive-3.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "args",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/args-2.5.0",
       "packageUri": "lib/",
@@ -176,6 +188,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "csslib",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/csslib-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "dart_style",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/dart_style-2.3.6",
       "packageUri": "lib/",
@@ -302,6 +320,12 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "flutter_native_splash",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/flutter_native_splash-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "flutter_svg",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/flutter_svg-2.0.10+1",
       "packageUri": "lib/",
@@ -380,6 +404,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "html",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/html-0.15.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "http",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/http-1.2.1",
       "packageUri": "lib/",
@@ -396,6 +426,12 @@
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "image",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/image-4.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "intl",
@@ -722,6 +758,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "universal_io",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/universal_io-2.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "vector_graphics",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/vector_graphics-1.1.11+1",
       "packageUri": "lib/",
@@ -800,7 +842,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-05-23T14:07:11.930381Z",
+  "generated": "2024-05-27T14:41:15.976447Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

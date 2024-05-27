@@ -84,16 +84,26 @@ class PoemsBloc extends Bloc<PoemsEvent, PoemsState> {
 
   Future<void> _onSearch(PoemsSearch event, Emitter<PoemsState> emit) async {
     emit(PoemsLoading());
-    final poems = poemsUseCase.poemsRepository.poems.where((element) => 
-      element.title.toLowerCase().contains(event.name.toLowerCase()
-    ));
-    final topic = Topics.values.firstWhere((element) => 
-     element.nameAndLocation.$1 == poems.first.topicCategory
-    );
-    emit(PoemsLoaded(
-      poems: poems.toList(),
-      value: topic
-    ));
+    var topic = await cacheService.getTopicName();
+    if(event.name.isNotEmpty) {
+      final poems = poemsUseCase.poemsRepository.poems.where((element) => 
+        element.title.toLowerCase().contains(event.name.toLowerCase()
+      ));
+      if(poems.isNotEmpty) {
+          topic = Topics.values.firstWhere((element) => 
+          element.nameAndLocation.$1 == poems.first.topicCategory
+        );
+      } 
+      emit(PoemsLoaded(
+        poems: poems.toList(),
+        value: topic
+      ));
+    } else {
+      emit(PoemsLoaded(
+        poems: poemsUseCase.poemsSortedBy(topic), 
+        value: topic, 
+      ));
+    }
   }
 
   Future<void> _onUpdatePoemsByPoem(PoemsUpdateByPoem event, Emitter<PoemsState> emit) async {

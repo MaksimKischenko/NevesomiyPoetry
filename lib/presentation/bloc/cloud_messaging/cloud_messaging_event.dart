@@ -9,10 +9,10 @@ sealed class CloudMessagingEvent extends Equatable {
 
 
 final class CloudMessagingFlag extends CloudMessagingEvent {
-  final bool isEnabled;
+  final bool? isEnabled;
 
   const CloudMessagingFlag({
-    required this.isEnabled,
+    this.isEnabled,
   });
 
 }

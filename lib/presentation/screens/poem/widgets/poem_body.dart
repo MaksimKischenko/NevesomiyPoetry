@@ -99,7 +99,8 @@ class _PoemBodyState extends State<PoemBody> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       SelectableText(PoemParser.byBreakContent(widget.poem.content),
-                          style: Theme.of(context).textTheme.bodyMedium),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontFamily: 'Roboto')
+                      ),
                       const SizedBox(height: 12),
                     ],
                   ),
