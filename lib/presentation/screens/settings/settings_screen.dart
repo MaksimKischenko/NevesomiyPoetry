@@ -73,6 +73,7 @@ class SettingsScreen extends StatelessWidget {
   void logOut(BuildContext context) {
     context.read<AuthBloc>().add(AuthSignOut());
     context.read<ThemeBloc>().add(ThemeChange(isDark: false));
+    context.read<CloudMessagingBloc>().add(const CloudMessagingFlag(isEnabled: false));
     context.read<MenuBloc>().add(const MenuTabUpdate(tab: MenuTab.poems));
   }
 }

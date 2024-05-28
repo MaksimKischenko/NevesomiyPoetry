@@ -5,6 +5,7 @@ import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/styles/styles.dart';
 import 'package:nevesomiy/presentation/widgets/icon_wrapper.dart';
+import 'package:nevesomiy/utils/utils.dart';
 
 class MessagesSwitcher extends StatefulWidget {
   final TextStyle? textStyle;
@@ -34,7 +35,7 @@ class _MessagesSwitcherState extends State<MessagesSwitcher> {
           if(state is CloudMessagingActivation) {
             isEnabled.value = state.isEnabled;
           } else if(state is CloudMessagingError) {
-            
+            _showError(state.error.toString());
           }
         },
         child: Row(
@@ -74,5 +75,13 @@ class _MessagesSwitcherState extends State<MessagesSwitcher> {
   void _onTap(bool value) {
     isEnabled.value = value;
     widget.onChanged?.call(onChanged: value);
+  }
+  
+  void _showError(String title) {
+    SnackBarDialog.showSnackBar(
+      context, 
+      title, 
+      isError: true
+    );             
   }
 }

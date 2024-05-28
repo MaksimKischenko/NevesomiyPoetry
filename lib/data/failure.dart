@@ -2,7 +2,6 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nevesomiy/domain/entites/ettities.dart';
 
 abstract interface class Failure  {
@@ -24,20 +23,21 @@ class SimpleFailure implements Failure {
 }
 
 class GoogleAuthFailure implements Failure {
-  final GoogleSignInAccount? googleAccount;
+  final String? error;
 
   GoogleAuthFailure({
-    required this.googleAccount,
+    required this.error,
   });
   
   @override
   String get message {
-    if(googleAccount == null) {
-      return 'Аккаунт не найден';
-    } 
-    else {
-      return FireBaseAuthErroCode.unknown.uiMessage;
-    }
+    return error ?? 'Неизвестно';
+    // if(error == null) {
+    //   return 'Аккаунт не найден';
+    // } 
+    // else {
+    //   return FireBaseAuthErroCode.unknown.uiMessage;
+    // }
   }
 }
 

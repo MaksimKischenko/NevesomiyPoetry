@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:nevesomiy/data/data.dart';
 import 'package:nevesomiy/data/failure.dart';
 import 'package:nevesomiy/domain/services/fire_base_auth_service.dart';
@@ -97,8 +98,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await service.signInWithGoogle();
       emit(AuthSignedIn(user: user));
-    } on FirebaseAuthException catch (e) {
-      emit(AuthError(error: FireBaseAuthFailure(error: e).message));
+    } on PlatformException catch (e) {
+      emit(AuthError(error: GoogleAuthFailure(error: e.details).message));
     }    
   }  
 

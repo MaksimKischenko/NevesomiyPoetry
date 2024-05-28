@@ -6,6 +6,7 @@ import 'package:nevesomiy/domain/entites/ettities.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 import 'package:nevesomiy/presentation/styles/styles.dart';
 import 'package:nevesomiy/presentation/widgets/icon_wrapper.dart';
+import 'package:nevesomiy/utils/snack_bar_dialogs.dart';
 
 class SignOutTile extends StatelessWidget {
   final TextStyle? textStyle;
@@ -26,7 +27,9 @@ class SignOutTile extends StatelessWidget {
         if (state.user == null) {
           context.go('/auth');
         } 
-      }          
+      } else if (state is AuthError) {
+          _showError(context, state.error.toString());
+      }  
     },
     child: Ink(
       child: InkWell(
@@ -51,4 +54,12 @@ class SignOutTile extends StatelessWidget {
       ),
     ),
   );
+  
+  void _showError(BuildContext context, String title, ) {
+    SnackBarDialog.showSnackBar(
+      context, 
+      title, 
+      isError: true
+    );             
+  }
 }

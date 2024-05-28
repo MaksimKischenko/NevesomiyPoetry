@@ -52,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
           BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
             listener: (context, state) {
               if (state is NetworkConnectionEnabled) {
-                showNetworkConnectionMessage(state);
+                _showNetworkConnectionMessage(state);
               }
             },
           ),
@@ -60,12 +60,12 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
             listener: (context, state) {
               if (state is AuthUnVerifiedEmail) {
                 if (!state.user!.emailVerified) {
-                  showEmailVarifictionMessage(state.user?.email ?? '');
+                  _showEmailVarifictionMessage(state.user?.email ?? '');
                 } else if(state is AuthSignedIn) {
                   context.go('/home');         
                 }
               } else if(state is AuthError) {
-                showErrorSignUpMessage(state.error.toString());
+                _showError(state.error.toString());
               }
             },
           ),
@@ -98,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
       )
     );
 
-  void showErrorSignUpMessage(String title) {
+  void _showError(String title) {
     SnackBarDialog.showSnackBar(
       context, 
       title, 
@@ -107,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
   }
 
   
-  void showNetworkConnectionMessage(NetworkConnectionEnabled state) {
+  void _showNetworkConnectionMessage(NetworkConnectionEnabled state) {
     if (!state.isEnabled) {
       ModalDialogs.showMessage(
         context: context,
@@ -118,7 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
     }
   }
 
-  void showEmailVarifictionMessage(String email) {
+  void _showEmailVarifictionMessage(String email) {
     ModalDialogs.showMessage(
       context: context,
       type: DialogType.emailVerify,

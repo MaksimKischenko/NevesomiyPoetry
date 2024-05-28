@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nevesomiy/app_state_manager.dart';
 import 'package:nevesomiy/presentation/bloc/bloc.dart';
 
+
 class AppWrapper extends StatefulWidget {
   final Widget child;
 
@@ -60,9 +61,18 @@ class _AppWrapperState extends State<AppWrapper> {
       listener: (context, state) {
         if(state is AuthSignedIn) {
           context.read<PoemsBloc>().add(PoemsLoadAndListen());
+        } else if(state is AuthError) {
+          // _showError(state.error.toString());
         }
       },
       child: widget.child,
     )
   );
+  // void _showError(String title) {
+  //   SnackBarDialog.showSnackBar(
+  //     context, 
+  //     title, 
+  //     isError: true
+  //   );             
+  // }
 }

@@ -21,8 +21,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   late Animation<Offset> _offsetAnimation;  
 
   static const Map<MenuTab, Widget> screensTabs = {
-    MenuTab.poems:  PoemsScreen(),    
-    MenuTab.settings:  SettingsScreen(),
+    MenuTab.poems: PoemsScreen(),    
+    MenuTab.settings: SettingsScreen(),
   };
 
   @override
@@ -72,14 +72,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           enableFeedback: true,
           items:  [          
             BottomNavigationBarItem(
-              icon: IconWrapper(
-                onTap: null,
-                color: ColorStyles.pallete1,                 
-                child: SvgPicture.asset(
-                  SvgRepo.bookClosed.location,
-                  width: 24,
-                  height: 24,
-                ),
+              icon: SvgPicture.asset(
+                SvgRepo.bookClosed.location,
+                width: 24,
+                height: 24,
               ),  
               activeIcon: IconWrapper(
                 onTap: null,
@@ -93,14 +89,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               label: 'Стихи',
             ),
             BottomNavigationBarItem(
-              icon: IconWrapper(
-                onTap: null,
-                color: ColorStyles.pallete1,
-                child: SvgPicture.asset(
-                  SvgRepo.settings.location,
-                  width: 24,
-                  height: 24,
-                ),
+              icon: SvgPicture.asset(
+                SvgRepo.settings.location,
+                width: 24,
+                height: 24,
               ),  
               activeIcon: IconWrapper(
                 onTap: null,

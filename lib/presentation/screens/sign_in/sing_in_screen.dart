@@ -50,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
           BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
              listener: (context, state) {
               if(state is NetworkConnectionEnabled) {
-                showErrorConnectionMessage(state);
+                _showErrorConnectionMessage(state);
               }
             }  
           ),
@@ -61,7 +61,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
                   context.go('/home');
                 }
               } else if(state is AuthError) {
-                showErrorSignInMessage(state.error.toString());
+                _showError(state.error.toString());
               }
             } 
           ),                 
@@ -94,7 +94,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
         )
           ));
 
-  void showErrorConnectionMessage(NetworkConnectionEnabled state) {
+  void _showErrorConnectionMessage(NetworkConnectionEnabled state) {
     if(!state.isEnabled) {
       ModalDialogs.showMessage(
         type: DialogType.errorNetwork,
@@ -105,7 +105,7 @@ class _SignInScreenState extends State<SignInScreen>  with TickerProviderStateMi
     }
   }
 
-  void showErrorSignInMessage(String title) {
+  void _showError(String title) {
     SnackBarDialog.showSnackBar(
       context, 
       title, 

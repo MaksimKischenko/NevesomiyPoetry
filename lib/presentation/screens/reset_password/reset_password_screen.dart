@@ -40,9 +40,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is PasswordReseted) {
-            passwordReseted('Пароль успешно сброшен');
+            _passwordReseted('Пароль успешно сброшен');
           } else if(state is AuthError) {
-            showErrorResetPassword(state.error.toString());
+            _showError(state.error.toString());
           }
         },
         child: Padding(
@@ -73,7 +73,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     const SizedBox(height: 12),
                     ActionMaterialButton(
                       name: 'Сбросить пароль',
-                      onTap: resetPassword,
+                      onTap: _resetPassword,
                     ),
                     TextButton(
                       onPressed: () => context.pop(),
@@ -95,7 +95,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       ),
     );
 
-  void showErrorResetPassword(String title) {
+  void _showError(String title) {
     SnackBarDialog.showSnackBar(
       context, 
       title, 
@@ -103,11 +103,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );             
   }
 
-  void resetPassword() {
+  void _resetPassword() {
     context.read<AuthBloc>().add(ResetPassword(email: _emailTextInputController.text.trim()));
   }
 
-  void passwordReseted(
+  void _passwordReseted(
     String title,
   ) {
     SnackBarDialog.showSnackBar(context, title, isError: false);
