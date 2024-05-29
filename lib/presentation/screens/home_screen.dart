@@ -53,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) => BlocConsumer<MenuBloc, MenuState>(
-    listener: (context, state) {
+    listener: (context, state) async{
       _isVisible = state.isVisible;
       if (_isVisible) {
-        _controller.reverse();
+        await _controller.reverse();
       } else {
-        _controller.forward();
+        await _controller.forward();
       }
     },      
     builder: (context, state) => Scaffold(
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           selectedItemColor: ColorStyles.pallete1,
           onTap: _onItemTapped,
         ),         
-      ),        
+      )     
     )
   );
 

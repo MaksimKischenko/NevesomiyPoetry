@@ -22,7 +22,8 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
   late ScrollController _hideBottomNavController;
   late TextEditingController _poetryNameController;
   late AnimationController _animationController;
-  late Animation<Offset> _offsetAnimation;  
+  late Animation<Offset> _offsetAnimationSearchField;  
+  late Animation<Offset> _offsetAnimationPoemsList;  
   late ValueNotifier<bool> _isVisibleSearchField;
   bool networkConnectionEnabled = true;
   var _isVisibleBottomBar = true;
@@ -37,7 +38,14 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
       duration: const Duration(milliseconds: 400),
       vsync: this,
     );
-    _offsetAnimation = Tween<Offset>(
+    _offsetAnimationPoemsList = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(0, 0.1),
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.ease,
+    ));
+    _offsetAnimationSearchField = Tween<Offset>(
       begin: const Offset(0, -10),
       end: const Offset(0, 0.1),
     ).animate(CurvedAnimation(
@@ -122,7 +130,7 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
                     valueListenable: _isVisibleSearchField,
                     builder: (context, value, child) => SearchPoetryBar(
                       isVisibleSearchField: _isVisibleSearchField.value,
-                      offsetAnimation: _offsetAnimation,
+                      offsetAnimation: _offsetAnimationSearchField,
                       poetryNameController: _poetryNameController,
                       onSearch: () {
                         _searchPoem(_poetryNameController.text);
@@ -130,8 +138,10 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
                     ),
                   ),
                   PoemList(
+                    offsetAnimation: _offsetAnimationPoemsList,
                     poems: state.poems,
                   ),
+                  
                 ],
               ),
             );
