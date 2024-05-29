@@ -61,18 +61,9 @@ class _AppWrapperState extends State<AppWrapper> {
       listener: (context, state) {
         if(state is AuthSignedIn) {
           context.read<PoemsBloc>().add(PoemsLoadAndListen());
-        } else if(state is AuthError) {
-          // _showError(state.error.toString());
-        }
+        } 
       },
       child: widget.child,
     )
   );
-  // void _showError(String title) {
-  //   SnackBarDialog.showSnackBar(
-  //     context, 
-  //     title, 
-  //     isError: true
-  //   );             
-  // }
 }
