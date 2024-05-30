@@ -6,10 +6,14 @@ import 'package:nevesomiy/presentation/styles/styles.dart';
 import 'package:nevesomiy/presentation/widgets/widget.dart';
 
 class SliverListAppBar extends SliverPersistentHeaderDelegate {
-  final Function() onTap;
+  final Function() onSearchTap;
+  final Function() onChangeListType;
+  final ValueNotifier<bool> isListType;
   
   const SliverListAppBar({
-    required this.onTap,
+    required this.onSearchTap,
+    required this.onChangeListType,
+    required this.isListType
   });
 
   @override
@@ -18,10 +22,21 @@ class SliverListAppBar extends SliverPersistentHeaderDelegate {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         centerTitle: true,
+        leading: IconButton(
+          onPressed: onChangeListType, 
+          icon: ValueListenableBuilder(
+            valueListenable: isListType,
+            builder: (context, value, child) => Icon(
+              isListType.value? Icons.list: Icons.grid_view, 
+              size: 32, 
+              color: ColorStyles.pallete3
+            ),
+          )
+        ), 
         actions: [
           IconWrapper(
             color: ColorStyles.pallete3,
-            onTap: onTap,
+            onTap: onSearchTap,
             child: SvgPicture.asset(
               SvgRepo.search.location,
               width: 24,

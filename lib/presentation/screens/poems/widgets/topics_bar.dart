@@ -15,45 +15,43 @@ class TopicsBar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => SliverList(
-      delegate: SliverChildBuilderDelegate(
-        childCount: 1,
-        (_, simpleIndex) => Padding(
-          padding: const EdgeInsets.all(8),
-          child: Wrap(
-            children: Topics.values
-              .mapIndexed((e, index) => Padding(
-                padding: const EdgeInsets.all(3),
-                child: ElevatedButton.icon(
-                  label: Text(Topics.values[index].nameAndLocation.$1,
-                      style: TextStyle(
-                          color: selected(index)
-                              ? ColorStyles.pallete1
-                              : ColorStyles.assetDissableColor
-                    )
+  Widget build(BuildContext context) => SliverList.builder(
+    itemCount: 1,
+    itemBuilder: (_, simpleIndex) => Padding(
+      padding: const EdgeInsets.all(8),
+      child: Wrap(
+        children: Topics.values
+          .mapIndexed((e, index) => Padding(
+            padding: const EdgeInsets.all(3),
+            child: ElevatedButton.icon(
+              label: Text(Topics.values[index].nameAndLocation.$1,
+                  style: TextStyle(
+                      color: selected(index)
+                          ? ColorStyles.pallete1
+                          : ColorStyles.assetDissableColor
+                )
+              ),
+              onPressed: () => sortByType(Topics.values[index]),
+              style: ButtonStyle(
+                side: selected(index)? MaterialStateProperty.all(
+                  BorderSide(
+                    color: ColorStyles.pallete1, 
+                    width: 1,
                   ),
-                  onPressed: () => sortByType(Topics.values[index]),
-                  style: ButtonStyle(
-                    side: selected(index)? MaterialStateProperty.all(
-                      BorderSide(
-                        color: ColorStyles.pallete1, 
-                        width: 1,
-                      ),
-                    ): null,
-                    elevation: selected(index)? MaterialStateProperty.all(16) : MaterialStateProperty.all(2)
-                  ),
-                  icon: SvgPicture.asset(
-                    Topics.values[index].nameAndLocation.$2,
-                    colorFilter: selected(index)
-                        ? null
-                        : ColorFilter.mode(ColorStyles.assetDissableColor, BlendMode.srcIn),
-                    width: 16,
-                    height: 16,
-                  ),
-                ),
-            )).toList(),
-          ),
-        )
+                ): null,
+                elevation: selected(index)? MaterialStateProperty.all(16) : MaterialStateProperty.all(2)
+              ),
+              icon: SvgPicture.asset(
+                Topics.values[index].nameAndLocation.$2,
+                colorFilter: selected(index)
+                    ? null
+                    : ColorFilter.mode(ColorStyles.assetDissableColor, BlendMode.srcIn),
+                width: 16,
+                height: 16,
+              ),
+            ),
+        )).toList(),
+      ),
     )
   );
 

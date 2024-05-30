@@ -21,58 +21,27 @@ class PoemsScreen extends StatefulWidget {
 class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStateMixin{
   late ScrollController _hideBottomNavController;
   late TextEditingController _poetryNameController;
-  late AnimationController _animationController;
+  late AnimationController _searchAnimationController;
   late Animation<Offset> _offsetAnimationSearchField;  
   late Animation<Offset> _offsetAnimationPoemsList;  
   late ValueNotifier<bool> _isVisibleSearchField;
-  bool networkConnectionEnabled = true;
+  late ValueNotifier<bool> _isListType;
+  var _networkConnectionEnabled = true;
   var _isVisibleBottomBar = true;
 
   @override
   void initState() {
     super.initState();
-    _isVisibleSearchField = ValueNotifier(false);
-    _poetryNameController = TextEditingController();
-    _hideBottomNavController = ScrollController();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 400),
-      vsync: this,
-    );
-    _offsetAnimationPoemsList = Tween<Offset>(
-      begin: const Offset(0, 0),
-      end: const Offset(0, 0.1),
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.ease,
-    ));
-    _offsetAnimationSearchField = Tween<Offset>(
-      begin: const Offset(0, -10),
-      end: const Offset(0, 0.1),
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.ease,
-    ));
-    _hideBottomNavController.addListener(() {
-      if (_hideBottomNavController.position.userScrollDirection == ScrollDirection.reverse) {
-        if (_isVisibleBottomBar) {
-          _isVisibleBottomBar = false;
-          context.read<MenuBloc>().add(MenuHide());
-        }
-      } else if (_hideBottomNavController.position.userScrollDirection == ScrollDirection.forward) {
-        if (!_isVisibleBottomBar) {
-          _isVisibleBottomBar = true;
-          context.read<MenuBloc>().add(MenuShow());
-        }
-      }
-    });
+    _onInitControllers();
   }
 
   @override
   void dispose() {
     _poetryNameController.dispose();
     _hideBottomNavController.dispose();
-    _animationController.dispose();
+    _searchAnimationController.dispose();
     _isVisibleSearchField.dispose();
+    _isListType.dispose();
     super.dispose();
   }
 
@@ -81,7 +50,7 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
   Widget build(BuildContext context) => BlocListener<NetworkConnectionBloc, NetworkConnectionState>(
       listener: (context, state) {
         if(state is NetworkConnectionEnabled) {
-          networkConnectionEnabled = state.isEnabled;
+          _networkConnectionEnabled = state.isEnabled;
         }
       },  
       child: BlocConsumer<PoemsBloc, PoemsState>(
@@ -114,8 +83,12 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
                 slivers: [
                   SliverPersistentHeader(
                     delegate: SliverListAppBar(
-                      onTap: () {
-                        _animationController.forward();
+                      isListType: _isListType,
+                      onChangeListType: () {
+                        _isListType.value = !_isListType.value;
+                      },
+                      onSearchTap: () {
+                        _searchAnimationController.forward();
                         _isVisibleSearchField.value = true;
                       },
                     ),
@@ -137,11 +110,18 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
                       },
                     ),
                   ),
-                  PoemList(
-                    offsetAnimation: _offsetAnimationPoemsList,
-                    poems: state.poems,
-                  ),
-                  
+                  ValueListenableBuilder(
+                    valueListenable: _isListType,
+                    builder: (context, value, child) => _isListType.value? 
+                    PoemList(
+                      offsetAnimation: _offsetAnimationPoemsList,
+                      poems: state.poems
+                    ): 
+                    PoemGrid(
+                      offsetAnimation: _offsetAnimationPoemsList,
+                      poems: state.poems,
+                    ),                    
+                  )
                 ],
               ),
             );
@@ -153,12 +133,12 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
     );
 
   Future<void> _loadPoems() async {
-    context.read<PoemsBloc>().add(PoemsLoad(syncWithFireStore: networkConnectionEnabled));
+    context.read<PoemsBloc>().add(PoemsLoad(syncWithFireStore: _networkConnectionEnabled));
   }
 
   Future<void> _searchPoem(String name) async {
     context.read<PoemsBloc>().add(PoemsSearch(name: name));
-    await _animationController.reverse();
+    await _searchAnimationController.reverse();
     _isVisibleSearchField.value = false;
     _poetryNameController.clear();
   }
@@ -166,4 +146,42 @@ class _PoemsScreenState extends State<PoemsScreen> with SingleTickerProviderStat
   Future<void> sortByType(Topics value) async {
     context.read<PoemsBloc>().add(PoemsSortByType(value: value));
   }
+
+  void _onInitControllers() {
+    _isVisibleSearchField = ValueNotifier(false);
+    _isListType = ValueNotifier(true);
+    _poetryNameController = TextEditingController();
+    _hideBottomNavController = ScrollController();
+    _searchAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+    _offsetAnimationPoemsList = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(0, 0.1),
+    ).animate(CurvedAnimation(
+      parent: _searchAnimationController,
+      curve: Curves.ease,
+    ));
+    _offsetAnimationSearchField = Tween<Offset>(
+      begin: const Offset(0, -10),
+      end: const Offset(0, 0.1),
+    ).animate(CurvedAnimation(
+      parent: _searchAnimationController,
+      curve: Curves.ease,
+    ));
+    _hideBottomNavController.addListener(() {
+      if (_hideBottomNavController.position.userScrollDirection == ScrollDirection.reverse) {
+        if (_isVisibleBottomBar) {
+          _isVisibleBottomBar = false;
+          context.read<MenuBloc>().add(MenuHide());
+        }
+      } else if (_hideBottomNavController.position.userScrollDirection == ScrollDirection.forward) {
+        if (!_isVisibleBottomBar) {
+          _isVisibleBottomBar = true;
+          context.read<MenuBloc>().add(MenuShow());
+        }
+      }
+    });
+  } 
 }
