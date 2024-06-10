@@ -27,11 +27,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-    (_) async{
-      await _onListenCloudMessages();
-    });   
     _controller = AnimationController(
       duration: const Duration(milliseconds: 400),
       vsync: this,
@@ -43,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       parent: _controller,
       curve: Curves.ease,
     ));
+    super.initState();
   }
 
   @override
@@ -118,8 +114,4 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     selectedBottomNavigationIndex = index;
     context.read<MenuBloc>().add(MenuTabUpdate(tab: screensTabs.keys.toList()[index]));
   } 
-
-  Future<void> _onListenCloudMessages() async{
-    context.read<CloudMessagingBloc>().add(const CloudMessagingFlag());
-  }
 }

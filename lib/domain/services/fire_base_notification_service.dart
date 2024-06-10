@@ -37,10 +37,10 @@ class FireBaseNotificationService {
      _firebaseMessaging.getToken().then((token) {
       // Здесь вы можете отправить токен на ваш сервер, если это необходимо.
     }),
-      _firebaseMessaging
+    _firebaseMessaging
           .subscribeToTopic('t3')
           .then((value) => log('topic subscrition enable')),
-      _cacheService.saveMessagesFlag(sendsMessages: true)
+    _cacheService.saveMessagesFlag(sendsMessages: true)
     ]);
   }
 

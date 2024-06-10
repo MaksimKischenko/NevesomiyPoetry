@@ -18,7 +18,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
   super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-    (_) async{
+    (_) {
+      _onListenCloudMessages();
       _onListenNetworkConnection();
     });   
   }
@@ -76,5 +77,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _onListenNetworkConnection() {
     context.read<NetworkConnectionBloc>().add(NetworkConnectionRun());
+  }
+
+  Future<void> _onListenCloudMessages() async{
+    context.read<CloudMessagingBloc>().add(const CloudMessagingFlag());
   }
 }
