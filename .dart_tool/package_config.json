@@ -278,6 +278,18 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "firebase_in_app_messaging",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_in_app_messaging-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_in_app_messaging_platform_interface",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_in_app_messaging_platform_interface-0.2.4+36",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "firebase_messaging",
       "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/firebase_messaging-15.0.0",
       "packageUri": "lib/",
@@ -309,7 +321,7 @@
     },
     {
       "name": "flutter_bloc",
-      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/flutter_bloc-8.1.5",
+      "rootUri": "file:///Users/kishchanka/.pub-cache/hosted/pub.dev/flutter_bloc-8.1.6",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -842,7 +854,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-06-10T08:02:32.761314Z",
+  "generated": "2024-06-11T09:37:30.141251Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

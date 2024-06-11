@@ -22,12 +22,12 @@ class CloudMessagingBloc extends Bloc<CloudMessagingEvent, CloudMessagingState> 
     CloudMessagingEvent event,
     Emitter<CloudMessagingState> emit,
   ) {
-    if (event is CloudMessagingFlag) return _onEnable(event, emit);
+    if (event is CloudMessagingRun) return _onEnable(event, emit);
     return null;
   }
 
   Future<void> _onEnable(
-    CloudMessagingFlag event,
+    CloudMessagingRun event,
     Emitter<CloudMessagingState> emit
   ) async {
     
@@ -35,8 +35,9 @@ class CloudMessagingBloc extends Bloc<CloudMessagingEvent, CloudMessagingState> 
     try {
       if(isEnabled) {
         await Future.wait([
-        service.enableFirebaseMessaging(),
         service.editMessagePermissions(),
+        service.enableFirebaseMessaging(),
+        service.enableFirebaseInAppMessaging(),
         emit.forEach<RemoteMessage>(
           service.myOutAppStream, 
           onData: (data) =>  CloudMessagingReceive(

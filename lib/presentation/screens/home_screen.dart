@@ -27,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _onListenCloudMessages();
+    });
     _controller = AnimationController(
       duration: const Duration(milliseconds: 400),
       vsync: this,
@@ -114,4 +117,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     selectedBottomNavigationIndex = index;
     context.read<MenuBloc>().add(MenuTabUpdate(tab: screensTabs.keys.toList()[index]));
   } 
+
+  void _onListenCloudMessages() {
+    context.read<CloudMessagingBloc>().add(const CloudMessagingRun());
+  }
 }

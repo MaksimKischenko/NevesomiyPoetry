@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:nevesomiy/domain/services/local_cache_service.dart';
 
@@ -9,6 +10,7 @@ class FireBaseNotificationService {
   static FireBaseNotificationService get instance => _instance;
   
   final _firebaseMessaging = FirebaseMessaging.instance;
+  final _firebaseInAppMessaging = FirebaseInAppMessaging.instance;
   final _cacheService = CacheService.instance;
 
   Stream<RemoteMessage> get myInAppStream => FirebaseMessaging.onMessage;
@@ -30,6 +32,11 @@ class FireBaseNotificationService {
       provisional: false,
       sound: true,
     );     
+  }
+
+
+  Future<void> enableFirebaseInAppMessaging() async {
+    await _firebaseInAppMessaging.triggerEvent('my_event');
   }
 
   Future<void> enableFirebaseMessaging() async {

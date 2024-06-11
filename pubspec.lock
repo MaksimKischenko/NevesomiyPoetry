@@ -369,6 +369,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.17.1"
+  firebase_in_app_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_in_app_messaging
+      sha256: "4b65bba3eebf8a60a2edc8184ed30b979c189121b9fb83127641d7f253fe5796"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.0"
+  firebase_in_app_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_in_app_messaging_platform_interface
+      sha256: "3ba5d5dc749230b0b08602216294c3d3a7f0e3ab1bbbf41f443c3c7a9743713b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4+36"
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -410,10 +426,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_bloc
-      sha256: f0ecf6e6eb955193ca60af2d5ca39565a86b8a142452c5b24d96fb477428f4d2
+      sha256: b594505eac31a0518bdcb4b5b79573b8d9117b193cc80cc12e17d639b10aa27a
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.5"
+    version: "8.1.6"
   flutter_lints:
     dependency: "direct dev"
     description:
