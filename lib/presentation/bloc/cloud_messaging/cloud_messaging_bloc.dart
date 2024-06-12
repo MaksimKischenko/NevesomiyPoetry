@@ -37,7 +37,7 @@ class CloudMessagingBloc extends Bloc<CloudMessagingEvent, CloudMessagingState> 
         await Future.wait([
         service.editMessagePermissions(),
         service.enableFirebaseMessaging(),
-        service.enableFirebaseInAppMessaging(),
+        // service.enableFirebaseInAppMessaging(),
         emit.forEach<RemoteMessage>(
           service.myOutAppStream, 
           onData: (data) =>  CloudMessagingReceive(

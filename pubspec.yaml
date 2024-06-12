@@ -3,7 +3,7 @@ description: Poetry mobile application.
 
 publish_to: 'none' 
 
-version: 1.1.7+9
+version: 1.1.8+10
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
@@ -24,7 +24,6 @@ dependencies:
   firebase_auth: ^5.0.0
   google_sign_in: ^6.2.1
   firebase_messaging: ^15.0.0 
-  firebase_in_app_messaging: ^0.8.0
   cloud_firestore: ^5.0.0
 
   # bl
