@@ -29,10 +29,10 @@ mixin AppThemes {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(ColorStyles.pallete3.withOpacity(0.9)),
-          foregroundColor: MaterialStateProperty.all(ColorStyles.pallete3),
-          overlayColor: MaterialStateProperty.all(ColorStyles.mainColorSplash),
-          shadowColor:  MaterialStateProperty.all(ColorStyles.pallete1),
+          backgroundColor: WidgetStateProperty.all(ColorStyles.pallete3.withOpacity(0.9)),
+          foregroundColor: WidgetStateProperty.all(ColorStyles.pallete3),
+          overlayColor: WidgetStateProperty.all(ColorStyles.mainColorSplash),
+          shadowColor:  WidgetStateProperty.all(ColorStyles.pallete1),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         )
       ),      
@@ -154,10 +154,10 @@ mixin AppThemes {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(ColorStyles.pallete3.withOpacity(0.9)),
-          foregroundColor: MaterialStateProperty.all(ColorStyles.pallete3),
-          overlayColor: MaterialStateProperty.all(ColorStyles.mainColorSplash),
-          shadowColor:  MaterialStateProperty.all(ColorStyles.pallete1),
+          backgroundColor: WidgetStateProperty.all(ColorStyles.pallete3.withOpacity(0.9)),
+          foregroundColor: WidgetStateProperty.all(ColorStyles.pallete3),
+          overlayColor: WidgetStateProperty.all(ColorStyles.mainColorSplash),
+          shadowColor:  WidgetStateProperty.all(ColorStyles.pallete1),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         )
       ),      

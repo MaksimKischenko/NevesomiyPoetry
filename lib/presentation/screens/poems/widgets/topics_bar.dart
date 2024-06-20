@@ -33,13 +33,13 @@ class TopicsBar extends StatelessWidget {
               ),
               onPressed: () => sortByType(Topics.values[index]),
               style: ButtonStyle(
-                side: selected(index)? MaterialStateProperty.all(
+                side: selected(index)? WidgetStateProperty.all(
                   BorderSide(
                     color: ColorStyles.pallete1, 
                     width: 1,
                   ),
                 ): null,
-                elevation: selected(index)? MaterialStateProperty.all(16) : MaterialStateProperty.all(2)
+                elevation: selected(index)? WidgetStateProperty.all(16) : WidgetStateProperty.all(2)
               ),
               icon: SvgPicture.asset(
                 Topics.values[index].nameAndLocation.$2,
